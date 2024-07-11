@@ -5,8 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../../../utils/app_color.dart';
-import '../../../../utils/dimensions.dart';
+import '../../../../../../utils/app_color.dart';
+import '../../../../../../utils/dimensions.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

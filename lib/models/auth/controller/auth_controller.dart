@@ -3,7 +3,6 @@ import 'package:to_let_mobile_app/common/widgets/error_message.dart';
 import 'package:to_let_mobile_app/common/widgets/success_message.dart';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:to_let_mobile_app/models/auth/model/signin_model.dart';
-import 'package:to_let_mobile_app/models/auth/model/signup_model.dart';
 import 'package:to_let_mobile_app/network/network_client.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/api_endpoints.dart';
@@ -11,7 +10,6 @@ import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../../common/controller/input_controller.dart';
 
 class AuthController extends GetxController with StateMixin {

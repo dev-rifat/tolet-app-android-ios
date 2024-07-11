@@ -9,8 +9,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../utils/images.dart';
-import '../widget/home_view_widgets.dart';
+import '../../../../../../utils/images.dart';
+import '../home/view/widget/home_view_widgets.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});

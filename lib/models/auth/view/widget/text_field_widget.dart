@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import '../../../../common/controller/input_controller.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/dimensions.dart';
-import '../../../home/view/widget/home_view_widgets.dart';
+import '../../../main/home/view/widget/home_view_widgets.dart';
 import 'auth_view_widget.dart';
 
 class TextFieldLayout extends StatelessWidget {
@@ -15,7 +14,7 @@ class TextFieldLayout extends StatelessWidget {
       child: Card(
         elevation: 0,
         shape: roundedRectangleBorder.copyWith(
-            borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+            borderRadius: BorderRadius.circular(Dimensions.radiusDefault+2),
             side: const BorderSide(
                 width: 1, color: AppColor.disableColor)),
         shadowColor: Colors.grey.withOpacity(0.2),
@@ -25,9 +24,16 @@ class TextFieldLayout extends StatelessWidget {
             const Divider(
               color: AppColor.disableColor,
             ),
-            Obx(() => userPasswordField(
+
+
+
+            userPasswordField(
                 context: context,
-                controller: passwordController)),
+
+                controller: passwordController),
+
+
+
           ],
         ),
       ),

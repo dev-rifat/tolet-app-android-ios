@@ -52,12 +52,13 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       style: subTextFieldTitleStyle,
       keyboardType: textInputType,
+      cursorColor: AppColor.primaryColor,
       validator: validator,
       autofocus: false,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: AppStyle.mid_large_text.copyWith(
-            color: AppColor.hintColor, fontSize: Dimensions.fontSizeDefault),
+            color: AppColor.hintColor, fontSize: Dimensions.fontSizeDefault+1),
         prefixIcon: Icon(
           prefixIcon,
           color: AppColor.hintColor.withOpacity(0.6),
@@ -91,10 +92,12 @@ class CustomTextField extends StatelessWidget {
       autofocus: false,
       obscureText: obsValue,
       validator: validator,
+      cursorColor: AppColor.primaryColor,
+
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: AppStyle.mid_large_text.copyWith(
-            color: AppColor.hintColor, fontSize: Dimensions.fontSizeDefault),
+            color: AppColor.hintColor, fontSize: Dimensions.fontSizeDefault+1),
         prefixIcon: Icon(
           prefixIcon,
           color: AppColor.hintColor.withOpacity(0.6),

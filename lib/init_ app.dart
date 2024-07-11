@@ -9,8 +9,8 @@ import 'common/controller/county_pickar_controller.dart';
 import 'common/controller/gender_controller.dart';
 import 'common/controller/pick_image_controller.dart';
 import 'models/auth/controller/auth_controller.dart';
-import 'models/home/controller/home_controller.dart';
 import 'common/controller/file_upload_controller.dart';
+import 'models/main/home/controller/home_controller.dart';
 import 'models/statring/controller/splash_controller.dart';
 
 

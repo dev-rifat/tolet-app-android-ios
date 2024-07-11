@@ -20,6 +20,7 @@ class Images {
   static String favicon = 'assets/images/favicon.png';
   static String logo = 'assets/images/logo.png';
   static String dark_logo = 'assets/images/dark_logo.png';
+  static String placeholder = 'assets/images/placeholder.png';
 
   static String right_arrow = 'assets/images/right_arrow.svg';
   static String app_logo = 'assets/images/app_logo.png';

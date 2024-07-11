@@ -1,10 +1,8 @@
 import 'package:to_let_mobile_app/common/widgets/custom_app_button.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_onloading.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_text_field.dart';
-import 'package:to_let_mobile_app/common/widgets/warning_message.dart';
 import 'package:to_let_mobile_app/models/auth/controller/auth_controller.dart';
 import 'package:to_let_mobile_app/models/auth/view/widget/input_field_widget.dart';
-import 'package:to_let_mobile_app/models/home/view/widget/home_view_widgets.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +13,7 @@ import '../../../../common/widgets/custom_spacer.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../utils/app_style.dart';
 import '../../../../utils/dimensions.dart';
+import '../../../main/home/view/widget/home_view_widgets.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});

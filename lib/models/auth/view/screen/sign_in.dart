@@ -1,19 +1,17 @@
-import 'package:to_let_mobile_app/common/widgets/custom_app_button.dart';
 import 'package:to_let_mobile_app/models/auth/view/widget/input_field_widget.dart';
-import 'package:to_let_mobile_app/models/home/view/widget/home_view_widgets.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../common/controller/input_controller.dart';
-import '../../../../common/controller/password_controller.dart';
 import '../../../../common/widgets/custom_onloading.dart';
 import '../../../../common/widgets/custom_spacer.dart';
+import '../../../../common/widgets/cutom_component/custom_app_buttom.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/app_layout.dart';
 import '../../../../utils/app_style.dart';
+import '../../../../utils/dimensions.dart';
 import '../../controller/auth_controller.dart';
 import '../widget/text_field_widget.dart';
 
@@ -23,10 +21,6 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Get.isRegistered<PasswordController>()) {
-      Get.delete<PasswordController>();
-    }
-    Get.put(PasswordController());
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -42,24 +36,14 @@ class SignInScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   customSpacerHeight(height: 56),
-                _titleTextLayout(),
+                  _titleTextLayout(),
                   customSpacerHeight(height: 30),
                   const TextFieldLayout(),
-
-
-
                   _recoveryPassword(context: context),
                   customSpacerHeight(height: 30),
-                  Obx(
-                    () => _loginButtonLayout(context),
-                  ),
+                  Obx(() => _loginButtonLayout()),
                   customSpacerHeight(height: 24),
-                  signInWithGoogle(
-                      context: context,
-                      text: "Guest",
-                      onAction: () {
-                        Get.toNamed(Routes.MAIN);
-                      }),
+                  _guestButtonLayout(),
                   const Spacer(),
                   createUserAccount(
                       context: context,
@@ -93,9 +77,9 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  _loginButtonLayout(context) {
-    return AppButton(
-      buttonText: "Login",
+  _loginButtonLayout() {
+    return CustomAppButton(
+      text: "Login",
       widget: Get.find<AuthController>().isSignInLoading.value
           ? onLoading(color: AppColor.cardColor, isSize: .8)
           : Text(
@@ -109,14 +93,27 @@ class SignInScreen extends StatelessWidget {
           GetStorage().write(AppString.USER_EMAIL, emailController.text);
         }
       },
-      isButtonExpanded: false,
-      isUsedButton: true,
+      buttonRadius: Dimensions.radiusDefault,
       buttonColor: AppColor.primaryColor,
     );
   }
 
+  _guestButtonLayout() {
+    return CustomAppButton(
+      widget: Text(
+        "Guest",
+        style: AppStyle.normal_text_black,
+      ),
+      onPressed: () {
+        Get.toNamed(Routes.MAIN);
+      },
+      buttonRadius: Dimensions.radiusDefault,
+      buttonColor: AppColor.hintColor.withOpacity(0.2),
+    );
+  }
+
   _titleTextLayout() {
-    return   titleTextLayout(
+    return titleTextLayout(
         context: Get.context,
         titleText: "Sign in\nto your account",
         subTitleText: "Welcome Back You've Been Missed!",

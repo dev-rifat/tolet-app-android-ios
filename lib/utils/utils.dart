@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import '../models/main/home/view/screen/home.dart';
 import 'app_string.dart';
 import 'images.dart';
 
@@ -85,7 +86,7 @@ final List _onboardDescription = [
 ];
 
 final screensLayoutForBtnNav = <Widget>[
-   Container(),
+  HomeScreen(),
    Container(),
    Container(),
    Container(),

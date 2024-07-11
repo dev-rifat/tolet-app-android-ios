@@ -2,14 +2,14 @@
 class Dimensions{
   Dimensions._();
 //App Size
-  static double fontSizeExtraSmall=10.0;
-  static double fontSizeSmall=12.0;
-  static double fontSizeDefault=14.0;
-  static double fontSizeExtraDefault=16.0;
-  static double fontSizeMid=18.0;
-  static double fontSizeLarge=20.0;
-  static double fontSizeExtraLarge=24.0;
-  static double fontSizeDoubleLarge=28.0;
+  static double fontSizeExtraSmall=8.0;
+  static double fontSizeSmall=10.0;
+  static double fontSizeDefault=12.0;
+  static double fontSizeExtraDefault=14.0;
+  static double fontSizeMid=16.0;
+  static double fontSizeLarge=18.0;
+  static double fontSizeExtraLarge=22.0;
+  static double fontSizeDoubleLarge=26.0;
 
 //padding
   static double paddingExtraSmall=2.0;
