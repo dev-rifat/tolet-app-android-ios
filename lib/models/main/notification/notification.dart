@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../../utils/images.dart';
-import '../home/view/widget/home_view_widgets.dart';
+import '../home/view/widget/card_style.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});

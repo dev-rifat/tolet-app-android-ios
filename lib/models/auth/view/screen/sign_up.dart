@@ -13,7 +13,7 @@ import '../../../../common/widgets/custom_spacer.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../utils/app_style.dart';
 import '../../../../utils/dimensions.dart';
-import '../../../main/home/view/widget/home_view_widgets.dart';
+import '../../../main/home/view/widget/card_style.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});

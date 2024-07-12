@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
-import 'package:to_let_mobile_app/models/main/home/view/widget/home_view_widgets.dart';
+import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
+import '../../../../../common/widgets/cutom_component/custom_title_text.dart';
 import '../widget/app_bar.dart';
+import '../widget/best_for_you.dart';
+import '../widget/category_list.dart';
+import '../widget/near_for_you.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,16 +19,36 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
+      backgroundColor:Colors.grey.shade100,
       body: Padding(
         padding: marginLayout.copyWith(left: 12, right: 12),
-        child: Column(
-          children: [
-            ///Search layout
-            _buildSearchLayout(),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///Search layout
+              _buildSearchLayout(),
+              customSpacerHeight(height: 18),
 
+              const CategoryList(),
 
+              customSpacerHeight(height: 22),
 
-          ],
+              ///Title text (Near for you)
+              buildCustomTitleText(text: "Near for you"),
+              customSpacerHeight(height: 14),
+
+              ///Near for you image list
+              const NearForYou(),
+              customSpacerHeight(height: 14),
+
+              ///Title text (Near for you)
+              buildCustomTitleText(text: "Best for you"),
+              customSpacerHeight(height: 14),
+              const BestForYou()
+            ],
+          ),
         ),
       ),
     );
@@ -46,12 +69,16 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: [
-                     const Icon(CupertinoIcons.search,color: AppColor.normalTextColor,),
+                    const Icon(
+                      CupertinoIcons.search,
+                      color: AppColor.normalTextColor,
+                    ),
                     customSpacerWidth(width: 8),
                     Text(
                       "Search",
-                      style: AppStyle.normal_text_black
-                          .copyWith(fontSize: Dimensions.fontSizeDefault + 2,color: AppColor.normalTextColor),
+                      style: AppStyle.normal_text_black.copyWith(
+                          fontSize: Dimensions.fontSizeDefault + 2,
+                          color: AppColor.normalTextColor),
                     ),
                   ],
                 ),
@@ -61,9 +88,7 @@ class HomeScreen extends StatelessWidget {
         ),
         Container(
           width: 50,
-          decoration: BoxDecoration(
-              color: AppColor.primaryColor,
-              borderRadius: BorderRadius.circular(8)),
+          decoration: decoration,
           child: const Padding(
             padding: EdgeInsets.all(12.0),
             child: Icon(

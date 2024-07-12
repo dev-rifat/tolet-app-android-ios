@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/controller/input_controller.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/dimensions.dart';
-import '../../../main/home/view/widget/home_view_widgets.dart';
+import '../../../main/home/view/widget/card_style.dart';
 import 'auth_view_widget.dart';
 
 class TextFieldLayout extends StatelessWidget {

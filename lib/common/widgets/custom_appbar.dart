@@ -60,7 +60,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
 _leadingProfile() {
   return CustomNetworkImage(
     imgUrl: "",
-    logoUrl: Images.user,
+    errorImg: Images.user,
   );
 }
 

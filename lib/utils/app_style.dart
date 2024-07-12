@@ -8,7 +8,7 @@ class AppStyle {
 
   static TextStyle title_text = TextStyle(
       fontSize: AppLayout.getWidth(Dimensions.paddingExtraLarge),
-      color: Colors.white,
+      color: Colors.black,
       fontWeight: FontWeight.w600,
       fontFamily: "Montserrat");
 

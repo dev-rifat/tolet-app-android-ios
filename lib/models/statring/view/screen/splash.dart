@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../main/home/view/widget/home_view_widgets.dart';
+import '../../../main/home/view/widget/card_style.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
