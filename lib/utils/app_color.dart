@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-
 class AppColor {
   AppColor._();
 
-  static  Color primaryColor = const Color(0xFF246EE9);
+  //static  Color primaryColor = const Color(0xFF019AFF);
+  static Color primaryColor = const Color(0xFF246EE9);
   static const Color backgroundColor = Color(0xFFFFFFFF);
   static const Color secondaryColor = Color(0xFF4D4D4D);
 
@@ -21,16 +21,8 @@ class AppColor {
   static const Color errorColorLight = Color(0xFFFE475B);
   static const Color pendingColor = Color(0xFFFFA500);
 
-
-
   static const Color balanceTimeGradientOne = Color(0xFF008EEC);
   static const Color balanceTimeGradientTwo = Color(0xFF019AFF);
   static const Color overTimeGradientOne = Color(0xFF294BD6);
   static const Color overTimeGradientTwo = Color(0xFF4466F2);
-
-
 }
-
-
-
-

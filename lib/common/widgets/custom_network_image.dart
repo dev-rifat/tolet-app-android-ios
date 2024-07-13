@@ -39,11 +39,11 @@ class CustomNetworkImage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(borderRadius??0),
                 image: DecorationImage(
                   image: imageProvider,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           )
         : CircleAvatar(
             radius: radius + 2.5,

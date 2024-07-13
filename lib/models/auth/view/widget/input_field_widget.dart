@@ -1,9 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
 import '../../../../common/controller/input_controller.dart';
 import '../../../../common/controller/password_controller.dart';
 import '../../../../common/widgets/custom_app_button.dart';
@@ -86,7 +84,9 @@ userContactField() {
               bottom: AppLayout.getHeight(16)),
           hintText: "Enter number",
           focusColor: AppColor.primaryColor,
-          hintStyle: GoogleFonts.poppins(
+          hintStyle: AppStyle
+
+            .normal_text_black.copyWith(
               color: AppColor.hintColor,
               fontSize: Dimensions.fontSizeDefault + 1),
           filled: false,

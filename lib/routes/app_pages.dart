@@ -1,8 +1,10 @@
 import 'package:to_let_mobile_app/models/auth/view/screen/sign_up.dart';
 import 'package:to_let_mobile_app/models/auth/view/screen/sign_in.dart';
 import 'package:get/get.dart';
-import '../models/main/main.dart';
+import '../models/main/main/drawer_main/drawer_screen.dart';
+import '../models/main/main/main.dart';
 import '../models/main/notification/notification.dart';
+import '../models/main/properties/view/screen/properties.dart';
 import '../models/statring/view/screen/splash.dart';
 part 'app_routes.dart';
 
@@ -16,9 +18,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MAIN,
-      page: () => const MainScreen(),
+      page: () => const ZoomMainDrawer(),
     ),
-
+    GetPage(
+      name: _Paths.VIEW_ALL,
+      page: () => const PropertiesScreen(),
+    ),
     GetPage(
       name: _Paths.SIGN_IN,
       page: () => SignInScreen(),
@@ -27,7 +32,6 @@ class AppPages {
       name: _Paths.SIGN_UP,
       page: () => SignUpScreen(),
     ),
-
     GetPage(
       name: _Paths.NOTIFICATION_SCREEN,
       page: () => const NotificationScreen(),

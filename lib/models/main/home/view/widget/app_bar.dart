@@ -14,6 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget { // C
       preferredSize: const Size.fromHeight(80.0), // here the desired height
       child: AppBar(
         leadingWidth: MediaQuery.of(context).size.width,
+            backgroundColor:Colors.grey.shade100,
         elevation: 0,
         leading: Padding(
           padding: marginLayout.copyWith(top: 12),  // Assuming marginLayout is defined somewhere in your utils

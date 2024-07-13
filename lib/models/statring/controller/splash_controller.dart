@@ -6,7 +6,7 @@ import 'package:get_storage/get_storage.dart';
 class SplashController extends GetxController {
   @override
   void onReady() {
-    Future.delayed( const Duration(seconds:1111), () => chooseScreen());
+    Future.delayed( const Duration(seconds:3), () => chooseScreen());
     super.onReady();
   }
 

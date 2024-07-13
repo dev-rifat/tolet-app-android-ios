@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../utils/app_color.dart';
 import '../../utils/app_layout.dart';
 import '../../utils/app_style.dart';
@@ -247,7 +246,7 @@ class AppInputField extends StatelessWidget {
                         bottom: AppLayout.getHeight(16)),
                     hintText: hint,
                     focusColor: AppColor.primaryColor,
-                    hintStyle: GoogleFonts.poppins(
+                    hintStyle: AppStyle.normal_text_black.copyWith(
                         color: AppColor.hintColor,
                         fontSize: Dimensions.fontSizeDefault + 1),
                     filled: false,
@@ -287,7 +286,7 @@ class AppInputField extends StatelessWidget {
                   onTap: () => onAction!(),
                   decoration: InputDecoration(
                     hintText: hint,
-                    hintStyle: GoogleFonts.poppins(
+                    hintStyle: AppStyle.normal_text_black.copyWith(
                       color: AppColor.hintColor,
                     ),
                     prefixIcon: const Icon(
@@ -337,7 +336,7 @@ class AppInputField extends StatelessWidget {
               hintText: hint,
               suffixIcon: weight,
               focusColor: AppColor.primaryColor,
-              hintStyle: GoogleFonts.poppins(
+              hintStyle: AppStyle.normal_text_black.copyWith(
                   color: AppColor.hintColor,
                   fontSize: Dimensions.fontSizeDefault + 1),
               filled: false,

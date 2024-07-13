@@ -1,13 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../../utils/app_color.dart';
-import '../../utils/app_layout.dart';
 import '../../utils/app_style.dart';
 import '../../utils/dimensions.dart';
-import 'custom_spacer.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;

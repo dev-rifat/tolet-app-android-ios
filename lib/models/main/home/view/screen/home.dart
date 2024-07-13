@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
@@ -28,10 +31,10 @@ class HomeScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///Search layout
-              _buildSearchLayout(),
+              _buildSearchLayout(context),
               customSpacerHeight(height: 18),
 
-              const CategoryList(),
+               CategoryList(),
 
               customSpacerHeight(height: 22),
 
@@ -54,9 +57,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  _buildSearchLayout() {
+  _buildSearchLayout(context) {
     return Row(
       children: [
+
+
         Expanded(
           child: SizedBox(
             width: double.infinity,
@@ -86,17 +91,22 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          width: 50,
-          decoration: decoration,
-          child: const Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
+        GestureDetector(
+          onTap: (){
+            ZoomDrawer.of(context)?.toggle();
+          },
+          child: Container(
+            width: 50,
+            decoration: decoration,
+            child: const Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
             ),
           ),
-        )
+        ),
       ],
     );
   }

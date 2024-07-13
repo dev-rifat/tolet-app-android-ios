@@ -1,36 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 
-class CategoryList extends StatelessWidget {
-  const CategoryList({super.key});
+import '../../controller/home_controller.dart';
 
+class CategoryList extends GetView<HomeController> {
+   CategoryList({super.key});
+
+final  List categoryList =["Home","Ded","Home","Test","Home","Home","Ded","Home","Test","Home"];
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
+        itemCount: categoryList.length,
         itemBuilder: (context, index) {
-          return SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Container(
-                decoration: decoration,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 14.0, right: 14),
-                  child: Text(
-                    "Home",
-                    style: AppStyle.normal_text
-                        .copyWith(color: AppColor.cardColor),
+          return Obx(() => GestureDetector(
+            onTap: (){
+              controller.isSelectCategory.value=index;
+            },
+            child: SizedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Container(
+                  decoration: controller.isSelectCategory.value==index?
+                  decoration:BoxDecoration(
+                    color: AppColor.cardColor,
+                    borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+
                   ),
-                )),
+                  child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 14.0, right: 14),
+                        child: Text(
+                          categoryList[index],
+                          style: AppStyle.normal_text
+                              .copyWith(color:controller.isSelectCategory.value==index? AppColor.cardColor:AppColor.primaryColor,
+
+                          fontWeight: FontWeight.w700
+                          ),
+                        ),
+                      )),
+                ),
               ),
             ),
-          );
+          ));
         },
       ),
     );
