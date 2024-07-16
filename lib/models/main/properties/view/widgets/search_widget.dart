@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
-
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../home/view/widget/card_style.dart';
-import '../../../home/view/widget/category_list.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({super.key});

@@ -60,7 +60,7 @@ abstract class _Paths {
   static const PROFILE = "/profile_screen";
   static const ORDER = "/order_screen";
   static const CATEGORY_VIEW = "/category_view_screen";
-  static const VIEW_ALL = "/view_all_screen";
+  static const VIEW_ALL = "/view_all_screen";   ///View all it's properties screen
   static const SEARCH_SCREEN = "/search_screen";
   static const NOTIFICATION_SCREEN = "/notification_screen";
   static const MY_CART_SCREEN = "/my_cart_screen";

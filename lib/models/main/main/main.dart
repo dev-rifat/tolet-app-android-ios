@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:to_let_mobile_app/models/main/favorite/view/screen/wishlist_screen.dart';
 import 'package:to_let_mobile_app/models/main/home/view/screen/home.dart';
 import 'package:to_let_mobile_app/models/main/main/widgets.dart';
 import 'package:to_let_mobile_app/models/main/profile/view/screen/profile.dart';
@@ -65,7 +66,7 @@ class _MainScreenState extends State<MainScreen> {
       const HomeScreen(),
       const PropertiesScreen(),
       Container(),
-      const HomeScreen(),
+      const WishListScreen(),
       const ProfileScreen(),
     ];
   }

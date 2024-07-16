@@ -17,7 +17,7 @@ import '../../../utils/dimensions.dart';
       ),
       if(isHoldSeeMoreText==false)
       GestureDetector(
-        onTap: ()=>Get.toNamed(Routes.VIEW_ALL),
+        onTap: ()=>Get.toNamed(Routes.SEARCH_SCREEN),
         child: Text(
           "See more",
           style: AppStyle.normal_text_black

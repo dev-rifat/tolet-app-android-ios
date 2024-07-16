@@ -16,36 +16,38 @@ class PostListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: 20,
         itemBuilder: (context, index) {
-        return Card(
-          elevation: 0,
-          shape: roundedRectangleBorder.copyWith(
-              borderRadius: BorderRadius.circular(12)),
-          color: AppColor.cardColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///user profile info only
-                _buildProfileInfo(),
-      
-                ///House info only
-                _houseInfo(),
-                _descriptionText(),
-      
-                customSpacerHeight(height: 14),
-      
-                ///House img only
-                _houseImage(),
-              ],
+          return Card(
+            elevation: 0,
+            shape: roundedRectangleBorder.copyWith(
+                borderRadius: BorderRadius.circular(12)),
+            color: AppColor.cardColor,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ///user profile info only
+                  _buildProfileInfo(),
+
+                  ///House info only
+                  _houseInfo(),
+                  _descriptionText(),
+
+                  customSpacerHeight(height: 14),
+
+                  ///House img only
+                  _houseImage(),
+                ],
+              ),
             ),
-          ),
-        );
-      },),
+          );
+        },
+      ),
     );
   }
-
 
   _buildProfileInfo() {
     return Column(
@@ -87,8 +89,10 @@ class PostListWidget extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            
-            Icon(Icons.favorite_border,color: AppColor.primaryColor,)
+            Icon(
+              Icons.favorite_border,
+              color: AppColor.primaryColor,
+            )
           ],
         )
       ],
