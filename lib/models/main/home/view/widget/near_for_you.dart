@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:to_let_mobile_app/routes/app_pages.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
@@ -19,13 +22,17 @@ class NearForYou extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Stack(
               children: [
-                SizedBox(
-                  width: 230,
-                  child: CustomNetworkImage(
-                    imgUrl:
-                    'https://www.desmoinesregister.com/gcdn/presto/2023/03/06/PDEM/442d7d79-7525-4f5d-8c0b-e56f3b810e3b-6102_NE_Briarwood_Dr_Ankeny_IA_twilight_028.jpg?crop=1023,576,x0,y94&width=660&height=372&format=pjpg&auto=webp',
-                    isRectangleImg: true,
-                    borderRadius: Dimensions.radiusMid+2,
+                GestureDetector(
+                  onTap: ()=>Get.toNamed(Routes.VIEW_DETAILS),
+
+                  child: SizedBox(
+                    width: 230,
+                    child: CustomNetworkImage(
+                      imgUrl:
+                      'https://www.desmoinesregister.com/gcdn/presto/2023/03/06/PDEM/442d7d79-7525-4f5d-8c0b-e56f3b810e3b-6102_NE_Briarwood_Dr_Ankeny_IA_twilight_028.jpg?crop=1023,576,x0,y94&width=660&height=372&format=pjpg&auto=webp',
+                      isRectangleImg: true,
+                      borderRadius: Dimensions.radiusMid+2,
+                    ),
                   ),
                 ),
                 Positioned(

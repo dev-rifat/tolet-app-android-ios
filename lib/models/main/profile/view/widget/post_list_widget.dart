@@ -14,36 +14,34 @@ class MyPostsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-        return Card(
-          elevation: 0,
-          shape: roundedRectangleBorder.copyWith(
-              borderRadius: BorderRadius.circular(12)),
-          color: AppColor.cardColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///user profile info only
-                _buildProfileInfo(),
-      
-                ///House info only
-                _houseInfo(),
-                _descriptionText(),
-      
-                customSpacerHeight(height: 14),
-      
-                ///House img only
-                _houseImage(),
-              ],
-            ),
+    return ListView.builder(
+      itemBuilder: (context, index) {
+      return Card(
+        elevation: 0,
+        shape: roundedRectangleBorder.copyWith(
+            borderRadius: BorderRadius.circular(12)),
+        color: AppColor.cardColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///user profile info only
+              _buildProfileInfo(),
+
+              ///House info only
+              _houseInfo(),
+              _descriptionText(),
+
+              customSpacerHeight(height: 14),
+
+              ///House img only
+              _houseImage(),
+            ],
           ),
-        );
-      },),
-    );
+        ),
+      );
+    },);
   }
 
 

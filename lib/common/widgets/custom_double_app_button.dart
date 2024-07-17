@@ -33,7 +33,7 @@ class CustomDoubleAppButton extends StatelessWidget {
                 border: Border.all(
                     width: 1, color: btnColor.withOpacity(0.5)),
                 borderRadius:
-                    BorderRadius.circular(Dimensions.radiusExtraLarge),
+                    BorderRadius.circular(Dimensions.radiusDefault),
               ),
               child: Center(
                   child: Text(AppString.text_close.tr,
@@ -54,7 +54,7 @@ class CustomDoubleAppButton extends StatelessWidget {
               decoration: BoxDecoration(
                 color: btnColor,
                 borderRadius:
-                    BorderRadius.circular(Dimensions.radiusExtraLarge),
+                    BorderRadius.circular(Dimensions.radiusDefault),
               ),
               child: Center(
                   child: widget??Text(

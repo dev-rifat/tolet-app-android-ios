@@ -14,7 +14,7 @@ class SearchScreen extends StatelessWidget {
 
       appBar: AppBar(
         backgroundColor:Colors.grey.shade100,
-        title: Text("Properties",style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid),),),
+        title: Text("Search",style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid),),),
       body: Padding(
         padding: marginLayout.copyWith(left: 8,right: 8),
         child: const Column(

@@ -38,6 +38,8 @@ abstract class Routes {
   static const ADMIN_SCREEN = _Paths.ADMIN_SCREEN;
   static const ADMIN_ALL_CATEGORY_VIEW = _Paths.ADMIN_ALL_CATEGORY_VIEW;
   static const ADMIN_ALL_PRODUCTS_VIEW = _Paths.ADMIN_ALL_PRODUCTS_VIEW;
+  static const VIEW_DETAILS = _Paths.VIEW_DETAILS;
+  static const MY_POSTS = _Paths.MY_POSTS;
 
 
 }
@@ -57,6 +59,8 @@ abstract class _Paths {
   static const MAIN = "/main_screen";
   static const CART = "/cart_screen";
   static const FAVORITE = "/favorite_screen";
+  static const VIEW_DETAILS = "/view_details_screen";
+  static const MY_POSTS = "/my_posts_details_screen";
   static const PROFILE = "/profile_screen";
   static const ORDER = "/order_screen";
   static const CATEGORY_VIEW = "/category_view_screen";

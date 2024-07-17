@@ -67,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
       const PropertiesScreen(),
       Container(),
       const WishListScreen(),
-      const ProfileScreen(),
+       ProfileScreen(),
     ];
   }
 }

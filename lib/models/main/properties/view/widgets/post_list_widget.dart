@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/models/main/properties/view/widgets/photo_grid.dart';
+import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
@@ -19,28 +21,31 @@ class PostListWidget extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         itemCount: 20,
         itemBuilder: (context, index) {
-          return Card(
-            elevation: 0,
-            shape: roundedRectangleBorder.copyWith(
-                borderRadius: BorderRadius.circular(12)),
-            color: AppColor.cardColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ///user profile info only
-                  _buildProfileInfo(),
+          return GestureDetector(
+            onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
+            child: Card(
+              elevation: 0,
+              shape: roundedRectangleBorder.copyWith(
+                  borderRadius: BorderRadius.circular(12)),
+              color: AppColor.cardColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///user profile info only
+                    _buildProfileInfo(),
 
-                  ///House info only
-                  _houseInfo(),
-                  _descriptionText(),
+                    ///House info only
+                    _houseInfo(),
+                    _descriptionText(),
 
-                  customSpacerHeight(height: 14),
+                    customSpacerHeight(height: 14),
 
-                  ///House img only
-                  _houseImage(),
-                ],
+                    ///House img only
+                    _houseImage(),
+                  ],
+                ),
               ),
             ),
           );
@@ -174,7 +179,9 @@ class PostListWidget extends StatelessWidget {
       height: 220,
       child: PhotoGrid(
         imageUrls: urls,
-        onImageClicked: (i) => print('Image $i was clicked!'),
+        onImageClicked: (i) {
+          Get.toNamed(Routes.VIEW_DETAILS);
+        },
         onExpandClicked: () => print('Expand Image was clicked'),
         maxImages: 2,
       ),

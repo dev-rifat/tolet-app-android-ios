@@ -21,6 +21,13 @@ class HomeController extends GetxController with StateMixin {
   final isFilterLoading = false.obs;
   final isFilterCategoryLoading = false.obs;
   final isSelectCategory = 0.obs;
+  final isSelectFilter = 0.obs;
+
+  var selectedValue = 'All'.obs;
+  List<String> items = ['All', 'Pending', 'Approve',];
+  void setSelected(String value) {
+    selectedValue.value = value;
+  }
 
 
   CategoriesModel categoriesModel = CategoriesModel();

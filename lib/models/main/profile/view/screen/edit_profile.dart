@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../../../../common/controller/file_upload_controller.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
@@ -134,16 +133,16 @@ customInsideAppbar({String ?title}) {
     elevation: 0,
     leading: GestureDetector(
         onTap: () => Get.back(),
-        child:  Icon(
+        child:  const Icon(
           Icons.arrow_back,
-          color:Theme.of(Get.context!).colorScheme.onPrimary,
+          color:AppColor.normalTextColor,
         )),
     centerTitle: true,
     backgroundColor: Theme.of(Get.context!).backgroundColor,
     title: Text(
       title??  AppString.text_edit_profile.tr,
       style: AppStyle.mid_large_text.copyWith(
-          fontSize: Dimensions.fontSizeMid, color: Theme.of(Get.context!).colorScheme.onPrimary),
+          fontSize: Dimensions.fontSizeMid, color:AppColor.normalTextColor,),
     ),
   );
 }

@@ -9,7 +9,6 @@ import '../../../../../utils/app_string.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../../auth/view/widget/auth_view_widget.dart';
-import '../../controller/profile_controller.dart';
 import '../screen/edit_profile.dart';
 
 class ChangePassword extends StatelessWidget {
@@ -39,7 +38,7 @@ class ChangePassword extends StatelessWidget {
                 customSpacerHeight(height: 14),
                 _confirmPassword(),
                 customSpacerHeight(height: 20),
-                Obx(() => _btnLayout()),
+                _btnLayout()
               ],
             ),
           ),

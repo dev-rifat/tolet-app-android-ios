@@ -10,6 +10,7 @@ import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/custom_title_text.dart';
+import '../../../../../routes/app_pages.dart';
 import '../widget/app_bar.dart';
 import '../widget/best_for_you.dart';
 import '../widget/category_list.dart';
@@ -63,29 +64,32 @@ class HomeScreen extends StatelessWidget {
 
 
         Expanded(
-          child: SizedBox(
-            width: double.infinity,
-            child: Card(
-              color: AppColor.hintColor.withOpacity(0.2),
-              shape: roundedRectangleBorder.copyWith(
-                  borderRadius: BorderRadius.circular(8)),
-              elevation: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Row(
-                  children: [
-                    const Icon(
-                      CupertinoIcons.search,
-                      color: AppColor.normalTextColor,
-                    ),
-                    customSpacerWidth(width: 8),
-                    Text(
-                      "Search",
-                      style: AppStyle.normal_text_black.copyWith(
-                          fontSize: Dimensions.fontSizeDefault + 2,
-                          color: AppColor.normalTextColor),
-                    ),
-                  ],
+          child: GestureDetector(
+            onTap: ()=>Get.toNamed(Routes.SEARCH_SCREEN),
+            child: SizedBox(
+              width: double.infinity,
+              child: Card(
+                color: AppColor.hintColor.withOpacity(0.2),
+                shape: roundedRectangleBorder.copyWith(
+                    borderRadius: BorderRadius.circular(8)),
+                elevation: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        CupertinoIcons.search,
+                        color: AppColor.normalTextColor,
+                      ),
+                      customSpacerWidth(width: 8),
+                      Text(
+                        "Search",
+                        style: AppStyle.normal_text_black.copyWith(
+                            fontSize: Dimensions.fontSizeDefault + 2,
+                            color: AppColor.normalTextColor),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -74,7 +74,7 @@ class TextFieldLayout extends StatelessWidget {
             },
           ),
           customSpacerHeight(height: 20),
-          Obx(() => _editBtnLayout()),
+         _editBtnLayout(),
           customSpacerHeight(height: 80),
         ],
       ),
