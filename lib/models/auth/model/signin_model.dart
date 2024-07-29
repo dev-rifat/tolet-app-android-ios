@@ -1,27 +1,39 @@
 class SignInResponse {
-  Data? data;
+  User? user;
+  String? token;
 
-  SignInResponse({this.data});
+  SignInResponse({this.user, this.token});
 
   SignInResponse.fromJson(Map<String, dynamic> json) {
-
-    data = json['data'] != null ?  Data.fromJson(json['data']) : null;
-    print("data ==> $data");
+    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    token = json['token'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.user != null) {
+      data['user'] = this.user!.toJson();
+    }
+    data['token'] = this.token;
+    return data;
+  }
 }
 
-class Data {
-  String? accessToken;
-  String? role;
+class User {
+  int? id;
   String? name;
 
-  Data({this.accessToken, this.role, this.name});
+  User({this.id, this.name});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     name = json['name'];
-    role = json['roles'];
-    accessToken = json['token'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
+  }
 }

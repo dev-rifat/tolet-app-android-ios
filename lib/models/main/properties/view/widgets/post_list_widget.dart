@@ -8,17 +8,19 @@ import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../profile/view/widget/expanded_text_layout.dart';
 
 class PostListWidget extends StatelessWidget {
-  const PostListWidget({super.key});
+   PostListWidget({super.key});
+ final ScrollController _hideButtonController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
+       // controller: _hideButtonController,
         itemCount: 20,
         itemBuilder: (context, index) {
           return GestureDetector(

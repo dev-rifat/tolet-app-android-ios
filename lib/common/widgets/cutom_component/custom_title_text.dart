@@ -17,12 +17,13 @@ import '../../../utils/dimensions.dart';
       ),
       if(isHoldSeeMoreText==false)
       GestureDetector(
-        onTap: ()=>Get.toNamed(Routes.SEARCH_SCREEN),
+        onTap:()=>Get.toNamed(Routes.SEARCH_SCREEN),
         child: Text(
           "See more",
-          style: AppStyle.normal_text_black
+          style: AppStyle.normal_text_grey
               .copyWith(
               color: AppColor.primaryColor,
+
               overflow: TextOverflow.ellipsis),
         ),
       ),

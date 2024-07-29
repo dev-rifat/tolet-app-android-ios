@@ -1,4 +1,4 @@
-import 'package:to_let_mobile_app/models/auth/view/widget/input_field_widget.dart';
+import 'package:to_let_mobile_app/models/auth/view/widget/sign_in_widget.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,13 +7,13 @@ import '../../../../common/controller/input_controller.dart';
 import '../../../../common/widgets/custom_onloading.dart';
 import '../../../../common/widgets/custom_spacer.dart';
 import '../../../../common/widgets/cutom_component/custom_app_buttom.dart';
+import '../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../routes/app_pages.dart';
 import '../../../../utils/app_color.dart';
-import '../../../../utils/app_layout.dart';
 import '../../../../utils/app_style.dart';
 import '../../../../utils/dimensions.dart';
 import '../../controller/auth_controller.dart';
-import '../widget/text_field_widget.dart';
+import '../widget/common_widget.dart';
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
@@ -21,10 +21,10 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("SignInScreen_called");
     return Form(
       key: _formKey,
       child: Scaffold(
-        appBar: appBar(context: context),
         body: Padding(
           padding: marginLayout,
           child: SingleChildScrollView(
@@ -33,46 +33,30 @@ class SignInScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  customSpacerHeight(height: 56),
-                  _titleTextLayout(),
+                  ///TitleText
+                  _titleText(context),
                   customSpacerHeight(height: 30),
-                  const TextFieldLayout(),
-                  _recoveryPassword(context: context),
+                  ///TextField body
+                   const TextFieldLayout(),
+                  ///Forgot password
+                  recoveryPassword(),
                   customSpacerHeight(height: 30),
+                  ///Login button
                   Obx(() => _loginButtonLayout()),
                   customSpacerHeight(height: 24),
-                  _guestButtonLayout(),
-                  const Spacer(),
-                  createUserAccount(
-                      context: context,
-                      firstText: "New user? ",
-                      endText: AppString.text_sign_up,
-                      onAction: () => Get.toNamed(Routes.SIGN_UP)),
-                  const Spacer(),
+                  ///For guest button
+                  guestButtonLayout(),
+                  customSpacerHeight(height: 30),
+
+                  ///For new register
+                 _newUserCreate(context),
                   customSpacerHeight(height: 76),
                 ],
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  _recoveryPassword({context}) {
-    return Container(
-      margin: EdgeInsets.only(top: AppLayout.getHeight(12)),
-      child: GestureDetector(
-        onTap: () => Get.toNamed(Routes.FORGOT_PASSWORD),
-        child: Align(
-            alignment: Alignment.bottomRight,
-            child: Text(
-              "Recovery Password",
-              style: AppStyle.normal_text
-                  .copyWith(color: AppColor.hintColor.withOpacity(0.9)),
-            )),
       ),
     );
   }
@@ -88,8 +72,7 @@ class SignInScreen extends StatelessWidget {
             ),
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          Get.find<AuthController>()
-              .logIn(emailController.text, passwordController.text);
+          Get.find<AuthController>().logIn();
           GetStorage().write(AppString.USER_EMAIL, emailController.text);
         }
       },
@@ -98,25 +81,25 @@ class SignInScreen extends StatelessWidget {
     );
   }
 
-  _guestButtonLayout() {
-    return CustomAppButton(
-      widget: Text(
-        "Guest",
-        style: AppStyle.normal_text_black,
-      ),
-      onPressed: () {
-        Get.toNamed(Routes.MAIN);
-      },
-      buttonRadius: Dimensions.radiusDefault,
-      buttonColor: AppColor.hintColor.withOpacity(0.2),
-    );
+  _titleText(context) {
+    return titleTextLayout(
+        titleText: "Sign in\nto your account",
+        subText: "",
+        context: context,
+        subTitleText: "Welcome Back You've Been Missed!");
   }
 
-  _titleTextLayout() {
-    return titleTextLayout(
-        context: Get.context,
-        titleText: "Sign in\nto your account",
-        subTitleText: "Welcome Back You've Been Missed!",
-        subText: "");
+  _newUserCreate(context) {
+    return  createUserAccount(
+        context: context,
+        firstText: "New user? ",
+        endText: AppString.text_sign_up,
+        onAction: (){
+          clearAuthTextField();
+          Get.toNamed(Routes.SIGN_UP);
+        }
+
+
+    );
   }
 }

@@ -3,8 +3,22 @@ import 'package:get_storage/get_storage.dart';
 
 class Api {
   Api._();
-  static String BASE_URL = "https://ellapad.datanapp.com/api";
+  static String BASE_URL = "https://to-let.property.nexgen-labs.xyz/api";
   static String LOG_IN = "/login";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   static String RESISTER = "/register";
   static String FORGOT = "/forget-password";
   static String PROFLE = "/user/profile/";

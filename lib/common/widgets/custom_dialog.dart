@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../models/auth/view/widget/auth_view_widget.dart';
 import '../../utils/app_color.dart';
-import '../../utils/app_layout.dart';
 import '../../utils/app_style.dart';
 import '../../utils/dimensions.dart';
 import 'custom_double_app_button.dart';
 import 'custom_spacer.dart';
+import 'cutom_component/margin_layout.dart';
 
 customDialog(
     {Widget? widget,

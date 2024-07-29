@@ -50,6 +50,7 @@ static String text_enter_email_account_to_reset="Enter your Email Account To Res
 static String text_your_pass="Your Password";
 static String text_email_address="Email Address";
 static String text_enter_email_address="Enter email address";
+static String text_enter_phone_num="Enter phone number";
 static String text_enter_old_password="Enter old password";
 static String text_enter_new_password="Enter new password";
 static String text_enter_confirm_password="Enter new confirm";
@@ -170,8 +171,9 @@ static String text_items="items";
   static  String text_password_alert_text = "The password should contain one upper case, one lower case, numbers, one special character ( +=#?!@\$%^&*- ). It should be a minimum of 8 characters. ";
 
   static const String fieldIsRequired = "Field is required !";
-  static const String the_first_name_field_is_required = "The first name field is required.";
+  static const String the_first_name_field_is_required = "The user name field is required.";
   static const String the_password_field_is_required = "The password field is required.";
+  static const String the__confirm_password_field_is_required = "The confirm password field is required.";
   static const String please_insert_a_valid_email_address = "Please insert a valid email address";
   static const String incorrect_user_or_password = "Incorrect user or password";
   static const String the_details_must_be_at_least_3_character = "The details must be at least 3 characters";
@@ -192,6 +194,7 @@ static String text_items="items";
 
 
   static const String the_email_field_is_required = "The email field is required.";
+  static const String the_phone_field_is_required = "The phone field is required.";
   static const String the_document_field_is_required = "The document name field is required.";
   static const String the_gender_field_is_required = "The gender field is required.";
   static const String enterYourPassword = "Enter your password";

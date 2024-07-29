@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
@@ -8,16 +7,20 @@ import 'package:to_let_mobile_app/models/main/profile/view/widget/post_list_widg
 import '../../../../../common/widgets/custom_dialog.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_layout.dart';
 import '../../../../../utils/app_string.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
 import '../../../home/view/widget/card_style.dart';
 import '../../controller/profile_controller.dart';
 import '../widget/profile_appbar.dart';
+import '../widget/sectionInfoLayout.dart';
+
+
+
 
 class ProfileScreen extends GetView<ProfileController> {
    const ProfileScreen({super.key});
@@ -37,7 +40,7 @@ class ProfileScreen extends GetView<ProfileController> {
           onRefresh: _refreshPage,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               _userInfoLayout(
                 context: context,
                 imgUrl:
@@ -48,9 +51,11 @@ class ProfileScreen extends GetView<ProfileController> {
               customSpacerHeight(height:12 ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: buildCustomTitleText(text: "My posts",isHoldSeeMoreText: true),
+                child: myPostsTitleText(text: "My posts"),
+
               ),
-              Expanded(child: const MyPostsWidget())
+              const Expanded(child: MyPostsWidget())
+
             ],
           ),
         ),

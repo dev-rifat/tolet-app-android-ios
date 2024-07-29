@@ -5,9 +5,12 @@ class CustomInputField extends StatefulWidget {
   final String? hitText;
   final Widget? suffixIcon;
   final double? corneRadius;
+ final bool isHideLabelText;
   final Widget? prefixIcon;
   final Color ?cursorColor;
+ final TextInputType ?textInputType;
   final Color ?borderColor;
+  final Color ?errorBorderColor;
   final TextStyle? hintStyle;
   final InputDecoration? inputDecoration;
   final String? Function(String?)? validator;
@@ -16,10 +19,13 @@ class CustomInputField extends StatefulWidget {
   const CustomInputField({
     super.key,
     required this.controller,
-    this.corneRadius,
+    this.corneRadius=6,
     this.hintStyle,
+    this.errorBorderColor,
     this.borderColor,
+    this.isHideLabelText=false,
     this.cursorColor,
+    this.textInputType=TextInputType.text,
     this.prefixIcon,
     this.suffixIcon,
     this.inputDecoration,
@@ -50,16 +56,47 @@ class _CustomInputFieldState extends State<CustomInputField> {
       controller: widget.controller,
       cursorColor:widget. cursorColor ?? const Color(0xFF3B3B3B),
       validator: widget.validator,
+      keyboardType:  widget.textInputType,
       onChanged: widget.onChanged, // Call onChange callback
       decoration: widget.inputDecoration ?? decoration,
     );
   }
 
   InputDecoration _inputStyle() {
+
+    if(widget.isHideLabelText==true){
+      return InputDecoration(
+        labelStyle: widget.hintStyle ?? const TextStyle(),
+        hintText: widget.hitText,
+
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(widget.corneRadius ?? 12),
+            borderSide:  BorderSide(width: 1, color:widget.borderColor?? Colors.transparent )),
+        focusedBorder: OutlineInputBorder(
+          borderSide:  BorderSide(color:widget.borderColor?? Colors.grey),
+          borderRadius: BorderRadius.circular(widget.corneRadius ?? 12),
+        ),
+        enabledBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: widget.borderColor?? Colors.grey),
+            borderRadius: BorderRadius.circular(widget.corneRadius ?? 12)),
+
+        hintStyle: widget.hintStyle ?? const TextStyle(color: Colors.grey),
+        errorStyle: const TextStyle(
+          color: Colors.red, // Set the color of the error text
+          fontStyle: FontStyle.italic, // Set the style of the error text
+        ),
+        errorBorder:  OutlineInputBorder(
+          borderSide: BorderSide(
+              color:widget.errorBorderColor?? Colors.transparent),),
+
+
+
+      );
+
+    }
     return InputDecoration(
-      //labelText: widget.hitText ?? "Enter input here",
+      labelText: widget.hitText ?? "Enter input here",
       labelStyle: widget.hintStyle ?? const TextStyle(),
-      hintText: widget.hitText,
 
       border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.corneRadius ?? 12),
@@ -73,18 +110,21 @@ class _CustomInputFieldState extends State<CustomInputField> {
           borderRadius: BorderRadius.circular(widget.corneRadius ?? 12)),
 
       hintStyle: widget.hintStyle ?? const TextStyle(color: Colors.grey),
-        errorStyle: const TextStyle(
-          color: Colors.red, // Set the color of the error text
-          fontStyle: FontStyle.italic, // Set the style of the error text
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-              color: Colors.transparent),),
+      errorStyle: const TextStyle(
+        color: Colors.red, // Set the color of the error text
+        fontStyle: FontStyle.italic, // Set the style of the error text
+      ),
+      errorBorder:  OutlineInputBorder(
+        borderSide: BorderSide(
+            color:widget.errorBorderColor?? Colors.transparent),),
 
 
 
     );
+
   }
+
+
 
   InputDecoration _inputStyleForPrefix() {
     return _inputStyle().copyWith(

@@ -3,13 +3,12 @@ import 'package:to_let_mobile_app/utils/app_layout.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
-import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../../../utils/images.dart';
+import '../../../common/widgets/cutom_component/margin_layout.dart';
 import '../home/view/widget/card_style.dart';
 
 class NotificationScreen extends StatelessWidget {
@@ -19,7 +18,6 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      appBar: _notificationAppbar(context),
       body: Padding(
         padding: marginLayout,
         child: SingleChildScrollView(
@@ -42,18 +40,18 @@ class NotificationScreen extends StatelessWidget {
     );
   }
 
-  _notificationAppbar(context) {
-    return appBar(
-        context: context,
-        text: AppString.text_notification.tr,
-        argumentVal: true,
-        iconW: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              CupertinoIcons.delete,
-              color: Theme.of(context).colorScheme.onPrimary,
-            )));
-  }
+  // _notificationAppbar(context) {
+  //   return appBar(
+  //       context: context,
+  //       text: AppString.text_notification.tr,
+  //       argumentVal: true,
+  //       iconW: IconButton(
+  //           onPressed: () {},
+  //           icon: Icon(
+  //             CupertinoIcons.delete,
+  //             color: Theme.of(context).colorScheme.onPrimary,
+  //           )));
+  // }
 
   _recentText(context) {
     return Text(

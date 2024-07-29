@@ -30,12 +30,16 @@ class InputNote extends StatelessWidget {
       keyboardType: TextInputType.multiline,
       controller: controller,
       validator: validator,
+      cursorColor: AppColor.normalTextColor,
+
       decoration: InputDecoration(
           hintText: hintText,
+
+
           hintStyle: AppStyle.normal_text
               .copyWith(color: AppColor.hintColor, fontWeight: FontWeight.w400),
           focusedBorder: OutlineInputBorder(
-              borderSide:  BorderSide(color: AppColor.primaryColor),
+              borderSide:  const BorderSide(color: AppColor.hintColor),
               borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
           enabledBorder: OutlineInputBorder(
               borderSide:  const BorderSide(color: AppColor.hintColor),

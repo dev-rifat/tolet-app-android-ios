@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
-import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
+import '../../../../common/widgets/custom_dialog.dart';
+import '../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../utils/app_string.dart';
 
 class DrawerMenuScreen extends StatelessWidget {
   const DrawerMenuScreen({super.key});
@@ -41,17 +43,7 @@ class DrawerMenuScreen extends StatelessWidget {
             _buildWidget(text: "Help?",icon: CupertinoIcons.headphones,onAction: ()=>Get.toNamed(Routes.MY_POSTS)),
             customSpacerHeight(height: 20),
 
-            SizedBox(
-              width: 80,
-              child: Card(
-                elevation: 0,
-                shape: roundedRectangleBorder.copyWith(side: const BorderSide(width: 1,color: AppColor.errorColor)),
-                color: Colors.red,
-                child: Center(child: Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text("Logout",style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),),
-                )),),
-            ),
+          _logout(),
 
             const Spacer(flex: 2,),
 
@@ -101,4 +93,37 @@ class DrawerMenuScreen extends StatelessWidget {
       ),
     );
   }
+
+  _logout() {
+    return   GestureDetector(
+      onTap: ()=>_logoutDialog(),
+      child: SizedBox(
+        width: 80,
+        child: Card(
+          elevation: 0,
+          shape: roundedRectangleBorder.copyWith(side: const BorderSide(width: 1,color: AppColor.errorColor)),
+          color: Colors.red,
+          child: Center(child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text("Logout",style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),),
+          )),),
+      ),
+    );
+  }
+}
+
+_logoutDialog(){
+   customDialog(
+    context: Get.context!,
+    saveBtnAction: () {
+      Get.offAllNamed(Routes.SIGN_IN);
+    },
+    icon: Icons.logout,
+    titleText: AppString.text_are_you_sure.tr,
+    subText: "${AppString.text_are_you_sure_want_to_exit_from_app.tr.replaceAll("exit", "logout")}.",
+    iconBgColor: AppColor.errorColor,
+    btnBgColor: AppColor.errorColor,
+    btnText: AppString.text_yes.tr,
+    drcText: "",
+  );
 }

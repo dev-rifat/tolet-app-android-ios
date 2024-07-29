@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget { // Changed class name to CustomAppBar
   const CustomAppBar({super.key});

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
@@ -8,12 +7,11 @@ import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
 
 class NearForYou extends StatelessWidget {
-
   const NearForYou({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  SizedBox(
+    return SizedBox(
       height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -23,15 +21,14 @@ class NearForYou extends StatelessWidget {
             child: Stack(
               children: [
                 GestureDetector(
-                  onTap: ()=>Get.toNamed(Routes.VIEW_DETAILS),
-
+                  onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
                   child: SizedBox(
                     width: 230,
                     child: CustomNetworkImage(
                       imgUrl:
-                      'https://www.desmoinesregister.com/gcdn/presto/2023/03/06/PDEM/442d7d79-7525-4f5d-8c0b-e56f3b810e3b-6102_NE_Briarwood_Dr_Ankeny_IA_twilight_028.jpg?crop=1023,576,x0,y94&width=660&height=372&format=pjpg&auto=webp',
+                          'https://www.desmoinesregister.com/gcdn/presto/2023/03/06/PDEM/442d7d79-7525-4f5d-8c0b-e56f3b810e3b-6102_NE_Briarwood_Dr_Ankeny_IA_twilight_028.jpg?crop=1023,576,x0,y94&width=660&height=372&format=pjpg&auto=webp',
                       isRectangleImg: true,
-                      borderRadius: Dimensions.radiusMid+2,
+                      borderRadius: Dimensions.radiusMid + 2,
                     ),
                   ),
                 ),
@@ -52,8 +49,7 @@ class NearForYou extends StatelessWidget {
                             ),
                             Text(
                               "3.5 km",
-                              style: AppStyle.normal_text_black
-                                  .copyWith(
+                              style: AppStyle.normal_text_black.copyWith(
                                   color: AppColor.cardColor,
                                   overflow: TextOverflow.ellipsis),
                             ),
@@ -83,8 +79,7 @@ class NearForYou extends StatelessWidget {
                             ),
                             Text(
                               "California,USA",
-                              style: AppStyle.normal_text_black
-                                  .copyWith(
+                              style: AppStyle.normal_text_black.copyWith(
                                   color: AppColor.cardColor,
                                   overflow: TextOverflow.ellipsis),
                             ),

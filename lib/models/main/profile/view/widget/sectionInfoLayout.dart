@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
+import '../../../../../routes/app_pages.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
+
 
 
 Widget sectionInfoLayout({required IconData ?icon,required text,required onAction,required BuildContext context}){
@@ -23,5 +26,31 @@ Widget sectionInfoLayout({required IconData ?icon,required text,required onActio
         ],
       ),
     ),
+  );
+}
+
+
+
+Widget myPostsTitleText({String? text}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        text ?? "",
+        style: AppStyle.normal_text_grey.copyWith(
+            color: AppColor.normalTextColor, fontSize: Dimensions.fontSizeMid),
+      ),
+        GestureDetector(
+          onTap:()=>Get.toNamed(Routes.MY_POSTS),
+          child: Text(
+            "See more",
+            style: AppStyle.normal_text_grey
+                .copyWith(
+                color: AppColor.primaryColor,
+
+                overflow: TextOverflow.ellipsis),
+          ),
+        ),
+    ],
   );
 }

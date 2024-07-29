@@ -1,12 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-
 import '../../../../../common/controller/input_controller.dart';
 import '../../../../../common/widgets/custom_double_app_button.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
-import '../../../../../common/widgets/custom_text_field.dart';
+import '../../../../../common/widgets/cutom_component/cutom_input_field.dart';
 import '../../../../../common/widgets/input_note.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_layout.dart';
@@ -119,10 +117,19 @@ userTextFieldLayout(
         hintText: AppString.text_bio.tr,
       )
           : CustomInputField(
-        hint: hintText ?? titleText,
+        hitText:  hintText ?? titleText,
         controller: controller,
         validator: validator,
+        errorBorderColor: Colors.red,
+        hintStyle: AppStyle.normal_text_black.copyWith(
+          color: AppColor.hintColor,
+          fontSize: Dimensions.fontSizeDefault+1,
+        ),
+        borderColor: AppColor.hintColor,
+
+
         textInputType: textInputType,
+
       ),
       customSpacerHeight(height: 12),
     ],

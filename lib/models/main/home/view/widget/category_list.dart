@@ -25,7 +25,7 @@ final  List categoryList =["Home","Ded","Home","Test","Home","Home","Ded","Home"
             },
             child: SizedBox(
               child: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+                padding: const EdgeInsets.only(right: 8.0),
                 child: Container(
                   decoration: controller.isSelectCategory.value==index?
                   decoration:BoxDecoration(

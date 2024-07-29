@@ -1,51 +1,28 @@
-import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
-import '../../../../routes/app_pages.dart';
+import 'package:flutter/material.dart';
+import 'package:to_let_mobile_app/models/auth/view/widget/sign_up_text_field_widget.dart';
+import '../../../../common/controller/input_controller.dart';
 import '../../../../utils/app_color.dart';
-import '../../../../utils/app_layout.dart';
-import '../../../../utils/app_string.dart';
-import '../../../../utils/app_style.dart';
-import 'auth_view_widget.dart';
+import '../../../../utils/dimensions.dart';
+import '../../../main/home/view/widget/card_style.dart';
 
- Widget recoveryPassword() {
-  return Container(
-    margin: EdgeInsets.only(top: AppLayout.getHeight(12)),
-    child: GestureDetector(
-      onTap: () => Get.toNamed(Routes.FORGOT_PASSWORD),
-      child: Align(
-          alignment: Alignment.bottomRight,
-          child: Text(
-            "Forgot Password?",
-            style: AppStyle.normal_text
-                .copyWith(color: AppColor.hintColor.withOpacity(0.9)),
-          )),
-    ),
-  );
-}
+class TextFieldLayout extends StatelessWidget {
+  const TextFieldLayout({super.key});
 
-
-
-Widget titleText() {
-  return titleTextLayout(
-      context: Get.context,
-      titleText: "Sign in\nto your account",
-      subTitleText: "Welcome Back You've Been Missed!",
-      subText: "");
-}
-
-Widget guestButtonLayout() {
-  return signInWithGoogle(
-      context: Get.context,
-      text: "Guest",
-      onAction: () {
-        Get.toNamed(Routes.MAIN);
-      });
-}
-
- Widget signupBtnLayout() {
-  return createUserAccount(
-      context: Get.context,
-      firstText: "New user? ",
-      endText: AppString.text_sign_up,
-      onAction: () => Get.toNamed(Routes.SIGN_UP));
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: roundedRectangleBorder.copyWith(
+          borderRadius: BorderRadius.circular(Dimensions.radiusDefault + 2),
+          side: const BorderSide(width: 1, color: AppColor.disableColor)),
+      shadowColor: Colors.grey.withOpacity(0.2),
+      child: Column(
+        children: [
+          userPhoneNumberField(phoneController),
+           divider(),
+          userPasswordField(controller: passwordController),
+        ],
+      ),
+    );
+  }
 }

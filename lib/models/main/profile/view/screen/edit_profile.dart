@@ -4,14 +4,13 @@ import 'package:get/get.dart';
 import '../../../../../common/controller/file_upload_controller.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_layout.dart';
 import '../../../../../utils/app_string.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
 import '../../../home/view/widget/card_style.dart';
-import '../../controller/profile_controller.dart';
 import '../widget/edit_profile_widget.dart';
 
 class EditProfileScreen extends StatelessWidget {

@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
-import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../home/view/widget/category_list.dart';
 import '../widgets/post_list_widget.dart';
 class PropertiesScreen extends StatelessWidget {
@@ -32,9 +31,12 @@ class PropertiesScreen extends StatelessWidget {
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CategoryList(),
+            Padding(
+              padding: const EdgeInsets.only(left: 6.0),
+              child: CategoryList(),
+            ),
             customSpacerHeight(height: 14),
-            const PostListWidget(),
+             PostListWidget(),
             customSpacerHeight(height: 14),
 
           ],

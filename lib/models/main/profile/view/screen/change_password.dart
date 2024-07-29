@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import '../../../../../common/controller/input_controller.dart';
 import '../../../../../common/widgets/custom_double_app_button.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
-import '../../../../../common/widgets/custom_text_field.dart';
+import '../../../../../common/widgets/cutom_component/cutom_input_field.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_string.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
 import '../screen/edit_profile.dart';
 
 class ChangePassword extends StatelessWidget {
@@ -60,7 +60,13 @@ class ChangePassword extends StatelessWidget {
         customSpacerHeight(height: 12),
         CustomInputField(
           controller: currentPassword,
-          hint: "Current password",
+          hitText: "Current password",
+          errorBorderColor: Colors.red,
+          hintStyle: AppStyle.normal_text_black.copyWith(
+            color: AppColor.hintColor,
+            fontSize: Dimensions.fontSizeDefault+1,
+          ),
+          borderColor: AppColor.hintColor,
           validator: (value) {
             if (value!.isEmpty) {
               return "The password field is required!";
@@ -88,7 +94,13 @@ class ChangePassword extends StatelessWidget {
         customSpacerHeight(height: 12),
         CustomInputField(
           controller: newPasswordController,
-          hint: "New password",
+          errorBorderColor: Colors.red,
+          hintStyle: AppStyle.normal_text_black.copyWith(
+            color: AppColor.hintColor,
+            fontSize: Dimensions.fontSizeDefault+1,
+          ),
+          borderColor: AppColor.hintColor,
+          hitText: "New password",
           validator: (value) {
             if (value!.isEmpty) {
               return "The password field is required!";
@@ -116,7 +128,13 @@ class ChangePassword extends StatelessWidget {
         customSpacerHeight(height: 12),
         CustomInputField(
           controller: confirmPassController,
-          hint: "Confirm password",
+          errorBorderColor: Colors.red,
+          hintStyle: AppStyle.normal_text_black.copyWith(
+            color: AppColor.hintColor,
+            fontSize: Dimensions.fontSizeDefault+1,
+          ),
+          borderColor: AppColor.hintColor,
+          hitText: "Confirm password",
           validator: (value) {
             if (value!.isEmpty) {
               return "The password field is required!";

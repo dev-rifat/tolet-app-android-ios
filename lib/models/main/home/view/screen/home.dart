@@ -1,15 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
-import 'package:to_let_mobile_app/models/auth/view/widget/auth_view_widget.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/custom_title_text.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../routes/app_pages.dart';
 import '../widget/app_bar.dart';
 import '../widget/best_for_you.dart';

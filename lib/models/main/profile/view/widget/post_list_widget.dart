@@ -6,7 +6,7 @@ import 'package:to_let_mobile_app/models/main/properties/view/widgets/photo_grid
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
-import '../../../../auth/view/widget/auth_view_widget.dart';
+import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import 'expanded_text_layout.dart';
 
 class MyPostsWidget extends StatelessWidget {

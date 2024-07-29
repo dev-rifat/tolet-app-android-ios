@@ -26,17 +26,28 @@ class CustomNetworkImage extends StatelessWidget {
     return isRectangleImg == true
         ? CachedNetworkImage(
             imageUrl: imgUrl,
-            placeholder: (context, url) => const CupertinoActivityIndicator(),
+            placeholder: (context, url) => Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(borderRadius ?? 0),
+                  image: DecorationImage(
+                    image: AssetImage(errorImg ?? Images.placeholder),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: const Center(child: CupertinoActivityIndicator())),
             errorWidget: (context, url, error) => Container(
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius??0),
-                  image: DecorationImage(
-                      image: AssetImage(errorImg ?? Images.placeholder))),
+                borderRadius: BorderRadius.circular(borderRadius ?? 0),
+                image: DecorationImage(
+                  image: AssetImage(errorImg ?? Images.placeholder),
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                 color: Colors.transparent,
-                borderRadius: BorderRadius.circular(borderRadius??0),
+                borderRadius: BorderRadius.circular(borderRadius ?? 0),
                 image: DecorationImage(
                   image: imageProvider,
                   fit: BoxFit.fill,

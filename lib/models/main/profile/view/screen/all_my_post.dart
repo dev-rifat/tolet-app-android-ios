@@ -1,14 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/models/main/profile/view/widget/post_list_widget.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
-import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../home/controller/home_controller.dart';
-import '../../../home/view/widget/category_list.dart';
-import '../../../properties/view/widgets/post_list_widget.dart';
+
 
 class MyPosts extends GetView<HomeController> {
    const MyPosts({super.key});

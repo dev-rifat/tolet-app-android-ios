@@ -16,25 +16,20 @@ class AuthController extends GetxController with StateMixin {
   final isSignInLoading = false.obs;
   final isSignUpLoading = false.obs;
 
-  Future<void> logIn(email, password) async {
+  Future<void> logIn() async {
     isSignInLoading(true);
+    Map<String, dynamic> signInMapData = {
+      "phone_number": phoneController.text,
+      "password": passwordController.text
+    };
     try {
-      Response response = await NetworkClient().postRequest(Api.LOG_IN, {
-        "email": email,
-        "password": password,
-      });
+      Response response =
+          await NetworkClient().postRequest(Api.LOG_IN, signInMapData);
       if (response.hasError) {
-        logErrorMessage(logName: "login", response: response);
-        showErrorMessage(
-            message: ErrorModel.fromJson(response.body).message ?? "");
+        _error(response, "logIn");
       } else {
         logSuccessMessage(logName: "login", response: response);
-        GetStorage().write(
-            AppString.ACCESS_TOKEN,
-            SignInResponse.fromJson(response.body).data?.accessToken ??
-                "${response.body["token"]}");
-        log("token==> ${GetStorage().read(AppString.ACCESS_TOKEN)}");
-        _routes();
+        _routes(response);
       }
     } catch (e) {
       log(e.toString());
@@ -44,34 +39,23 @@ class AuthController extends GetxController with StateMixin {
 
   Future<void> signUp() async {
     isSignUpLoading(true);
+
+    Map<dynamic, dynamic> signUpMapData = {
+      "name": userNameController.text,
+      "email": emailController.text,
+      "phone_number": phoneController.text,
+      "password": passwordController.text,
+      "password_confirmation": confirmPassController.text
+    };
     try {
-      Response response = await NetworkClient().postRequest(Api.RESISTER, {
-        "first_name": firstNameController.text,
-        "last_name": lastNameController.text,
-        "email": resEmailController.text,
-        "mobile_number": mobileNumController.text,
-        "land_number": landNumController.text,
-        "address": addressController.text,
-        "state": stateController.text,
-        "city": cityController.text,
-        "zip": zipController.text,
-        "password": resPasswordController.text,
-        "confirm_password": confirmPassController.text,
-      });
+      Response response = await NetworkClient().postRequest(Api.RESISTER,signUpMapData);
+      print("signup44 ::: $response");
 
       if (response.hasError) {
-        logErrorMessage(logName: "signup", response: response);
-        showErrorMessage(
-            message: ErrorModel.fromJson(response.body).message ??
-                "The email has already been taken");
+        _error(response, "signup");
       } else {
         logSuccessMessage(logName: "signup", response: response);
-        GetStorage().write(
-            AppString.ACCESS_TOKEN,
-            SignInResponse.fromJson(response.body).data?.accessToken ??
-                "${response.body["token"]}");
-        log("token==> ${GetStorage().read(AppString.ACCESS_TOKEN)}");
-        _routes();
+        _routes(response);
       }
     } catch (e) {
       log(e.toString());
@@ -79,33 +63,61 @@ class AuthController extends GetxController with StateMixin {
     isSignUpLoading(false);
   }
 
-  Future<void> forgot() async {
-    isSignUpLoading(true);
-    try {
-      Response response = await NetworkClient().postRequest(Api.FORGOT, {
-        "email": restPasswordController.text,
-      });
-      if (response.hasError) {
-        logErrorMessage(logName: "forgot", response: response);
-        showErrorMessage(
-            message:
-                ErrorModel.fromJson(response.body).error ?? "Email not found");
-      } else {
-        logSuccessMessage(logName: "forgot", response: response);
 
-        showSuccessMessage(message: "Reset link sent to your email");
 
-        log("forgot==> ${response.body}");
-      }
-    } catch (e) {
-      log(e.toString());
-    }
-    isSignUpLoading(false);
-  }
 
-  void _routes() {
-    if (GetStorage().read(AppString.ACCESS_TOKEN) != null) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  void _routes(Response response) {
+    _storeData();
+    GetStorage()
+        .write(AppString.ACCESS_TOKEN,
+            SignInResponse.fromJson(response.body).token)
+        .then((value) {
       Get.toNamed(Routes.MAIN);
+    });
+  }
+  void _storeData() {
+    GetStorage().write(
+      AppString.USER_EMAIL,
+      emailController.text,
+    );
+    GetStorage().write(
+      AppString.USER_PASSWORD,
+      passwordController.text,
+    );
+  }
+  void _error(Response response, String methodName) {
+    print("$methodName ::: $response");
+
+    logErrorMessage(logName: methodName, response: response);
+    if (methodName == "logIn") {
+      showErrorMessage(
+          message: ErrorModel.fromJson(response.body).message ?? "");
+    } else {
+      showErrorMessage(
+          message: ErrorModel.fromJson(response.body).errorMessage ?? "");
     }
   }
 }

@@ -1,19 +1,20 @@
-import 'package:to_let_mobile_app/common/widgets/custom_app_button.dart';
-import 'package:to_let_mobile_app/common/widgets/custom_onloading.dart';
-import 'package:to_let_mobile_app/common/widgets/custom_text_field.dart';
-import 'package:to_let_mobile_app/models/auth/controller/auth_controller.dart';
-import 'package:to_let_mobile_app/models/auth/view/widget/input_field_widget.dart';
-import 'package:to_let_mobile_app/utils/app_color.dart';
+import 'package:to_let_mobile_app/common/widgets/cutom_component/margin_layout.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../../common/controller/input_controller.dart';
+import '../../../../common/widgets/custom_onloading.dart';
 import '../../../../common/widgets/custom_spacer.dart';
+import '../../../../common/widgets/cutom_component/custom_app_buttom.dart';
 import '../../../../routes/app_pages.dart';
+import '../../../../utils/app_color.dart';
 import '../../../../utils/app_style.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../main/home/view/widget/card_style.dart';
+import '../../controller/auth_controller.dart';
+import '../widget/common_widget.dart';
+import '../widget/sign_up_text_field_widget.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -24,79 +25,54 @@ class SignUpScreen extends StatelessWidget {
     return Form(
       key: _formKey,
       child: Scaffold(
-        appBar: appBar(context: context),
         backgroundColor: Theme.of(context).backgroundColor,
-        body: Container(
+        body: Padding(
           padding: marginLayout,
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                titleTextLayout(
-                    context: context,
-                    titleText: "Create your account",
-                    subTitleText: "Welcome back! Please enter your details",
-                    subText: ""),
-                customSpacerHeight(height: 28),
-                _userNameField(),
-                customSpacerHeight(height: 16),
-                userEmailField(resEmailController),
-                customSpacerHeight(height: 16),
-                userContactField(),
-                customSpacerHeight(height: 16),
-                userAddressField(),
-                customSpacerHeight(height: 16),
-                userStateField(),
-                customSpacerHeight(height: 16),
-                userCityField(),
-                customSpacerHeight(height: 16),
-                userZipCodeField(),
-                customSpacerHeight(height: 16),
-                Obx(() => regUserPasswordField(
-                      context: context,
-                      controller: resPasswordController,
-                    )),
-                customSpacerHeight(height: 8),
-                Card(
-                  elevation: 0,
-                  shape: roundedRectangleBorder,
-                  color: AppColor.primaryOrange.withOpacity(0.08),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      AppString.text_password_alert_text,
-                      style: AppStyle.mid_large_text.copyWith(
-                          color: AppColor.hintColor,
-                          fontSize: Dimensions.fontSizeDefault,
-                          fontWeight: FontWeight.w400),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  customSpacerHeight(height: 30),
+                  _titleText(context),
+                  customSpacerHeight(height: 30),
+                  Card(
+                    elevation: 0,
+                    shape: roundedRectangleBorder.copyWith(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radiusDefault + 2),
+                        side: const BorderSide(
+                            width: 1, color: AppColor.disableColor)),
+                    shadowColor: Colors.grey.withOpacity(0.2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        userNameField(userNameController),
+                        divider(),
+                        userPhoneNumberField(phoneController),
+                        divider(),
+                        userEmailField(emailController),
+                        divider(),
+                        userPasswordField(),
+                        divider(),
+                        userConfirmPasswordField(),
+                      ],
                     ),
                   ),
-                ),
-                customSpacerHeight(height: 16),
-                Obx(() => userConfirmPasswordField(
-                    context: context, controller: confirmPassController)),
-                customSpacerHeight(height: 30),
-                Obx(
-                  () => _signUpButtonLayout(context),
-                ),
-                customSpacerHeight(height: 20),
-                signInWithGoogle(
-                    context: context,
-                    text: "Guest",
-                    onAction: () {
-                      Get.toNamed(Routes.MAIN);
-                    }),
-                customSpacerHeight(height: 12),
-                createUserAccount(
-                    context: context,
-                    firstText: "Already Have Account? ",
-                    endText: "log In",
-                    onAction: () {
-                      Get.toNamed(Routes.SIGN_IN);
-                    }),
-                customSpacerHeight(height: 90),
-              ],
+                  customSpacerHeight(height: 30),
+                  Obx(
+                    () => _signUpButtonLayout(context),
+                  ),
+                  customSpacerHeight(height: 20),
+                  guestButtonLayout(),
+                  customSpacerHeight(height: 30),
+                  _newUserCreate(context),
+                  customSpacerHeight(height: 90),
+                ],
+              ),
             ),
           ),
         ),
@@ -105,61 +81,40 @@ class SignUpScreen extends StatelessWidget {
   }
 
   _signUpButtonLayout(context) {
-    return AppButton(
-      buttonText: "Sign Up",
+    return CustomAppButton(
+      text: "Sign Up",
       widget: Get.find<AuthController>().isSignUpLoading.value
           ? onLoading(color: AppColor.cardColor, isSize: .8)
           : Text(
               "Sign Up",
               style: AppStyle.mid_large_text,
             ),
+      buttonRadius: Dimensions.radiusDefault,
+      buttonColor: AppColor.primaryColor,
       onPressed: () {
         if (_formKey.currentState!.validate()) {
           Get.find<AuthController>().signUp();
-          GetStorage().write(AppString.USER_EMAIL, resEmailController.text);
-          GetStorage().write(AppString.USER_PASSWORD, passwordController.text);
         }
       },
-      isButtonExpanded: false,
-      isUsedButton: true,
     );
   }
 }
 
-_userNameField() {
-  return Row(
-    children: [
-      Expanded(
-        child: AppInputField(
-          title: "First Name *",
-          hint: "Enter first name",
-          controller: firstNameController,
-          isFieldElevationHide: true,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return AppString.text_field_is_requird;
-            } else {
-              return null;
-            }
-          },
-        ),
-      ),
-      customSpacerWidth(width: 12),
-      Expanded(
-        child: AppInputField(
-          title: "Last Name *",
-          hint: "Enter last name",
-          controller: lastNameController,
-          isFieldElevationHide: true,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return AppString.text_field_is_requird;
-            } else {
-              return null;
-            }
-          },
-        ),
-      ),
-    ],
-  );
+_newUserCreate(context) {
+  return createUserAccount(
+      context: context,
+      firstText: "Already have? ",
+      endText: "Sign In",
+      onAction: () {
+        Get.toNamed(Routes.SIGN_IN);
+        clearAuthTextField();
+      });
+}
+
+_titleText(context) {
+  return titleTextLayout(
+      titleText: "Sign up\nto your account",
+      subText: "",
+      context: context,
+      subTitleText: "Welcome Back You've Been Missed!");
 }

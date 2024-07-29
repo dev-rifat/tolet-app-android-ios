@@ -40,7 +40,7 @@ class AppPages {
 
     GetPage(
       name: _Paths.MY_POSTS,
-      page: () =>  MyPosts(),
+      page: () =>  const MyPosts(),
     ),
     GetPage(
       name: _Paths.CAHANGE_PASSWORD,
