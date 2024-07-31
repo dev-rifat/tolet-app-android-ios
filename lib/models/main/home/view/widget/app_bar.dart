@@ -1,52 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
+import '../../controller/home_controller.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget { // Changed class name to CustomAppBar
-  const CustomAppBar({super.key});
-
+   CustomAppBar({super.key});
+    HomeController controller=Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
-      preferredSize: const Size.fromHeight(80.0), // here the desired height
+      preferredSize: const Size.fromHeight(0.0), // here the desired height
       child: AppBar(
         leadingWidth: MediaQuery.of(context).size.width,
-            backgroundColor:Colors.grey.shade100,
+           backgroundColor:Colors.grey.shade100,
         elevation: 0,
         leading: Padding(
-          padding: marginLayout.copyWith(top: 12),  // Assuming marginLayout is defined somewhere in your utils
+          padding: marginLayout.copyWith(top: 5,left: 24),  // Assuming marginLayout is defined somewhere in your utils
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Location",
-                style: AppStyle.normal_text_black.copyWith(color: AppColor.hintColor),
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Dhaka",
-                    style: AppStyle.normal_text_black.copyWith(fontSize: Dimensions.fontSizeMid),
+
+              Obx(() {
+                return DropdownButton<String>(
+                  value: controller.selectedDivision.value,
+                    onChanged: (newValue) {
+                    controller.setSelectedDivision(newValue!);
+                  },
+                  underline: Container(),
+                  hint: const Text("Location"),
+                  style: AppStyle.normal_text_black.copyWith(fontSize: 14),
+                  padding: EdgeInsets.zero,
+
+                  icon:  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Icon(Icons.expand_more,color: AppColor.hintColor,),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(2.0),
-                    child: Icon(
-                      Icons.expand_more,
-                      size: 20,
-                      color: AppColor.hintColor,
-                    ),
-                  ),
-                ],
-              ),
+                  items: controller.divisionItems
+                      .map<DropdownMenuItem<String>>((dynamic value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Row(
+                        children: [
+                           Icon(Icons.location_on,size: 16,color: AppColor.primaryColor,),
+                          customSpacerWidth(width: 8),
+                          Text(value,style: AppStyle.normal_text_black.copyWith(fontSize: 15),),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                );
+              }),
+
             ],
           ),
         ),
         actions: [
           Padding(
-            padding: marginLayout.copyWith(top: 12),
+            padding: marginLayout.copyWith(top: 5),
             child: const Icon(CupertinoIcons.bell),
           ),
         ],
@@ -55,5 +70,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget { // C
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80.0);
+  Size get preferredSize => const Size.fromHeight(64.0);
 }

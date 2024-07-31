@@ -9,6 +9,7 @@ import '../../../../../common/widgets/custom_app_bar.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../home/view/widget/category_list.dart';
+import '../../../main/main.dart';
 import '../widget/add_image.dart';
 import '../widget/gender_widget.dart';
 import '../widget/text_field_widgets.dart';
@@ -32,6 +33,8 @@ class CreatePost extends StatelessWidget {
         padding: marginLayout,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
+          controller: hideButtonController,
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

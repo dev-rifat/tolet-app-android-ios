@@ -10,6 +10,7 @@ import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/custom_title_text.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../routes/app_pages.dart';
+import '../../../main/main.dart';
 import '../widget/app_bar.dart';
 import '../widget/best_for_you.dart';
 import '../widget/category_list.dart';
@@ -21,12 +22,14 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(),
+      appBar:  CustomAppBar(),
       backgroundColor:Colors.grey.shade100,
       body: Padding(
         padding: marginLayout.copyWith(left: 12, right: 12),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
+          controller: hideButtonController,
+
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

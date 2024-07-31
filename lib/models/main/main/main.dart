@@ -1,6 +1,7 @@
+import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
+import 'package:awesome_bottom_bar/widgets/inspired/inspired.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:get/get.dart';
 import 'package:hidable/hidable.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:to_let_mobile_app/models/main/favorite/view/screen/wishlist_screen.dart';
@@ -10,7 +11,8 @@ import 'package:to_let_mobile_app/models/main/profile/view/screen/profile.dart';
 import 'package:to_let_mobile_app/models/main/properties/view/screen/properties.dart';
 import '../../../utils/app_color.dart';
 import '../create_post/view/screen/create_post_screen.dart';
-import '../profile/controller/profile_controller.dart';
+
+ScrollController hideButtonController = ScrollController();
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key, this.routeIndex = 0}) : super(key: key);
@@ -22,48 +24,25 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   late PersistentTabController controller;
-   ScrollController _hideButtonController = ScrollController();
 
+  int visit = 0;
+  double height = 30;
 
-
-  var _isVisible;
   @override
   initState() {
     super.initState();
     controller = PersistentTabController(
       initialIndex: widget.routeIndex ?? 0,
     );
-    _isVisible = true;
-    _hideButtonController = ScrollController();
-    _hideButtonController.addListener(() {
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if(_isVisible) {
-          setState(() {
-            _isVisible = false;
-            print("**** $_isVisible up");
-          });
-        }
-      }
-      if (_hideButtonController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if(!_isVisible) {
-          setState(() {
-            _isVisible = true;
-            print("**** $_isVisible down");
-          });
-        }
-      }
-    });
   }
 
-
-
-  // @override
-  // void dispose() {
-  //   _hideButtonController.dispose();
-  //   super.dispose();
-  // }
+  final List<Widget> _screenListLayout = [
+    const HomeScreen(),
+    const PropertiesScreen(),
+    const CreatePost(),
+    const WishListScreen(),
+    const ProfileScreen()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -73,42 +52,83 @@ class _MainScreenState extends State<MainScreen> {
     return WillPopScope(
         onWillPop: () => appExitChecker,
         child: Scaffold(
-            body: PersistentTabView(
-                context,
-                controller: controller,
-                hideNavigationBar:! _isVisible,
-                screens: _screenListLayout(),
-                items: iconList,
-                backgroundColor: AppColor.backgroundColor,
-                confineInSafeArea: true,
-                decoration: NavBarDecoration(
-                  borderRadius: BorderRadius.circular(1.0),
-                  colorBehindNavBar: Colors.white,
-                ),
-                navBarStyle: NavBarStyle.style15,
-                navBarHeight: 60,
-                hideNavigationBarWhenKeyboardShows: true,
-                onItemSelected: (value) {
-                  print(controller.index == value);
-                },
-              ),
+          // body: PersistentTabView(
+          //     context,
+          //     controller: controller,
+          //     screens: _screenListLayout(),
+          //     items: iconList,
+          //     backgroundColor: AppColor.backgroundColor,
+          //     confineInSafeArea: true,
+          //     decoration: NavBarDecoration(
+          //       borderRadius: BorderRadius.circular(1.0),
+          //       colorBehindNavBar: Colors.white,
+          //     ),
+          //     navBarStyle: NavBarStyle.style15,
+          //     navBarHeight: 55,
+          //     hideNavigationBarWhenKeyboardShows: true,
+          //     onItemSelected: (value) {
+          //       print(controller.index == value);
+          //     },
+          //   ),
+
+          body:_screenListLayout[visit],
 
 
+          bottomNavigationBar: Hidable(
+            controller: hideButtonController,
+            enableOpacityAnimation: true,
+            child: BottomBarCreative(
+              items: items,
+              backgroundSelected: AppColor.primaryColor,
+             paddingVertical: 12,
 
+              backgroundColor: Colors.white,
+              iconSize: 25,
+              color: AppColor.hintColor,
+              colorSelected: AppColor.primaryColor,
+              enableShadow: true,
+              indexSelected: visit,
+              onTap: (int index) => setState(() {
+                visit = index;
+              }),
+            ),
+          ),
         ));
   }
 
   void _initialController() async {
-    Get.put(ProfileController());
+    //  Get.put(ProfileController());
   }
 
-  _screenListLayout() {
-    return [
-      const HomeScreen(),
-      const PropertiesScreen(),
-      const CreatePost(),
-      const WishListScreen(),
-      const ProfileScreen()
-    ];
-  }
-}
+  List<TabItem> items = [
+    TabItem(
+      icon: CupertinoIcons.house_fill,
+    ),
+    TabItem(
+      icon: Icons.hotel,
+    ),
+    TabItem(
+      icon: Icons.add,
+    ),
+    TabItem(
+      icon: Icons.favorite_border,
+    ),
+    TabItem(
+      icon: CupertinoIcons.person_alt_circle,
+    ),
+  ];
+
+//   _screenListLayout() {
+//     return [
+//       const HomeScreen(),
+//       const PropertiesScreen(),
+//       const CreatePost(),
+//       const WishListScreen(),
+//       const ProfileScreen()
+//     ];
+//   }
+
+
+
+ }
+

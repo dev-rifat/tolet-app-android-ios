@@ -7,6 +7,7 @@ import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../main/main.dart';
 import 'expanded_text_layout.dart';
 
 class MyPostsWidget extends StatelessWidget {
@@ -15,35 +16,36 @@ class MyPostsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      controller: hideButtonController,
       itemBuilder: (context, index) {
-      return Card(
-        elevation: 0,
-        shape: roundedRectangleBorder.copyWith(
-            borderRadius: BorderRadius.circular(12)),
-        color: AppColor.cardColor,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ///user profile info only
-              _buildProfileInfo(),
+        return Card(
+          elevation: 0,
+          shape: roundedRectangleBorder.copyWith(
+              borderRadius: BorderRadius.circular(12)),
+          color: AppColor.cardColor,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ///user profile info only
+                _buildProfileInfo(),
 
-              ///House info only
-              _houseInfo(),
-              _descriptionText(),
+                ///House info only
+                _houseInfo(),
+                _descriptionText(),
 
-              customSpacerHeight(height: 14),
+                customSpacerHeight(height: 14),
 
-              ///House img only
-              _houseImage(),
-            ],
+                ///House img only
+                _houseImage(),
+              ],
+            ),
           ),
-        ),
-      );
-    },);
+        );
+      },
+    );
   }
-
 
   _buildProfileInfo() {
     return Column(
@@ -85,15 +87,19 @@ class MyPostsWidget extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            
-          Card(
-             elevation: 0,
-              color: AppColor.pendingColor.withOpacity(0.2),
-
-              child:  Padding(
-                padding: const EdgeInsets.only(left: 8.0,right: 8,bottom: 2,top: 2),
-                child: Text("Pending",style: AppStyle.normal_text_black.copyWith(color: AppColor.pendingColor,overflow: TextOverflow.ellipsis),),
-              )),
+            Card(
+                elevation: 0,
+                color: AppColor.pendingColor.withOpacity(0.2),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 8.0, right: 8, bottom: 2, top: 2),
+                  child: Text(
+                    "Pending",
+                    style: AppStyle.normal_text_black.copyWith(
+                        color: AppColor.pendingColor,
+                        overflow: TextOverflow.ellipsis),
+                  ),
+                )),
           ],
         )
       ],

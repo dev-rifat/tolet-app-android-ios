@@ -8,6 +8,7 @@ import 'package:to_let_mobile_app/utils/app_color.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
+import '../../../main/main.dart';
 import '../../../properties/view/widgets/search_widget.dart';
 
 class WishListScreen extends StatelessWidget {
@@ -23,9 +24,13 @@ class WishListScreen extends StatelessWidget {
           GestureDetector(onTap: () {}, child: const Icon(CupertinoIcons.bell)),
           customSpacerWidth(width: 12),
         ],
-        title: Text(
-          "Properties",
-          style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid),
+        leadingWidth: double.infinity,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 16.0,top: 14),
+          child: Text(
+            "Properties",
+            style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid),
+          ),
         ),
       ),
       body: Padding(
@@ -36,6 +41,8 @@ class WishListScreen extends StatelessWidget {
             customSpacerHeight(height: 14),
             Expanded(
               child: ListView.builder(
+                controller: hideButtonController,
+
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: 50,

@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:to_let_mobile_app/common/widgets/error_message.dart';
-import 'package:to_let_mobile_app/common/widgets/success_message.dart';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:to_let_mobile_app/models/auth/model/signin_model.dart';
 import 'package:to_let_mobile_app/network/network_client.dart';
@@ -49,8 +48,6 @@ class AuthController extends GetxController with StateMixin {
     };
     try {
       Response response = await NetworkClient().postRequest(Api.RESISTER,signUpMapData);
-      print("signup44 ::: $response");
-
       if (response.hasError) {
         _error(response, "signup");
       } else {
@@ -62,31 +59,6 @@ class AuthController extends GetxController with StateMixin {
     }
     isSignUpLoading(false);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   void _routes(Response response) {
@@ -110,7 +82,6 @@ class AuthController extends GetxController with StateMixin {
   }
   void _error(Response response, String methodName) {
     print("$methodName ::: $response");
-
     logErrorMessage(logName: methodName, response: response);
     if (methodName == "logIn") {
       showErrorMessage(

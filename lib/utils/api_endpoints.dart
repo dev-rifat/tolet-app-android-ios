@@ -5,11 +5,7 @@ class Api {
   Api._();
   static String BASE_URL = "https://to-let.property.nexgen-labs.xyz/api";
   static String LOG_IN = "/login";
-
-
-
-
-
+  static String DIVISION_LIST = "/division/list";
 
 
 

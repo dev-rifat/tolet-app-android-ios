@@ -80,33 +80,13 @@ PersistentBottomNavBarItem _navbarIcon(
 _inActiveIcon(text, IconData icon) {
   return SizedBox(
     height: AppLayout.getHeight(25),
-    child: Column(
-      children: [
-        Icon(icon,color: AppColor.hintColor,),
-        customSpacerHeight(height: 2),
-        Text(
-          text,
-          style: AppStyle.mid_large_text
-              .copyWith(fontSize: 10, color: AppColor.hintColor),
-        )
-      ],
-    ),
+    child: Icon(icon,color: AppColor.hintColor,),
   );
 }
 
 _activeIcon(text, IconData icon) {
   return SizedBox(
     height: AppLayout.getHeight(25),
-    child: Column(
-      children: [
-        Icon(icon,color: AppColor.primaryColor,),
-        customSpacerHeight(height: 2),
-        Text(
-          text,
-          style: AppStyle.mid_large_text
-              .copyWith(fontSize: 10, color: AppColor.hintColor),
-        )
-      ],
-    ),
+    child:  Icon(icon,color: AppColor.primaryColor,),
   );
 }
