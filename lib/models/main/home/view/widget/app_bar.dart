@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
+import 'package:to_let_mobile_app/models/main/home/model/division_list_model.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
@@ -27,34 +28,34 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget { // C
 
               Obx(() {
                 return DropdownButton<String>(
-                  value: controller.selectedDivision.value,
-                    onChanged: (newValue) {
+                  value: controller.selectedDivision.value.isNotEmpty ? controller.selectedDivision.value : null,
+                  onChanged: (newValue) {
                     controller.setSelectedDivision(newValue!);
                   },
                   underline: Container(),
                   hint: const Text("Location"),
                   style: AppStyle.normal_text_black.copyWith(fontSize: 14),
                   padding: EdgeInsets.zero,
-
-                  icon:  const Padding(
+                  icon: const Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Icon(Icons.expand_more,color: AppColor.hintColor,),
+                    child: Icon(Icons.expand_more, color: AppColor.hintColor),
                   ),
-                  items: controller.divisionItems
-                      .map<DropdownMenuItem<String>>((dynamic value) {
+                  items: controller.divisionList
+                      .map<DropdownMenuItem<String>>((Data value) {
                     return DropdownMenuItem<String>(
-                      value: value,
+                      value: value.name,
                       child: Row(
                         children: [
-                           Icon(Icons.location_on,size: 16,color: AppColor.primaryColor,),
+                          Icon(Icons.location_on, size: 16, color: AppColor.primaryColor),
                           customSpacerWidth(width: 8),
-                          Text(value,style: AppStyle.normal_text_black.copyWith(fontSize: 15),),
+                          Text(value.name ?? "", style: AppStyle.normal_text_black.copyWith(fontSize: 15)),
                         ],
                       ),
                     );
                   }).toList(),
                 );
-              }),
+              })
+
 
             ],
           ),
