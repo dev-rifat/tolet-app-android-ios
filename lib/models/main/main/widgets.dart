@@ -1,17 +1,18 @@
 import 'dart:io';
+import 'package:awesome_bottom_bar/tab_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import '../../../../utils/app_color.dart';
-import '../../../../utils/app_layout.dart';
 import '../../../../utils/app_string.dart';
 import '../../../common/widgets/custom_dialog.dart';
-import '../../../common/widgets/custom_spacer.dart';
-import '../../../utils/app_style.dart';
+import '../create_post/view/screen/create_post_screen.dart';
+import '../favorite/view/screen/wishlist_screen.dart';
+import '../home/view/screen/home.dart';
+import '../profile/view/screen/profile.dart';
+import '../properties/view/screen/properties.dart';
 
-List<PersistentBottomNavBarItem> get iconList => _navBarsItems();
 Future<bool> get appExitChecker => _onWillPop();
 
 Future<bool> _onWillPop() async {
@@ -34,59 +35,29 @@ Future<bool> _onWillPop() async {
   );
 }
 
-List<PersistentBottomNavBarItem> _navBarsItems() {
-  return [
-    _navbarIcon(
-        activeIcon: CupertinoIcons.house_fill,
-        text: "Home",
-        inActiveIcon: CupertinoIcons.home,),
-    _navbarIcon(
-        activeIcon:Icons.hotel,
-        text: "Properties",
-        inActiveIcon:Icons.hotel_outlined,),
+List<TabItem> items = [
+  const TabItem(
+    icon: CupertinoIcons.house_fill,
+  ),
+  const TabItem(
+    icon: Icons.hotel,
+  ),
+  const TabItem(
+    icon: Icons.add,
+  ),
+  const TabItem(
+    icon: Icons.favorite_border,
+  ),
+  const TabItem(
+    icon: CupertinoIcons.person_alt_circle,
+  ),
+];
 
 
-    PersistentBottomNavBarItem(
-      icon: const Icon(Icons.add,color: AppColor.cardColor,),
-
-      activeColorPrimary: AppColor.primaryColor,
-      inactiveIcon: const Icon(Icons.add,color:  AppColor.cardColor,),
-    ),
-    _navbarIcon(
-      activeIcon:  Icons.favorite,
-      text: "Favorite",
-      inActiveIcon: Icons.favorite_border,),
-    _navbarIcon(
-      activeIcon: CupertinoIcons.person_alt,
-      text: "Profile",
-      inActiveIcon: CupertinoIcons.person,),
-  ];
-}
-
-
-
-PersistentBottomNavBarItem _navbarIcon(
-    {required activeIcon, required String text, inActiveIcon}) {
-
-  return PersistentBottomNavBarItem(
-    icon: _activeIcon(text, activeIcon),
-    inactiveIcon: _inActiveIcon(text, inActiveIcon),
-  );
-}
-
-
-
-
-_inActiveIcon(text, IconData icon) {
-  return SizedBox(
-    height: AppLayout.getHeight(25),
-    child: Icon(icon,color: AppColor.hintColor,),
-  );
-}
-
-_activeIcon(text, IconData icon) {
-  return SizedBox(
-    height: AppLayout.getHeight(25),
-    child:  Icon(icon,color: AppColor.primaryColor,),
-  );
-}
+final List<Widget> screenListLayout = [
+  const HomeScreen(),
+  const PropertiesScreen(),
+  const CreatePost(),
+  const WishListScreen(),
+  const ProfileScreen()
+];
