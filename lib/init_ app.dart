@@ -9,12 +9,27 @@ import 'common/controller/gender_controller.dart';
 import 'common/controller/pick_image_controller.dart';
 import 'models/auth/controller/auth_controller.dart';
 import 'common/controller/file_upload_controller.dart';
+import 'models/main/favorite/hive/hive_object.dart';
 import 'models/main/home/controller/home_controller.dart';
 import 'models/statring/controller/splash_controller.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+
+String wishList="wishlist";
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive and open a box
+  await Hive.initFlutter();
+
+  // Register the adapter for your custom object
+  Hive.registerAdapter(WishlistItemAdapter());
+
+  // Open a box
+  await Hive.openBox<WishlistItem>(wishList);
+
+
   await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

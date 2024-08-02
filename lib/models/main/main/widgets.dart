@@ -58,6 +58,6 @@ final List<Widget> screenListLayout = [
   const HomeScreen(),
   const PropertiesScreen(),
   const CreatePost(),
-  const WishListScreen(),
+   WishListScreen(),
   const ProfileScreen()
 ];

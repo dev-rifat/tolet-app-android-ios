@@ -6,6 +6,7 @@ import 'init_ app.dart';
 
 void main() async {
   await initApp();
+
   runApp( const MyApp());
 }
 

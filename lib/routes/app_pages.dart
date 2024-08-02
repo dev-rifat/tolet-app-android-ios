@@ -35,7 +35,7 @@ class AppPages {
       page: () =>  ProfileScreen(),
     ), GetPage(
       name: _Paths.FAVORITE,
-      page: () => const WishListScreen(),
+      page: () =>  WishListScreen(),
     ),
 
     GetPage(
@@ -56,7 +56,7 @@ class AppPages {
       page: () => const PropertiesScreen(),
     ), GetPage(
       name: _Paths.FAVORITE,
-      page: () => const WishListScreen(),
+      page: () =>  WishListScreen(),
     ),
     GetPage(
       name: _Paths.SIGN_IN,

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
@@ -9,19 +11,31 @@ import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../favorite/controller/wishlist_controller.dart';
+import '../../../favorite/hive/hive_object.dart';
 import '../../../main/main.dart';
 import '../../../profile/view/widget/expanded_text_layout.dart';
 
 class PostListWidget extends StatelessWidget {
-   PostListWidget({super.key});
+  PostListWidget({super.key});
+
+  final WishlistController controller = Get.put(WishlistController());
+  var nameList = [
+    "Rifat Hasan",
+    "Rifat Hasan 2",
+    "Rifat Hasan 3",
+    "Rifat Hasan 4",
+    "Rifat Hasan 5"
+  ];
+  var idList = [1, 2, 3, 4, 5];
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
-       controller: hideButtonController,
-        itemCount: 20,
+        controller: hideButtonController,
+        itemCount: nameList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
@@ -36,7 +50,7 @@ class PostListWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     ///user profile info only
-                    _buildProfileInfo(),
+                    _buildProfileInfo(index),
 
                     ///House info only
                     _houseInfo(),
@@ -56,7 +70,14 @@ class PostListWidget extends StatelessWidget {
     );
   }
 
-  _buildProfileInfo() {
+  _buildProfileInfo(index) {
+    late Box<WishlistItem> wishlistBox;
+    wishlistBox = Hive.box<WishlistItem>('wishlist');
+
+    // Using RxBool to ensure reactivity
+    final exists = RxBool(wishlistBox.values.any((item) => item.id == idList[index]));
+    print("exists :: $exists");
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -66,13 +87,13 @@ class PostListWidget extends StatelessWidget {
               height: 20,
               borderColor: Colors.transparent,
               imgUrl:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",
             ),
             customSpacerWidth(width: 8),
             Column(
               children: [
                 Text(
-                  "Rifat Hasan",
+                  nameList[index],
                   style: AppStyle.small_text_black.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: Dimensions.fontSizeDefault + 1),
@@ -96,15 +117,39 @@ class PostListWidget extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            Icon(
-              Icons.favorite_border,
-              color: AppColor.primaryColor,
-            )
+            Obx(() => GestureDetector(
+              onTap: () {
+                if (exists.value) {
+                  // Remove item from wishlist
+                  controller.deleteItem(idList[index]);
+                } else {
+                  // Add item to wishlist
+                  controller.addItem(
+                      id: idList[index],
+                      name: nameList[index],
+                      description: nameList[index]);
+                }
+
+                // Update exists status
+                exists.value = wishlistBox.values
+                    .any((item) => item.id == idList[index]);
+              },
+              child: exists.value
+                  ? Icon(
+                Icons.favorite,
+                color: AppColor.primaryColor,
+              )
+                  : Icon(
+                Icons.favorite_border,
+                color: AppColor.primaryColor,
+              ),
+            ))
           ],
         )
       ],
     );
   }
+
 
   _descriptionText() {
     var drc =
