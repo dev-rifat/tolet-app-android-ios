@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../utils/api_endpoints.dart';
 import '../../utils/app_color.dart';
 import '../../utils/images.dart';
@@ -32,7 +31,7 @@ class CustomNetworkImage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(borderRadius ?? 0),
                   image: DecorationImage(
                     image: AssetImage(errorImg ?? Images.placeholder),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 child: const Center(child: CupertinoActivityIndicator())),
@@ -41,7 +40,7 @@ class CustomNetworkImage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(borderRadius ?? 0),
                 image: DecorationImage(
                   image: AssetImage(errorImg ?? Images.placeholder),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -74,8 +73,6 @@ class CustomNetworkImage extends StatelessWidget {
                     backgroundColor: AppColor.hintColor.withOpacity(0.5),
 
                       radius: radius,
-                      backgroundImage: AssetImage(errorImg ?? Images.user),
-
                   child: const Icon(Icons.person,color: AppColor.cardColor,),
 
                   ),

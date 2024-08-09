@@ -34,8 +34,11 @@ class WishlistItemAdapter extends TypeAdapter<WishlistItem> {
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.rent)  ..writeByte(3)
-      ..write(obj.bedroom);
+      ..write(obj.rent)
+      ..writeByte(3)
+      ..write(obj.bedroom)
+    ..writeByte(4)
+      ..write(obj.img);
   }
 
   @override

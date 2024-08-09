@@ -18,12 +18,12 @@ class PropertiesController extends GetxController with StateMixin {
 
   PropertiesModel propertiesModel = PropertiesModel();
 
-  Future getProperties() async {
+  Future getProperties({categoryId="0"}) async {
     change(null, status: RxStatus.loading());
 
     try {
       Response response = await NetworkClient().getRequest(
-        Api.PEOPRTIES_lIST,
+        "${Api.PEOPRTIES_lIST}?category_id=$categoryId",
       );
       if (response.hasError) {
         logErrorMessage(logName: "getProperties", response: response);
