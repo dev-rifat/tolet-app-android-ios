@@ -7,6 +7,7 @@ import 'package:to_let_mobile_app/utils/utils.dart';
 import 'package:get/get.dart';
 import '../model/categories_model.dart';
 import '../model/division_list_model.dart' as city;
+import '../model/search_model.dart';
 
 
 class HomeController extends GetxController with StateMixin {
@@ -35,6 +36,7 @@ class HomeController extends GetxController with StateMixin {
   void onInit() {
     getDivisionList();
     getCategory();
+    getSearchList();
 
     super.onInit();
   }
@@ -42,6 +44,7 @@ class HomeController extends GetxController with StateMixin {
   ///Using model for division list
   city.DivisionListModel divisionListModel = city.DivisionListModel();
   CategoriesModel categoriesModel = CategoriesModel();
+  SearchModel searchModel = SearchModel();
 
   Future getDivisionList() async {
     change(null, status: RxStatus.loading());
@@ -88,6 +91,31 @@ class HomeController extends GetxController with StateMixin {
         logSuccessMessage(logName: "getCategory", response: response);
         log("getCategory ==> ${response.body}");
         categoriesModel = CategoriesModel.fromJson(response.body);
+        change(null, status: RxStatus.success());
+
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    change(null, status: RxStatus.success());
+  }
+
+  Future getSearchList({String ?query=""}) async {
+    change(null, status: RxStatus.loading());
+
+    try {
+      Response response = await NetworkClient().getRequest(
+        "${Api.SERCH_POST_lIST}$query",
+      );
+      if (response.hasError) {
+        logErrorMessage(logName: "getSearchList", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getSearchList", response: response);
+        log("getSearchList ==> ${response.body}");
+        searchModel = SearchModel.fromJson(response.body);
         change(null, status: RxStatus.success());
 
       }

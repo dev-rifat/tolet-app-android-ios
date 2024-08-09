@@ -11,7 +11,7 @@ import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
 import '../../../main/main.dart';
-import '../../../properties/view/widgets/search_widget.dart';
+import '../../../properties/view/widgets/search/search_widget.dart';
 import '../../controller/wishlist_controller.dart';
 import '../../hive/hive_object.dart';
 
@@ -43,7 +43,7 @@ class WishListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            const SearchWidget(),
+             _buildSearchLayout(context),
             customSpacerHeight(height: 14),
             Expanded(
               child: ValueListenableBuilder(
@@ -178,4 +178,36 @@ class WishListScreen extends StatelessWidget {
       ),
     );
   }
+}
+_buildSearchLayout(context) {
+  return GestureDetector(
+    onTap: ()=>Get.toNamed(Routes.SEARCH_SCREEN),
+    child: SizedBox(
+      width: double.infinity,
+      child: Card(
+        color: AppColor.hintColor.withOpacity(0.2),
+        shape: roundedRectangleBorder.copyWith(
+            borderRadius: BorderRadius.circular(8)),
+        elevation: 0,
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              const Icon(
+                CupertinoIcons.search,
+                color: AppColor.normalTextColor,
+              ),
+              customSpacerWidth(width: 8),
+              Text(
+                "Search",
+                style: AppStyle.normal_text_black.copyWith(
+                    fontSize: Dimensions.fontSizeDefault + 2,
+                    color: AppColor.normalTextColor),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
 }

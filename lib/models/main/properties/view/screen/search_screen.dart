@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
-import '../widgets/post_list_widget.dart';
-import '../widgets/search_widget.dart';
+import '../../../home/controller/home_controller.dart';
+import '../widgets/search/search_list.dart';
+import '../widgets/search/search_widget.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends GetView<HomeController> {
   const SearchScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,10 @@ class SearchScreen extends StatelessWidget {
         child:  Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SearchWidget(),
-            PostListWidget()
+             SearchWidget(onChanged: (value){
+               controller.getSearchList(query: value);
+             },),
+            SearchListWidget()
           ],
         ),
       ),

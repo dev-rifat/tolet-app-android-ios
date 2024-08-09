@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
-import '../../../../../utils/app_color.dart';
-import '../../../../../utils/dimensions.dart';
-import '../../../home/view/widget/card_style.dart';
+import '../../../../../../utils/app_color.dart';
+import '../../../../../../utils/dimensions.dart';
+import '../../../../home/view/widget/card_style.dart';
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({super.key});
+  final void Function(String)? onChanged; // Added onChange callback
+
+  const SearchWidget({super.key,this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class SearchWidget extends StatelessWidget {
         elevation: 0,
         child: TextField(
           cursorColor: AppColor.normalTextColor,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: "Enter search",
 
