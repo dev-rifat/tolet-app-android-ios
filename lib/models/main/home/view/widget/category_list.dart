@@ -5,20 +5,20 @@ import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 
+import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../controller/home_controller.dart';
 
 class CategoryList extends GetView<HomeController> {
-   CategoryList({super.key});
-
-final  List categoryList =["Home","Ded","Home","Test","Home","Home","Ded","Home","Test","Home"];
-  @override
+   const CategoryList({super.key});
+   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      child: ListView.builder(
+      child: controller.obx((state) => ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: categoryList.length,
+        itemCount: controller.categoriesModel.data?.length??0,
         itemBuilder: (context, index) {
+          var category=controller.categoriesModel.data;
           return Obx(() => GestureDetector(
             onTap: (){
               controller.isSelectCategory.value=index;
@@ -37,11 +37,11 @@ final  List categoryList =["Home","Ded","Home","Test","Home","Home","Ded","Home"
                       child: Padding(
                         padding: const EdgeInsets.only(left: 14.0, right: 14),
                         child: Text(
-                          categoryList[index],
+                          category?[index].name??"",
                           style: AppStyle.normal_text
                               .copyWith(color:controller.isSelectCategory.value==index? AppColor.cardColor:AppColor.primaryColor,
 
-                          fontWeight: FontWeight.w700
+                              fontWeight: FontWeight.w700
                           ),
                         ),
                       )),
@@ -50,7 +50,10 @@ final  List categoryList =["Home","Ded","Home","Test","Home","Home","Ded","Home"
             ),
           ));
         },
+      ),onLoading: const ShimmerListEffect()
+
       ),
+
     );
   }
 }

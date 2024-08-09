@@ -4,22 +4,19 @@ import 'package:get_storage/get_storage.dart';
 class Api {
   Api._();
   static String BASE_URL = "https://to-let.property.nexgen-labs.xyz/api";
+  static String IMGE_KEY = "https://to-let.property.nexgen-labs.xyz/public/property";
   static String LOG_IN = "/login";
-  static String DIVISION_LIST = "/division/list";
-
-
-
-
-
-
-
-
-
   static String RESISTER = "/register";
+
+  static String DIVISION_LIST = "/division/list";
+  static String CATEGORY_LIST = "/category/list";
+  static String PEOPRTIES_lIST = "/property/list";
+
+
+
   static String FORGOT = "/forget-password";
   static String PROFLE = "/user/profile/";
   static String EDIT_ROFIEL = "/user/profile/";
-  static String CATEGORY_LIST = "/categories";
   static String POPULAR_PRODUCT = "/products";
   static String WISH_LIST = "/user/wishlist/";
   static String ADD_tO_WISH_LIST = "/user/wishlist";

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:to_let_mobile_app/common/widgets/warning_message.dart';
+import '../../../../init_ app.dart';
 import '../hive/hive_object.dart';
 
 class WishlistController extends GetxController {
@@ -8,23 +10,26 @@ class WishlistController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    wishlistBox = Hive.box<WishlistItem>('wishlist');
+    wishlistBox = Hive.box<WishlistItem>(wishListTableKey);
   }
 
   void addItem({
     required int id,
     required String name,
-    required String description,
+    required String rent,
+    required String bedroom,
+    required String img,
   }) {
     try {
       // Check if an item with the same id already exists
       final exists = wishlistBox.values.any((item) => item.id == id);
       if (exists) {
         print('Item with id $id already exists in the wishlist');
+        showWarningMessage(message: "Already exists in the wishlist");
         return;
       }
 
-      final item = WishlistItem(id: id, name: name, description: description);
+      final item = WishlistItem(id: id, name: name, rent: rent,bedroom:bedroom ,img: img);
       wishlistBox.add(item);
       update(); // Notify listeners
       print('Item added: ${item.name}');

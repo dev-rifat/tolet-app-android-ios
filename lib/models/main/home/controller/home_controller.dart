@@ -5,6 +5,7 @@ import 'package:to_let_mobile_app/network/network_client.dart';
 import 'package:to_let_mobile_app/utils/api_endpoints.dart';
 import 'package:to_let_mobile_app/utils/utils.dart';
 import 'package:get/get.dart';
+import '../model/categories_model.dart';
 import '../model/division_list_model.dart' as city;
 
 
@@ -33,12 +34,14 @@ class HomeController extends GetxController with StateMixin {
   @override
   void onInit() {
     getDivisionList();
+    getCategory();
 
     super.onInit();
   }
 
   ///Using model for division list
   city.DivisionListModel divisionListModel = city.DivisionListModel();
+  CategoriesModel categoriesModel = CategoriesModel();
 
   Future getDivisionList() async {
     change(null, status: RxStatus.loading());
@@ -68,4 +71,31 @@ class HomeController extends GetxController with StateMixin {
     }
     change(null, status: RxStatus.success());
   }
+
+
+  Future getCategory() async {
+    change(null, status: RxStatus.loading());
+
+    try {
+      Response response = await NetworkClient().getRequest(
+        Api.CATEGORY_LIST,
+      );
+      if (response.hasError) {
+        logErrorMessage(logName: "getCategory", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getCategory", response: response);
+        log("getCategory ==> ${response.body}");
+        categoriesModel = CategoriesModel.fromJson(response.body);
+        change(null, status: RxStatus.success());
+
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    change(null, status: RxStatus.success());
+  }
+
 }

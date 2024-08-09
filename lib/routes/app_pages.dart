@@ -6,7 +6,6 @@ import 'package:to_let_mobile_app/models/main/profile/view/screen/change_passwor
 import 'package:to_let_mobile_app/models/main/profile/view/screen/edit_profile.dart';
 import '../models/main/favorite/view/screen/wishlist_screen.dart';
 import '../models/main/main/drawer_main/drawer_screen.dart';
-import '../models/main/main/main.dart';
 import '../models/main/notification/notification.dart';
 import '../models/main/profile/view/screen/profile.dart';
 import '../models/main/properties/view/screen/properties.dart';

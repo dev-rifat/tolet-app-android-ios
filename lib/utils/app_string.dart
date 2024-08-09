@@ -11,6 +11,13 @@ class AppString {
   static String text_view_profile = "View Profile";
   static String text_use_as_the_shipping_address = "Use as the shipping address";
 
+  static String text_bd_currency="৳";
+
+
+
+
+
+
   static String text_add_to_cart = "Add To Cart";
   static String text_add_new_card = "Add New Card";
   static String text_confirm_oder = "Confirm Oder";

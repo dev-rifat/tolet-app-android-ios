@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import '../../../../../utils/app_color.dart';

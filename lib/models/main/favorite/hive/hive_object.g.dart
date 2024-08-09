@@ -19,7 +19,9 @@ class WishlistItemAdapter extends TypeAdapter<WishlistItem> {
     return WishlistItem(
       id: fields[0] as int,
       name: fields[1] as String,
-      description: fields[2] as String,
+      rent: fields[2] as String,
+      bedroom: fields[3] as String,
+      img: fields[4] as String,
     );
   }
 
@@ -32,7 +34,8 @@ class WishlistItemAdapter extends TypeAdapter<WishlistItem> {
       ..writeByte(1)
       ..write(obj.name)
       ..writeByte(2)
-      ..write(obj.description);
+      ..write(obj.rent)  ..writeByte(3)
+      ..write(obj.bedroom);
   }
 
   @override

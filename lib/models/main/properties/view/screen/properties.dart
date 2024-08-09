@@ -44,8 +44,8 @@ class PropertiesScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            Padding(
-              padding: const EdgeInsets.only(left: 6.0),
+            const Padding(
+              padding: EdgeInsets.only(left: 6.0),
               child: CategoryList(),
             ),
             customSpacerHeight(height: 14),

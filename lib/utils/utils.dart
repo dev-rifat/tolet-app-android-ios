@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:intl/intl.dart';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -86,7 +87,7 @@ final List _onboardDescription = [
 ];
 
 final screensLayoutForBtnNav = <Widget>[
-  HomeScreen(),
+  const HomeScreen(),
    Container(),
    Container(),
    Container(),
@@ -95,4 +96,26 @@ final screensLayoutForBtnNav = <Widget>[
  List<String> _county = ['New York', 'Aurora County', 'Jones County', 'Austin County'];
  List<String> _switchUser = ['USER', 'ADMIN', 'SHOPPER',];
 
+String formatDateTime(String dateWithTime) {
+  var dateTime = DateTime.parse(dateWithTime);
+  DateTime now = DateTime.now();
+  Duration difference = now.difference(dateTime);
 
+  if (difference.isNegative) {
+    return "0 s";  // Handle negative difference by showing "0 s"
+  }
+
+  if (difference.inHours < 12) {
+    // If the difference is less than 12 hours
+    if (difference.inSeconds < 60) {
+      return "Just now";  // Show seconds
+    } else if (difference.inMinutes < 60) {
+      return "${difference.inMinutes} m";  // Show minutes
+    } else {
+      return "${difference.inHours} h";  // Show hours
+    }
+  } else {
+    // If the difference is more than 12 hours
+    return DateFormat('dd MMM yyyy').format(dateTime);
+  }
+}

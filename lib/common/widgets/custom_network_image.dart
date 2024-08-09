@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/api_endpoints.dart';
 import '../../utils/app_color.dart';
 import '../../utils/images.dart';
 
@@ -25,7 +26,7 @@ class CustomNetworkImage extends StatelessWidget {
     var radius = height;
     return isRectangleImg == true
         ? CachedNetworkImage(
-            imageUrl: imgUrl,
+            imageUrl: Api.IMGE_KEY+imgUrl,
             placeholder: (context, url) => Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius ?? 0),
@@ -66,12 +67,18 @@ class CustomNetworkImage extends StatelessWidget {
                 radius: radius,
                 backgroundColor: AppColor.cardColor,
                 child: CachedNetworkImage(
-                  imageUrl: imgUrl,
+                  imageUrl: Api.IMGE_KEY+imgUrl,
                   placeholder: (context, url) =>
                       const CupertinoActivityIndicator(),
                   errorWidget: (context, url, error) => CircleAvatar(
+                    backgroundColor: AppColor.hintColor.withOpacity(0.5),
+
                       radius: radius,
-                      backgroundImage: AssetImage(errorImg ?? Images.user)),
+                      backgroundImage: AssetImage(errorImg ?? Images.user),
+
+                  child: const Icon(Icons.person,color: AppColor.cardColor,),
+
+                  ),
                   imageBuilder: (context, imageProvider) => Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

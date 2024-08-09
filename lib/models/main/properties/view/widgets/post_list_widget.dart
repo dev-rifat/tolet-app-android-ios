@@ -4,69 +4,78 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
+import 'package:to_let_mobile_app/common/widgets/loading_effect/shimmer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/models/main/properties/view/widgets/photo_grid.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
+import 'package:to_let_mobile_app/utils/api_endpoints.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
+import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../utils/utils.dart';
 import '../../../favorite/controller/wishlist_controller.dart';
 import '../../../favorite/hive/hive_object.dart';
 import '../../../main/main.dart';
 import '../../../profile/view/widget/expanded_text_layout.dart';
+import '../../controller/properties_controller.dart';
 
-class PostListWidget extends StatelessWidget {
+class PostListWidget extends GetView<PropertiesController> {
   PostListWidget({super.key});
 
-  final WishlistController controller = Get.put(WishlistController());
-  var nameList = [
-    "Rifat Hasan",
-    "Rifat Hasan 2",
-    "Rifat Hasan 3",
-    "Rifat Hasan 4",
-    "Rifat Hasan 5"
-  ];
-  var idList = [1, 2, 3, 4, 5];
+  final WishlistController wishlistController = Get.put(WishlistController());
+  // var nameList = [
+  //   "Rifat Hasan",
+  //   "Rifat Hasan 2",
+  //   "Rifat Hasan 3",
+  //   "Rifat Hasan 4",
+  //   "Rifat Hasan 5"
+  // ];
+  //var idList = [1, 2, 3, 4, 5];
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        controller: hideButtonController,
-        itemCount: nameList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
-            child: Card(
-              elevation: 0,
-              shape: roundedRectangleBorder.copyWith(
-                  borderRadius: BorderRadius.circular(12)),
-              color: AppColor.cardColor,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ///user profile info only
-                    _buildProfileInfo(index),
+    return controller.obx(
+      (state) => Expanded(
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          controller: hideButtonController,
+          itemCount: controller.propertiesModel.data?.properties?.length,
+          itemBuilder: (context, index) {
+            var data = controller.propertiesModel.data?.properties;
+            return GestureDetector(
+              onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
+              child: Card(
+                elevation: 0,
+                shape: roundedRectangleBorder.copyWith(
+                    borderRadius: BorderRadius.circular(12)),
+                color: AppColor.cardColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///user profile info only
+                      _buildProfileInfo(index),
 
-                    ///House info only
-                    _houseInfo(),
-                    _descriptionText(),
+                      ///House info only
+                      _houseInfo(index),
+                      _descriptionText(index),
 
-                    customSpacerHeight(height: 14),
+                      customSpacerHeight(height: 14),
 
-                    ///House img only
-                    _houseImage(),
-                  ],
+                      ///House img only
+                      _buildHouseImage(index),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
+      onLoading: const ShimmerListEffect(),
     );
   }
 
@@ -75,31 +84,63 @@ class PostListWidget extends StatelessWidget {
     wishlistBox = Hive.box<WishlistItem>('wishlist');
 
     // Using RxBool to ensure reactivity
-    final exists = RxBool(wishlistBox.values.any((item) => item.id == idList[index]));
-    print("exists :: $exists");
+    final exists = RxBool(wishlistBox.values.any((item) =>
+        item.id == controller.propertiesModel.data?.properties?[index].id));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomNetworkImage(
+            CustomNetworkImage(
               height: 20,
               borderColor: Colors.transparent,
-              imgUrl:
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",
+              imgUrl: controller
+                      .propertiesModel.data?.properties?[index].user?.image ??
+                  "",
             ),
             customSpacerWidth(width: 8),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nameList[index],
+                  controller.propertiesModel.data?.properties?[index].user
+                          ?.name ??
+                      "",
                   style: AppStyle.small_text_black.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: Dimensions.fontSizeDefault + 1),
                 ),
                 Row(
                   children: [
+                   formatDateTime(
+                      controller.propertiesModel.data?.properties?[index]
+                          .availableFrom ??
+                          "",
+                    ).endsWith("s") ||formatDateTime(
+                      controller.propertiesModel.data?.properties?[index]
+                          .availableFrom ??
+                          "",
+                    ).endsWith("now")
+
+
+                    ||  formatDateTime(
+                          controller.propertiesModel.data?.properties?[index]
+                              .availableFrom ??
+                              "",
+                        ).endsWith("m")||  formatDateTime(
+                      controller.propertiesModel.data?.properties?[index]
+                          .availableFrom ??
+                          "",
+                    ).endsWith("h")
+
+
+                    ? const Icon(
+                      Icons.access_time_sharp,
+                      size: 13,
+                      color: AppColor.hintColor,
+                    ):
                     const Icon(
                       Icons.calendar_today,
                       size: 12,
@@ -107,7 +148,12 @@ class PostListWidget extends StatelessWidget {
                     ),
                     customSpacerWidth(width: 4),
                     Text(
-                      "6 Apr 2023",
+                      formatDateTime(
+                        controller.propertiesModel.data?.properties?[index]
+                                .availableFrom ??
+                            "",
+                      ),
+
                       style: AppStyle.small_text_black.copyWith(
                           fontSize: Dimensions.fontSizeDefault,
                           color: AppColor.hintColor),
@@ -118,42 +164,59 @@ class PostListWidget extends StatelessWidget {
             ),
             const Spacer(),
             Obx(() => GestureDetector(
-              onTap: () {
-                if (exists.value) {
-                  // Remove item from wishlist
-                  controller.deleteItem(idList[index]);
-                } else {
-                  // Add item to wishlist
-                  controller.addItem(
-                      id: idList[index],
-                      name: nameList[index],
-                      description: nameList[index]);
-                }
+                  onTap: () {
+                    if (exists.value) {
+                      // Remove item from wishlist
+                      wishlistController.deleteItem(controller
+                              .propertiesModel.data?.properties?[index].id ??
+                          0);
+                    } else {
+                      // Add item to wishlist
+                      wishlistController.addItem(
+                          id: controller.propertiesModel.data
+                                  ?.properties?[index].id ??
+                              0,
+                          name: controller.propertiesModel.data
+                                  ?.properties?[index].title ??
+                              "No added yet",
+                          rent: controller.propertiesModel.data
+                                  ?.properties?[index].rent ??
+                              "o",
 
-                // Update exists status
-                exists.value = wishlistBox.values
-                    .any((item) => item.id == idList[index]);
-              },
-              child: exists.value
-                  ? Icon(
-                Icons.favorite,
-                color: AppColor.primaryColor,
-              )
-                  : Icon(
-                Icons.favorite_border,
-                color: AppColor.primaryColor,
-              ),
-            ))
+                        bedroom: controller.propertiesModel.data
+                                  ?.properties?[index].bedroom ??
+                              "0",
+
+                        img: controller.propertiesModel.data
+                                  ?.properties?[index].images?.first.title ??
+                              "0",
+                      );
+                    }
+
+                    // Update exists status
+                    exists.value = wishlistBox.values.any((item) =>
+                        item.id ==
+                        controller.propertiesModel.data?.properties?[index].id);
+                  },
+                  child: exists.value
+                      ? Icon(
+                          Icons.favorite,
+                          color: AppColor.primaryColor,
+                        )
+                      : Icon(
+                          Icons.favorite_border,
+                          color: AppColor.primaryColor,
+                        ),
+                ))
           ],
         )
       ],
     );
   }
 
-
-  _descriptionText() {
+  _descriptionText(index) {
     var drc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+        controller.propertiesModel.data?.properties?[index].description ?? "";
     final wordCount = drc.split(' ').length;
     if (wordCount > 20) {
       return Padding(
@@ -167,27 +230,29 @@ class PostListWidget extends StatelessWidget {
         padding: marginLayout.copyWith(left: 8, right: 4, bottom: 0, top: 0),
         child: Text(
           drc,
-          style: AppStyle.mid_large_text.copyWith(color: AppColor.primaryColor),
+          style: disTextStyle,
         ),
       );
     }
   }
 
-  _houseInfo() {
+  _houseInfo(index) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Orchard House",
+            controller.propertiesModel.data?.properties?[index].title ??
+                "No added yet",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.normalTextColor,
                 fontSize: Dimensions.fontSizeDefault + 1,
                 overflow: TextOverflow.ellipsis),
           ),
           Text(
-            "\$400 / year",
+            "${AppString.text_bd_currency} ${controller.propertiesModel.data?.properties?[index].rent ??
+                "0"}",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.primaryColor,
                 fontSize: Dimensions.fontSizeDefault - 1,
@@ -202,11 +267,41 @@ class PostListWidget extends StatelessWidget {
               ),
               customSpacerWidth(width: 4),
               Text(
-                "6 Bedroom",
+                "${controller.propertiesModel.data?.properties?[index].bedroom ?? "0"} Bedroom",
                 style: AppStyle.normal_text_black.copyWith(
                     color: AppColor.normalTextColor.withOpacity(0.7),
                     fontSize: Dimensions.fontSizeDefault - 1,
                     overflow: TextOverflow.ellipsis),
+              ),
+              _divider(),
+              Icon(
+                Icons.bathtub_outlined,
+                size: 14,
+                color: AppColor.normalTextColor.withOpacity(0.7),
+              ),
+              customSpacerWidth(width: 4),
+              Text(
+                "${controller.propertiesModel.data?.properties?[index].bathroom ?? "0"} Bathroom",
+                style: AppStyle.normal_text_black.copyWith(
+                    color: AppColor.normalTextColor.withOpacity(0.7),
+                    fontSize: Dimensions.fontSizeDefault - 1,
+                    overflow: TextOverflow.ellipsis),
+              ),
+              _divider(),
+              Icon(
+                Icons.door_sliding_outlined,
+                size: 14,
+                color: AppColor.normalTextColor.withOpacity(0.7),
+              ),
+              customSpacerWidth(width: 4),
+              Expanded(
+                child: Text(
+                  "${controller.propertiesModel.data?.properties?[index].veranda ?? "0"} Veranda",
+                  style: AppStyle.normal_text_black.copyWith(
+                      color: AppColor.normalTextColor.withOpacity(0.7),
+                      fontSize: Dimensions.fontSizeDefault - 1,
+                      overflow: TextOverflow.ellipsis),
+                ),
               ),
             ],
           )
@@ -215,22 +310,47 @@ class PostListWidget extends StatelessWidget {
     );
   }
 
-  _houseImage() {
-    var urls = <String>[
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-    ];
+  Widget _buildHouseImage(int index) {
+    // Retrieve the list of images from the properties model
+    final images = controller.propertiesModel.data?.properties?[index].images;
 
+    // Get the first image's title if available
+    final imageUrl =
+        images?.isNotEmpty == true ? images?.first.title ?? "" : "";
+
+    // Construct the full image URL
+    final fullImageUrl = "/$imageUrl";
+
+    // Wrap the URL in a list for PhotoGrid
+    final imageUrls = [fullImageUrl];
+
+    // Return the widget displaying the image
     return SizedBox(
       height: 220,
-      child: PhotoGrid(
-        imageUrls: urls,
-        onImageClicked: (i) {
-          Get.toNamed(Routes.VIEW_DETAILS);
-        },
-        onExpandClicked: () => print('Expand Image was clicked'),
-        maxImages: 2,
+      child: imageUrls.length == 1
+          ? CustomNetworkImage(
+              imgUrl: fullImageUrl,
+              isRectangleImg: true,
+              borderRadius: 4,
+            )
+          : PhotoGrid(
+              imageUrls: imageUrls,
+              onImageClicked: (index) {
+                Get.toNamed(Routes.VIEW_DETAILS);
+              },
+              onExpandClicked: () => print('Expand Image was clicked'),
+              maxImages: 2,
+            ),
+    );
+  }
+
+  _divider() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8),
+      child: Container(
+        width: 1,
+        height: 8,
+        color: AppColor.hintColor,
       ),
     );
   }

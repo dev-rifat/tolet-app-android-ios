@@ -11,7 +11,12 @@ class WishlistItem extends HiveObject {
   final String name;
 
   @HiveField(2)
-  final String description;
+  final String rent;
 
-  WishlistItem({required this.id, required this.name, required this.description});
+  @HiveField(3)
+  final String bedroom;
+  @HiveField(4)
+  final String img;
+
+  WishlistItem({required this.id, required this.name, required this.rent,required this.bedroom,required this.img});
 }

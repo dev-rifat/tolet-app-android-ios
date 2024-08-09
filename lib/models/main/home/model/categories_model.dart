@@ -1,47 +1,50 @@
 class CategoriesModel {
+  String? status;
+  List<Data>? data;
 
-  List<Categories>? categories;
-  CategoriesModel({this.categories});
+  CategoriesModel({this.status, this.data});
 
   CategoriesModel.fromJson(Map<String, dynamic> json) {
-    if (json['categories'] != null) {
-      categories = <Categories>[];
-      json['categories'].forEach((v) {
-        categories!.add(Categories.fromJson(v));
+    status = json['status'];
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (categories != null) {
-      data['categories'] = categories!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Categories {
+class Data {
   int? id;
-  String? categories;
-  String? createdAt;
-  String? updatedAt;
+  String? name;
+  dynamic appIcon;
+  dynamic webIcon;
 
-  Categories({this.id, this.categories, this.createdAt, this.updatedAt});
+  Data({this.id, this.name, this.appIcon, this.webIcon});
 
-  Categories.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    categories = json['categories'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    name = json['name'];
+    appIcon = json['app_icon'];
+    webIcon = json['web_icon'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['categories'] = this.categories;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
+    data['name'] = this.name;
+    data['app_icon'] = this.appIcon;
+    data['web_icon'] = this.webIcon;
     return data;
   }
 }
