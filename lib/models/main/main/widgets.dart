@@ -48,7 +48,7 @@ List<TabItem> items = [
   const TabItem(
     icon: Icons.favorite_border,
   ),
-  const TabItem(
+   const TabItem(
     icon: CupertinoIcons.person_alt_circle,
   ),
 ];

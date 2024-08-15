@@ -60,7 +60,10 @@ class PostListWidget extends GetView<PropertiesController> {
       itemCount: data.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => Get.toNamed(Routes.VIEW_DETAILS),
+          onTap: (){
+            controller.getPropertiesDetails(propertiesId: controller.propertiesModel.data?[index].id??"");
+            Get.toNamed(Routes.VIEW_DETAILS);
+          },
           child: Card(
             elevation: 0,
             shape: roundedRectangleBorder.copyWith(
@@ -221,46 +224,6 @@ class PostListWidget extends GetView<PropertiesController> {
     );
   }
 
-
-
-
-  // _buildHouseImage(int index) {
-  //   // Fetch the first image title or an empty string if none exists
-  //   final imageTitle = controller.propertiesModel.data?[index].images
-  //       ?.where((element) => element.title != null).length?? "";
-  //
-  //   // Build the image URL
-  //   final imgUrl = "https://to-let.property.nexgen-labs.xyz/public/property/$imageTitle";
-  //   print("imgUrl ::: $imageTitle");
-  //
-  //   // Return the image grid
-  //   return SizedBox(
-  //     height: 220,
-  //     child: controller.propertiesModel.data?[index].images?.length==1
-  //         ? CustomNetworkImage(
-  //       imgUrl: imgUrl,
-  //       isRectangleImg: true,
-  //       borderRadius: 4,
-  //     ): PhotoGrid(
-  //       imageUrls: [imgUrl],
-  //       onImageClicked: (i) {
-  //         Get.toNamed(Routes.VIEW_DETAILS);
-  //       },
-  //       onExpandClicked: () => print('Expand Image was clicked'),
-  //       maxImages: 2,
-  //     ),
-  //   );
-  // }
-
-
-
-
-
-
-
-
-
-
   Widget _buildHouseImage(int index) {
     // Fetch the images list for the current index
     final images = controller.propertiesModel.data?[index].images;
@@ -294,17 +257,12 @@ class PostListWidget extends GetView<PropertiesController> {
       )
           : PhotoGrid(
         imageUrls: imageUrls,
-        onImageClicked: (index) {
-          Get.toNamed(Routes.VIEW_DETAILS);
-        },
+        onImageClicked: (index) {},
         onExpandClicked: () => print('Expand Image was clicked'),
         maxImages: 2,
       ),
     );
   }
-
-
-
 
 
 

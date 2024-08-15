@@ -30,7 +30,7 @@ class CustomNetworkImage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius ?? 0),
                   image: DecorationImage(
-                    image: AssetImage(errorImg ?? Images.placeholder),
+                    image: AssetImage(errorImg ?? AppImages.placeholder),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -39,7 +39,7 @@ class CustomNetworkImage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(borderRadius ?? 0),
                 image: DecorationImage(
-                  image: AssetImage(errorImg ?? Images.placeholder),
+                  image: AssetImage(errorImg ?? AppImages.placeholder),
                   fit: BoxFit.cover,
                 ),
               ),

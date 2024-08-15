@@ -51,55 +51,47 @@ class _PhotoGridState extends State<PhotoGrid> {
 
         // If no more are remaining return a simple image widget
         if (remaining == 0) {
-          return GestureDetector(
-              onTap: () => widget.onImageClicked(index),
-              child: CustomNetworkImage(
-                imgUrl: imageUrl,
-                isRectangleImg: true,
-                borderRadius: 4,
-
-              ));
-        } else {
-          // Create the facebook like effect for the last image with number of remaining  images
-          return GestureDetector(
-            onTap: () => widget.onExpandClicked(),
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CustomNetworkImage(
-                  imgUrl: imageUrl,
-                  isRectangleImg: true,
-                  borderRadius: 4,
-                ),
-                Positioned.fill(
-                  child: Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Colors.black54,
-
-                    ),
-                    child: Text(
-                      '+$remaining',
-                      style: TextStyle(
-                          fontSize: 32,
-                          color: AppColor.cardColor.withOpacity(0.8)),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-      } else {
-        return GestureDetector(
-          child: CustomNetworkImage(
+          return CustomNetworkImage(
             imgUrl: imageUrl,
             isRectangleImg: true,
             borderRadius: 4,
 
-          ),
-          onTap: () => widget.onImageClicked(index),
+          );
+        } else {
+          // Create the facebook like effect for the last image with number of remaining  images
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              CustomNetworkImage(
+                imgUrl: imageUrl,
+                isRectangleImg: true,
+                borderRadius: 4,
+              ),
+              Positioned.fill(
+                child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.black54,
+
+                  ),
+                  child: Text(
+                    '+$remaining',
+                    style: TextStyle(
+                        fontSize: 32,
+                        color: AppColor.cardColor.withOpacity(0.8)),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }
+      } else {
+        return CustomNetworkImage(
+          imgUrl: imageUrl,
+          isRectangleImg: true,
+          borderRadius: 4,
+
         );
       }
     });

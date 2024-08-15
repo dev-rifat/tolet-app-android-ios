@@ -4,7 +4,7 @@ import 'package:get_storage/get_storage.dart';
 class Api {
   Api._();
   static String BASE_URL = "https://to-let.property.nexgen-labs.xyz/api";
-  static String IMGE_KEY = "https://to-let.property.nexgen-labs.xyz/public/property";
+  static String IMGE_KEY = "https://to-let.property.nexgen-labs.xyz/public/property/";
   static String LOG_IN = "/login";
   static String RESISTER = "/register";
 
@@ -12,7 +12,7 @@ class Api {
   static String CATEGORY_LIST = "/category/list";
   static String PEOPRTIES_lIST = "/category-property/list";
   static String SERCH_POST_lIST = "/property/search?query=";
-
+  static String PEOPRTIES_DETAILS = "/property/show/";
 
 
 

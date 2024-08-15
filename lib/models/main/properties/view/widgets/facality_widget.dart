@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
+import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_style.dart';
 
 
 class FacilityWidget extends StatelessWidget {
   FacilityWidget({super.key});
-  List value=["Wifi","Gas","Water","Current","Filter","Floor","Tv"];
+final  PropertiesController controller=Get.find<PropertiesController>();
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 40,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: iconList.length,
+        itemCount: controller.propertiesModelDetails.value.data?.facilities?.length??0,
         itemBuilder: (context, index) {
           return Card(
-            color: AppColor.primaryColor,
+            color: AppColor.successColor,
+            elevation: 0,
+
+            shape: roundedRectangleBorder.copyWith(borderRadius: BorderRadius.circular(6)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: iconList[index],
+              child: Text(controller.propertiesModelDetails.value.data?.facilities?[index].title?.toUpperCase()??"",style: AppStyle.normal_text.copyWith(color: AppColor.cardColor),),
             ),
           );
         },),

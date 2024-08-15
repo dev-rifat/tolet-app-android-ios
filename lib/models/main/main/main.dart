@@ -32,6 +32,9 @@ class _MainScreenState extends State<MainScreen> {
         onWillPop: () => appExitChecker,
         child: Scaffold(
           body: screenListLayout[visit],
+
+
+          
           bottomNavigationBar: Hidable(
             controller: hideButtonController,
             enableOpacityAnimation: true,

@@ -77,6 +77,6 @@ class NoInternetScreen extends StatelessWidget {
     return SizedBox(
         height: AppLayout.getHeight(350),
         width: double.infinity,
-        child: Lottie.asset(Images.no_internet));
+        child: Lottie.asset(AppImages.no_internet));
   }
 }

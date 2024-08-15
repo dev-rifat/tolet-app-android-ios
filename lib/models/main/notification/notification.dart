@@ -72,7 +72,7 @@ class NotificationScreen extends StatelessWidget {
           color: Theme.of(context).hintColor.withOpacity(0.1),
           child: Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Image.asset(Images.t_shirt),
+            child: Image.asset(AppImages.t_shirt),
           )),
     );
   }

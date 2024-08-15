@@ -1,8 +1,11 @@
 import 'dart:developer';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:to_let_mobile_app/common/widgets/success_message.dart';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../models/main/home/view/screen/home.dart';
 import 'app_string.dart';
 import 'images.dart';
@@ -55,23 +58,23 @@ List<String> _reviewerName = [
 
 
 final List _banners = [
-  Images.banner_1,
-  Images.banner_2,
-  Images.banner_3,
+  AppImages.banner_1,
+  AppImages.banner_2,
+  AppImages.banner_3,
 ];
 
 List<String> _items=[
-  Images.paymet_cart_1,
-  Images.paymet_cart_1,
+  AppImages.paymet_cart_1,
+  AppImages.paymet_cart_1,
 
 ];
 
 
 
 final List _onboardImage = [
-  Images.getOder,
-  Images.confirm_oder,
-  Images.payment,
+  AppImages.getOder,
+  AppImages.confirm_oder,
+  AppImages.payment,
 ];
 
 final List _onboardTitle = [
@@ -118,4 +121,36 @@ String formatDateTime(String dateWithTime) {
     // If the difference is more than 12 hours
     return DateFormat('dd MMM yyyy').format(dateTime);
   }
+}
+Future<void> launchWhatsApp({required String phoneNumber, String? message}) async {
+  String url = 'https://wa.me/$phoneNumber';
+
+  if (message != null && message.isNotEmpty) {
+    url += '?text=${Uri.encodeComponent(message)}';
+  }
+
+  final Uri uri = Uri.parse(url);
+
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $uri';
+  }
+}
+void makeLocalPhoneCall(String phoneNumber) async {
+  final Uri phoneUri = Uri(
+    scheme: 'tel',
+    path: phoneNumber,
+  );
+
+  if (await canLaunch(phoneUri.toString())) {
+    await launch(phoneUri.toString());
+  } else {
+    throw 'Could not launch $phoneUri';
+  }
+}
+void copyToClipboard(String text) {
+  Clipboard.setData(ClipboardData(text: text)).then((_) {
+    showSuccessMessage(message:"Copied");
+  });
 }

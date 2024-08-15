@@ -1,16 +1,21 @@
 // App Image string here
 
-class Images {
-  Images._();
+class AppImages {
+  AppImages._();
 
   static String error_alert_logo = 'assets/images/error_alert_logo.png';
   static String t_shirt = 'assets/images/t-shirt.png';
-  static String app_icon = 'assets/images/app_icon.png';
-  static String t_shirt_2 = 'assets/images/tshirt_2.png';
-  static String google = 'assets/images/google.png';
-  static String google_map = 'assets/images/google_map.png';
 
-  static String paymet_cart_2 = 'assets/images/payment_card2.png';
+  static String whatApp = 'assets/images/whatapp.png';
+  static String phone = 'assets/images/phone.png';
+
+
+
+
+
+
+
+
   static String paymet_cart_1 = 'assets/images/payment_card.png';
   static String banner_3 = 'assets/images/banner_3.jpg';
   static String banner_2 = 'assets/images/banner_1.jpg';
