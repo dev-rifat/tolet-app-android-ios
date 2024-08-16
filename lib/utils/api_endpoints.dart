@@ -9,6 +9,8 @@ class Api {
   static String RESISTER = "/register";
 
   static String DIVISION_LIST = "/division/list";
+  static String CITY_LIST = "/city/list";
+
   static String CATEGORY_LIST = "/category/list";
   static String PEOPRTIES_lIST = "/category-property/list";
   static String SERCH_POST_lIST = "/property/search?query=";

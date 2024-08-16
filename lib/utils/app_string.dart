@@ -10,10 +10,9 @@ class AppString {
   static const String rememberMe = "Remember me";
   static String text_view_profile = "View Profile";
   static String text_use_as_the_shipping_address = "Use as the shipping address";
-
   static String text_bd_currency="৳";
-
-
+  static const String LATITUDE = "latitude_key";
+  static const String LONGTITUDE = "longitude_key";
 
 
 

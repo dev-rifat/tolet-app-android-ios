@@ -13,7 +13,7 @@ class MultiImagePickerExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 4,
+      height: MediaQuery.of(context).size.height ,
       child: Column(
         children: [
           _warning(),
@@ -38,6 +38,7 @@ class MultiImagePickerExample extends StatelessWidget {
             child: Obx(() {
               return controller.imageFileList.isNotEmpty
                   ? GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'common/controller/location_service_controller.dart';
 import 'models/main/favorite/hive/hive_object.dart';
 import 'models/statring/controller/splash_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -18,6 +19,7 @@ Future<void> initApp() async {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark));
   Get.put(SplashController());
+  Get.put(LocationServiceController());
 }
 
  _initHive() async {

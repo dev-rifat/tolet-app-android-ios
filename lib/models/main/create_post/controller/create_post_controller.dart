@@ -1,4 +1,11 @@
+import 'dart:developer';
 import 'package:get/get.dart';
+import '../../../../common/widgets/error_message.dart';
+import '../../../../network/network_client.dart';
+import '../../../../utils/api_endpoints.dart';
+import '../../../../utils/utils.dart';
+import '../../../auth/model/error_model.dart';
+import '../model/cilty_list_model.dart';
 
 
 
@@ -81,5 +88,44 @@ class CreatePostController extends GetxController with StateMixin {
     selectedDivision.value = value;
   }
 
+  List<CityListData> cityListList = [];
 
+  CityListModel cityListModel = CityListModel();
+
+
+  @override
+  void onInit() {
+    getCityList();
+
+    super.onInit();
+  }
+
+  Future getCityList() async {
+    change(null, status: RxStatus.loading());
+
+    try {
+      Response response = await NetworkClient().getRequest(
+        Api.CITY_LIST,
+      );
+      if (response.hasError) {
+        logErrorMessage(logName: "getCityList", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getCityList", response: response);
+        log("getCityList ==> ${response.body}");
+        change(null, status: RxStatus.success());
+        cityListModel = CityListModel.fromJson(response.body);
+
+        cityListList = cityListModel.data ?? [];
+        if (cityListList.isNotEmpty) {
+          selectedDivision.value = cityListList[0].name ?? "";
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    change(null, status: RxStatus.success());
+  }
 }

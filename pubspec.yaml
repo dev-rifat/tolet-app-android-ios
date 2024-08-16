@@ -62,6 +62,8 @@ dependencies:
   awesome_bottom_bar: ^1.2.4
   shimmer: ^3.0.0
   url_launcher: ^6.3.0
+  geolocator: ^11.0.0
+
 
 dev_dependencies:
   flutter_test:

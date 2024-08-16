@@ -9,10 +9,12 @@ import '../../../../../utils/app_style.dart';
 import '../../../home/view/widget/category_list.dart';
 import '../../../main/main.dart';
 import '../../controller/create_post_controller.dart';
+import '../../model/cilty_list_model.dart';
 import '../widget/add_facility.dart';
 import '../widget/gender_widget.dart';
 import '../widget/multi_image_pikar.dart';
 import '../widget/text_field_widgets.dart';
+
 
 class CreatePost extends StatelessWidget {
   CreatePost({super.key});
@@ -47,7 +49,10 @@ class CreatePost extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               customSpacerHeight(height: 20),
+
               const CategoryList(),
+              customSpacerHeight(height: 20),
+              _cityList(),
               customSpacerHeight(height: 20),
               postTitleTextField(),
               customSpacerHeight(height: 20),
@@ -336,3 +341,58 @@ class CreatePost extends StatelessWidget {
   }
 }
 
+_cityList(){
+  var controller=Get.find<CreatePostController>();
+  return SizedBox(
+
+    child: Card(
+      elevation: 0,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+        side: BorderSide(
+            color: AppColor.hintColor.withOpacity(0.7)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+            left: 12.0, right: 8, bottom: 6, top: 6),
+        child: Obx(() {
+          return DropdownButton<String>(
+            value: controller.selectedDivision.value.isNotEmpty ? controller.selectedDivision.value : null,
+            onChanged: (newValue) {
+              controller.setSelectedDivision(newValue!);
+            },
+            underline: Container(),
+            isExpanded: true,
+            hint: Text(
+              "Select city",
+              style: AppStyle.normal_text_black.copyWith(
+                  color:
+                  AppColor.normalTextColor.withOpacity(0.5),
+                  fontSize: Dimensions.fontSizeDefault + 1),
+            ),
+            style: AppStyle.normal_text_black.copyWith(fontSize: 14),
+            padding: EdgeInsets.zero,
+            icon: const Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Icon(Icons.expand_more, color: AppColor.hintColor),
+            ),
+            items: controller.cityListList
+                .map<DropdownMenuItem<String>>((CityListData value) {
+              return DropdownMenuItem<String>(
+                value: value.name,
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on, size: 16, color: AppColor.primaryColor),
+                    customSpacerWidth(width: 8),
+                    Text(value.name ?? "", style: AppStyle.normal_text_black.copyWith(fontSize: 15)),
+                  ],
+                ),
+              );
+            }).toList(),
+          );
+        }),
+      ),
+    ),
+  );
+}
