@@ -1,7 +1,10 @@
 import 'package:awesome_bottom_bar/awesome_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:hidable/hidable.dart';
+import 'package:to_let_mobile_app/models/main/home/controller/home_controller.dart';
 import 'package:to_let_mobile_app/models/main/main/widgets.dart';
+import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import '../../../utils/app_color.dart';
 
 ScrollController hideButtonController = ScrollController();
@@ -21,6 +24,7 @@ class _MainScreenState extends State<MainScreen> {
   initState() {
     super.initState();
     visit = widget.routeIndex ?? 0;
+
   }
 
   @override
@@ -50,6 +54,11 @@ class _MainScreenState extends State<MainScreen> {
               indexSelected: visit,
               onTap: (int index) => setState(() {
                 visit = index;
+                Get.find<HomeController>().isSelectCategory.value=0;
+                if(index==1){
+                  Get.find<PropertiesController>().getProperties(categoryId: "0");
+                }
+
               }),
             ),
           ),

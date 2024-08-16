@@ -47,7 +47,8 @@ class AuthController extends GetxController with StateMixin {
       "password_confirmation": confirmPassController.text
     };
     try {
-      Response response = await NetworkClient().postRequest(Api.RESISTER,signUpMapData);
+      Response response =
+          await NetworkClient().postRequest(Api.RESISTER, signUpMapData);
       if (response.hasError) {
         _error(response, "signup");
       } else {
@@ -60,16 +61,18 @@ class AuthController extends GetxController with StateMixin {
     isSignUpLoading(false);
   }
 
-
   void _routes(Response response) {
     _storeData();
     GetStorage()
-        .write(AppString.ACCESS_TOKEN,
-            SignInResponse.fromJson(response.body).token)
-        .then((value) {
-      Get.toNamed(Routes.MAIN);
-    });
+      ..write(
+          AppString.ID_STORE, SignInResponse.fromJson(response.body).user?.id)
+      ..write(AppString.ACCESS_TOKEN,
+              SignInResponse.fromJson(response.body).token)
+          .then((value) {
+        Get.toNamed(Routes.MAIN);
+      });
   }
+
   void _storeData() {
     GetStorage().write(
       AppString.USER_EMAIL,
@@ -80,6 +83,7 @@ class AuthController extends GetxController with StateMixin {
       passwordController.text,
     );
   }
+
   void _error(Response response, String methodName) {
     print("$methodName ::: $response");
     logErrorMessage(logName: methodName, response: response);

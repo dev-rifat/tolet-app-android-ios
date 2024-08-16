@@ -24,7 +24,7 @@ final  PropertiesController controller=Get.find<PropertiesController>();
             shape: roundedRectangleBorder.copyWith(borderRadius: BorderRadius.circular(6)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(controller.propertiesModelDetails.value.data?.facilities?[index].title?.toUpperCase()??"",style: AppStyle.normal_text.copyWith(color: AppColor.cardColor),),
+              child: Text(controller.propertiesModelDetails.value.data?.facilities?[index].title?.toUpperCase().replaceAll("\"", "")??"",style: AppStyle.normal_text.copyWith(color: AppColor.cardColor),),
             ),
           );
         },),

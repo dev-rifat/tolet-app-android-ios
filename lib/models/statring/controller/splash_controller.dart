@@ -1,8 +1,8 @@
+import 'package:to_let_mobile_app/models/main/create_post/controller/multi_image_pic_controller.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import '../../../common/controller/county_pickar_controller.dart';
 import '../../../common/controller/date_time_controller.dart';
 import '../../../common/controller/file_upload_controller.dart';
@@ -40,4 +40,5 @@ void intController() {
   Get.put(DateTimeController(), permanent: true);
   Get.put(AuthController(), permanent: true);
   Get.put(PropertiesController(), permanent: true);
+  Get.put(MultiImagePickerController(), permanent: true);
 }

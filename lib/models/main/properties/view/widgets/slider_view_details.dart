@@ -5,6 +5,8 @@ import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import 'package:to_let_mobile_app/utils/api_endpoints.dart';
 
+import '../../../../../common/widgets/image_zoom.dart';
+
 class BuildImageSliderLayout extends GetView<PropertiesController> {
   BuildImageSliderLayout({super.key});
 
@@ -26,12 +28,17 @@ class BuildImageSliderLayout extends GetView<PropertiesController> {
                                 .propertiesModelDetails.value.data?.images?.length ??
                             0,
                         itemBuilder: (context, index) {
-                          return CustomNetworkImage(
-                            isRectangleImg: true,
-                            imgUrl: controller.propertiesModelDetails.value.data
-                                    ?.images?[index].title ??
-                                "",
-                            borderRadius: 20,
+                          return GestureDetector(
+                            onTap: ()=>showImageZoomDialog(context, controller.propertiesModelDetails.value.data
+                                ?.images?[index].title ??
+                                ""),
+                            child: CustomNetworkImage(
+                              isRectangleImg: true,
+                              imgUrl: controller.propertiesModelDetails.value.data
+                                      ?.images?[index].title ??
+                                  "",
+                              borderRadius: 8,
+                            ),
                           );
                         })),
                 Container(

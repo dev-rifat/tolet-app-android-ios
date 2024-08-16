@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:to_let_mobile_app/models/main/create_post/controller/create_post_controller.dart';
 import 'package:to_let_mobile_app/models/main/home/model/categories_model.dart' as cat;
 import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
@@ -32,6 +33,8 @@ class CategoryList extends GetView<HomeController> {
                 Get.find<PropertiesController>().getProperties(
                     categoryId: category.id
                 );
+                Get.find<CreatePostController>().isSelectCategoryId.value=category.id.toString()??"";
+
               },
               child: SizedBox(
                 child: Padding(

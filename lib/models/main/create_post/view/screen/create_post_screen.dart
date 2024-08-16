@@ -15,7 +15,6 @@ import '../widget/gender_widget.dart';
 import '../widget/multi_image_pikar.dart';
 import '../widget/text_field_widgets.dart';
 
-
 class CreatePost extends StatelessWidget {
   CreatePost({super.key});
 
@@ -26,20 +25,7 @@ class CreatePost extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
-      appBar: customAppBar(
-          text: "Create post",
-          prefix: Card(
-              elevation: 0,
-              color: AppColor.primaryColor,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: 12.0, right: 12, top: 4, bottom: 4),
-                child: Text(
-                  "Create",
-                  style:
-                      AppStyle.normal_text.copyWith(color: AppColor.cardColor),
-                ),
-              ))),
+      appBar: _appbar(),
       body: Padding(
         padding: marginLayout,
         child: SingleChildScrollView(
@@ -49,7 +35,6 @@ class CreatePost extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               customSpacerHeight(height: 20),
-
               const CategoryList(),
               customSpacerHeight(height: 20),
               _cityList(),
@@ -73,9 +58,9 @@ class CreatePost extends StatelessWidget {
                         child: Obx(() {
                           return DropdownButton<String>(
                             value:
-                                createPostController.selectedValue.value.isEmpty
+                                createPostController.selectedBedRoomValue.value.isEmpty
                                     ? null
-                                    : createPostController.selectedValue.value,
+                                    : createPostController.selectedBedRoomValue.value,
                             hint: Text(
                               "Bed room",
                               style: AppStyle.normal_text_black.copyWith(
@@ -329,9 +314,8 @@ class CreatePost extends StatelessWidget {
               customSpacerHeight(height: 20),
               descriptionTextField(),
               customSpacerHeight(height: 20),
-
               customSpacerHeight(height: 20),
-               MultiImagePickerExample(),
+              MultiImagePickerExample(),
               customSpacerHeight(height: 200),
             ],
           ),
@@ -339,37 +323,73 @@ class CreatePost extends StatelessWidget {
       ),
     );
   }
+
+  _appbar() {
+    return customAppBar(
+        text: "Create post",
+        prefix: GestureDetector(
+          onTap: () {
+            Get.find<CreatePostController>().createPost();
+          },
+          child: Card(
+              elevation: 0,
+              color: AppColor.primaryColor,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12, top: 4, bottom: 4),
+                child:
+                   Obx(() =>  Get.find<CreatePostController>().isLoadingCreatePost.isTrue
+                       ? const SizedBox(
+                     height: 20,
+                         width: 20,
+                         child: CircularProgressIndicator(
+                                              color: AppColor.cardColor,
+                           strokeWidth: 2,
+                                            ),
+                       )
+                       : Text(
+                     "Create",
+                     style: AppStyle.normal_text
+                         .copyWith(color: AppColor.cardColor),
+                   ),)
+
+              )),
+        ));
+  }
 }
 
-_cityList(){
-  var controller=Get.find<CreatePostController>();
+_cityList() {
+  var controller = Get.find<CreatePostController>();
   return SizedBox(
-
     child: Card(
       elevation: 0,
       color: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-            color: AppColor.hintColor.withOpacity(0.7)),
+        side: BorderSide(color: AppColor.hintColor.withOpacity(0.7)),
       ),
       child: Padding(
-        padding: const EdgeInsets.only(
-            left: 12.0, right: 8, bottom: 6, top: 6),
+        padding: const EdgeInsets.only(left: 12.0, right: 8, bottom: 6, top: 6),
         child: Obx(() {
-          return DropdownButton<String>(
-            value: controller.selectedDivision.value.isNotEmpty ? controller.selectedDivision.value : null,
+          return DropdownButton<CityListData>(
+            value: controller.selectedCity.value.isNotEmpty
+                ? controller.cityListList.firstWhere(
+                    (city) => city.name == controller.selectedCity.value)
+                : null,
             onChanged: (newValue) {
-              controller.setSelectedDivision(newValue!);
+              controller.setSelectedDivision(newValue?.name ?? "");
+              print("City ID: ${newValue?.id}, City Name: ${newValue?.name}");
+              // Use newValue?.id for the API call
+              controller.isSelectedCityId.value = newValue?.id.toString() ?? "";
             },
             underline: Container(),
             isExpanded: true,
             hint: Text(
               "Select city",
               style: AppStyle.normal_text_black.copyWith(
-                  color:
-                  AppColor.normalTextColor.withOpacity(0.5),
-                  fontSize: Dimensions.fontSizeDefault + 1),
+                color: AppColor.normalTextColor.withOpacity(0.5),
+                fontSize: Dimensions.fontSizeDefault + 1,
+              ),
             ),
             style: AppStyle.normal_text_black.copyWith(fontSize: 14),
             padding: EdgeInsets.zero,
@@ -378,14 +398,17 @@ _cityList(){
               child: Icon(Icons.expand_more, color: AppColor.hintColor),
             ),
             items: controller.cityListList
-                .map<DropdownMenuItem<String>>((CityListData value) {
-              return DropdownMenuItem<String>(
-                value: value.name,
+                .map<DropdownMenuItem<CityListData>>((CityListData value) {
+              return DropdownMenuItem<CityListData>(
+                value: value,
                 child: Row(
                   children: [
-                    Icon(Icons.location_on, size: 16, color: AppColor.primaryColor),
+                    Icon(Icons.location_on,
+                        size: 16, color: AppColor.primaryColor),
                     customSpacerWidth(width: 8),
-                    Text(value.name ?? "", style: AppStyle.normal_text_black.copyWith(fontSize: 15)),
+                    Text(value.name ?? "",
+                        style:
+                            AppStyle.normal_text_black.copyWith(fontSize: 15)),
                   ],
                 ),
               );

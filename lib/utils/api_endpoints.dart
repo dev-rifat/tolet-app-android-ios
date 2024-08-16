@@ -15,6 +15,7 @@ class Api {
   static String PEOPRTIES_lIST = "/category-property/list";
   static String SERCH_POST_lIST = "/property/search?query=";
   static String PEOPRTIES_DETAILS = "/property/show/";
+  static String CREATE_POST = "/property/add";
 
 
 

@@ -11,7 +11,6 @@ Widget postTitleTextField() {
   return CustomInputField(
     hitText: "Title",
     controller: postTitleController,
-    textInputType: TextInputType.number,
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
