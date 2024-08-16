@@ -31,7 +31,9 @@ TextEditingController  get verandaController =>_verandaController;
 TextEditingController  get floorNoController =>_floorNoController;
 TextEditingController  get rentController =>_rentController;
 TextEditingController  get additionalPhoneNumberController =>_additionalPhoneNumberController;
+TextEditingController  get whatAppNumberController =>_whatAppNumberController;
 TextEditingController  get descriptionController =>_descriptionController;
+TextEditingController  get addFacilityController =>_addFacilityController;
 
 
 
@@ -74,6 +76,8 @@ TextEditingController  _floorNoController=TextEditingController();
 TextEditingController  _rentController=TextEditingController();
 TextEditingController  _additionalPhoneNumberController=TextEditingController();
 TextEditingController  _descriptionController=TextEditingController();
+TextEditingController  _whatAppNumberController=TextEditingController();
+TextEditingController  _addFacilityController=TextEditingController();
 
 
 

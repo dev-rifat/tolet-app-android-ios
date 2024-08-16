@@ -46,9 +46,10 @@ class InputNote extends StatelessWidget {
               borderRadius: BorderRadius.circular(Dimensions.radiusDefault)),
           border:  const OutlineInputBorder(
               borderSide: BorderSide(color: AppColor.hintColor))),
-      maxLines: 4,
-      maxLength: 150,
-      minLines: 4,
+     maxLines: 4,
+       maxLength: 150,
+       minLines: 4,
+
     );
   }
 }

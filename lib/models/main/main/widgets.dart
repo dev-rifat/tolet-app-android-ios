@@ -57,7 +57,7 @@ List<TabItem> items = [
 final List<Widget> screenListLayout = [
   const HomeScreen(),
   const PropertiesScreen(),
-  const CreatePost(),
+   CreatePost(),
    WishListScreen(),
   const ProfileScreen()
 ];

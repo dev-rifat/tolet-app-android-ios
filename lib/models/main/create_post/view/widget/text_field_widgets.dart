@@ -9,7 +9,7 @@ import '../../../../../utils/dimensions.dart';
 
 Widget postTitleTextField() {
   return CustomInputField(
-    hitText: "Enter post title",
+    hitText: "Title",
     controller: postTitleController,
     textInputType: TextInputType.number,
     hintStyle: AppStyle.normal_text_black.copyWith(
@@ -130,7 +130,30 @@ Widget additionalPhoneNumberTextField({controller}) {
       }
     },
   );
-}Widget descriptionTextField({controller}) {
+}
+
+Widget whatAppNumberTextField({controller}) {
+  return CustomInputField(
+    hitText: "WhatApp number",
+    controller: whatAppNumberController,
+    textInputType: TextInputType.number,
+    hintStyle: AppStyle.normal_text_black.copyWith(
+      color: AppColor.hintColor,
+      fontSize: Dimensions.fontSizeDefault+1,
+    ),
+    validator: (value) {
+      if (value!.isEmpty) {
+        return AppString.text_field_is_requird;
+      } else {
+        return null;
+      }
+    },
+  );
+}
+
+
+
+Widget descriptionTextField({controller}) {
   return InputNote(
     controller: descriptionController,
     hintText: "Description",
@@ -143,5 +166,6 @@ Widget additionalPhoneNumberTextField({controller}) {
     },
   );
 }
+
 
 

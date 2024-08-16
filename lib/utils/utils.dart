@@ -10,33 +10,27 @@ import '../models/main/home/view/screen/home.dart';
 import 'app_string.dart';
 import 'images.dart';
 
+List get list => _items;
 
-List  get list=>_items;
+List get categoryIndex => _categoryList;
 
-List  get categoryIndex=>_categoryList;
+List get bannerIndex => _banners;
+List get onboardImageIndex => _onboardImage;
+List get onboardTitleIndex => _onboardTitle;
+List get onboardDescriptionIndex => _onboardDescription;
 
-List  get bannerIndex=>_banners;
-List  get onboardImageIndex=>_onboardImage;
-List  get onboardTitleIndex=>_onboardTitle;
-List  get onboardDescriptionIndex=>_onboardDescription;
-
-List<String>  get countyList=>_county;
-List<String>  get username=>_reviewerName;
-List<String>  get switchUser=>_switchUser;
-
+List<String> get countyList => _county;
+List<String> get username => _reviewerName;
+List<String> get switchUser => _switchUser;
 
 void logErrorMessage({required String logName, Response? response}) =>
     log("${response?.statusCode} :  ${response?.request?.url.toString()}",
         name: logName, error: ErrorModel.fromJson(response?.body).message);
 
-
-
 void logSuccessMessage(
-    {required String logName, Response? response, String? message}) =>
+        {required String logName, Response? response, String? message}) =>
     log("${response?.statusCode} :  ${response?.request?.url.toString()}",
         name: logName, error: message);
-
-
 
 List _categoryList = [
   "All Category",
@@ -46,8 +40,6 @@ List _categoryList = [
   "Tennis",
 ];
 
-
-
 List<String> _reviewerName = [
   "Tracy Mosby",
   "Cherub",
@@ -56,20 +48,16 @@ List<String> _reviewerName = [
   "TurboSlayer",
 ];
 
-
 final List _banners = [
   AppImages.banner_1,
   AppImages.banner_2,
   AppImages.banner_3,
 ];
 
-List<String> _items=[
+List<String> _items = [
   AppImages.paymet_cart_1,
   AppImages.paymet_cart_1,
-
 ];
-
-
 
 final List _onboardImage = [
   AppImages.getOder,
@@ -91,38 +79,34 @@ final List _onboardDescription = [
 
 final screensLayoutForBtnNav = <Widget>[
   const HomeScreen(),
-   Container(),
-   Container(),
-   Container(),
+  Container(),
+  Container(),
+  Container(),
 ];
 
- List<String> _county = ['New York', 'Aurora County', 'Jones County', 'Austin County'];
- List<String> _switchUser = ['USER', 'ADMIN', 'SHOPPER',];
+List<String> _county = [
+  'New York',
+  'Aurora County',
+  'Jones County',
+  'Austin County'
+];
+List<String> _switchUser = [
+  'USER',
+  'ADMIN',
+  'SHOPPER',
+];
 
 String formatDateTime(String dateWithTime) {
+  if (dateWithTime.isEmpty) {
+    DateTime now = DateTime.now();
+    return DateFormat('dd MMM yyyy').format(now);
+  }
   var dateTime = DateTime.parse(dateWithTime);
-  DateTime now = DateTime.now();
-  Duration difference = now.difference(dateTime);
-
-  if (difference.isNegative) {
-    return "0 s";  // Handle negative difference by showing "0 s"
-  }
-
-  if (difference.inHours < 12) {
-    // If the difference is less than 12 hours
-    if (difference.inSeconds < 60) {
-      return "Just now";  // Show seconds
-    } else if (difference.inMinutes < 60) {
-      return "${difference.inMinutes} m";  // Show minutes
-    } else {
-      return "${difference.inHours} h";  // Show hours
-    }
-  } else {
-    // If the difference is more than 12 hours
-    return DateFormat('dd MMM yyyy').format(dateTime);
-  }
+  return DateFormat('dd MMM yyyy').format(dateTime);
 }
-Future<void> launchWhatsApp({required String phoneNumber, String? message}) async {
+
+Future<void> launchWhatsApp(
+    {required String phoneNumber, String? message}) async {
   String url = 'https://wa.me/$phoneNumber';
 
   if (message != null && message.isNotEmpty) {
@@ -137,6 +121,7 @@ Future<void> launchWhatsApp({required String phoneNumber, String? message}) asyn
     throw 'Could not launch $uri';
   }
 }
+
 void makeLocalPhoneCall(String phoneNumber) async {
   final Uri phoneUri = Uri(
     scheme: 'tel',
@@ -149,8 +134,9 @@ void makeLocalPhoneCall(String phoneNumber) async {
     throw 'Could not launch $phoneUri';
   }
 }
+
 void copyToClipboard(String text) {
   Clipboard.setData(ClipboardData(text: text)).then((_) {
-    showSuccessMessage(message:"Copied");
+    showSuccessMessage(message: "Copied");
   });
 }
