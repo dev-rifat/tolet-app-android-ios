@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:to_let_mobile_app/models/main/create_post/view/screen/no_auth.dart';
 import '../../../../utils/app_color.dart';
 import '../../../../utils/app_string.dart';
 import '../../../common/widgets/custom_dialog.dart';
@@ -48,16 +50,16 @@ List<TabItem> items = [
   const TabItem(
     icon: Icons.favorite_border,
   ),
-   const TabItem(
+  const TabItem(
     icon: CupertinoIcons.person_alt_circle,
   ),
 ];
 
-
 final List<Widget> screenListLayout = [
   const HomeScreen(),
   const PropertiesScreen(),
-   CreatePost(),
-   WishListScreen(),
+
+       CreatePost(),
+  WishListScreen(),
   const ProfileScreen()
 ];

@@ -29,13 +29,6 @@ class AddFacility extends StatelessWidget {
                   color: AppColor.hintColor,
                   fontSize: Dimensions.fontSizeDefault + 1,
                 ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return AppString.text_field_is_requird;
-                  } else {
-                    return null;
-                  }
-                },
               ),
             ),
             customSpacerWidth(width: 12),

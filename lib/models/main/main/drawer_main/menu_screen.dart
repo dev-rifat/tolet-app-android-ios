@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
@@ -117,6 +118,8 @@ _logoutDialog(){
     context: Get.context!,
     saveBtnAction: () {
       Get.offAllNamed(Routes.SIGN_IN);
+      GetStorage().remove(AppString.ACCESS_TOKEN);
+      GetStorage().remove(AppString.ID_STORE);
     },
     icon: Icons.logout,
     titleText: AppString.text_are_you_sure.tr,

@@ -87,7 +87,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
         ),
         errorBorder:  OutlineInputBorder(
           borderSide: BorderSide(
-              color:widget.errorBorderColor?? Colors.transparent),),
+              color:widget.errorBorderColor?? Colors.red),),
 
 
 

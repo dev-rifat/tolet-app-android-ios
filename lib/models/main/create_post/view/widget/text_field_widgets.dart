@@ -15,6 +15,7 @@ Widget postTitleTextField() {
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
     ),
+    errorBorderColor: AppColor.errorColor,
     validator: (value) {
       if (value!.isEmpty) {
         return AppString.text_field_is_requird;
@@ -33,7 +34,8 @@ Widget bedRoomTextField() {
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
-    ),
+    ),    errorBorderColor: AppColor.errorColor,
+
     validator: (value) {
       if (value!.isEmpty) {
         return AppString.text_field_is_requird;
@@ -48,6 +50,8 @@ Widget bathRoomTextField() {
     hitText: "Bath room no.",
     controller: bathRoomController,
     textInputType: TextInputType.number,
+    errorBorderColor: AppColor.errorColor,
+
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
@@ -64,6 +68,8 @@ Widget bathRoomTextField() {
   return CustomInputField(
     hitText: "Veranda no.",
     controller: verandaController,
+    errorBorderColor: AppColor.errorColor,
+
     textInputType: TextInputType.number,
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
@@ -82,6 +88,8 @@ Widget bathRoomTextField() {
     hitText: "Floor no",
     controller: floorNoController,
     textInputType: TextInputType.number,
+    errorBorderColor: AppColor.errorColor,
+
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
@@ -99,6 +107,8 @@ Widget bathRoomTextField() {
     hitText: "Rent.",
     controller: rentController,
     textInputType: TextInputType.number,
+    errorBorderColor: AppColor.errorColor,
+
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
@@ -117,6 +127,8 @@ Widget additionalPhoneNumberTextField({controller}) {
     hitText: "Additional phone number",
     controller: additionalPhoneNumberController,
     textInputType: TextInputType.number,
+    errorBorderColor: AppColor.errorColor,
+
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
@@ -136,6 +148,8 @@ Widget whatAppNumberTextField({controller}) {
     hitText: "WhatApp number",
     controller: whatAppNumberController,
     textInputType: TextInputType.number,
+    errorBorderColor: AppColor.errorColor,
+
     hintStyle: AppStyle.normal_text_black.copyWith(
       color: AppColor.hintColor,
       fontSize: Dimensions.fontSizeDefault+1,
@@ -156,6 +170,7 @@ Widget descriptionTextField({controller}) {
   return InputNote(
     controller: descriptionController,
     hintText: "Description",
+
     validator: (value) {
       if (value!.isEmpty) {
         return AppString.text_field_is_requird;

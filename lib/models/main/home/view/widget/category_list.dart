@@ -34,6 +34,7 @@ class CategoryList extends GetView<HomeController> {
                     categoryId: category.id
                 );
                 Get.find<CreatePostController>().isSelectCategoryId.value=category.id.toString()??"";
+                Get.find<CreatePostController>().isSelectCategoryName.value=category.name.toString()??"";
 
               },
               child: SizedBox(

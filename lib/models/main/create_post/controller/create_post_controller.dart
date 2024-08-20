@@ -17,11 +17,12 @@ class CreatePostController extends GetxController with StateMixin {
   final isSelectCategory = 0.obs;
   final isSelectGender = 0.obs;
   final isSelectFilter = 0.obs;
-  final isSelectCategoryId = "".obs;
+  final isSelectCategoryId = "1".obs;
+  final isSelectCategoryName = "".obs;
   final isSelectedCityId = "".obs;
   final isLoadingCreatePost = false.obs;
 
-  var selectedBedRoomValue = "".obs;
+  var selectedBedRoomValue = "02".obs;
   List<String> items = [
     '01',
     '02',
@@ -31,7 +32,7 @@ class CreatePostController extends GetxController with StateMixin {
     "06",
   ];
 
-  var selectedBathRoomValue = ''.obs;
+  var selectedBathRoomValue = '02'.obs;
 
   List<String> bathRoomItems = [
     '01',
@@ -42,7 +43,7 @@ class CreatePostController extends GetxController with StateMixin {
     "06",
   ];
 
-  var selectedVarandaValue = ''.obs;
+  var selectedVarandaValue = '02'.obs;
 
   List<String> varandItems = [
     '01',
@@ -53,7 +54,7 @@ class CreatePostController extends GetxController with StateMixin {
     "06",
   ];
 
-  var selectedFloorValue = ''.obs;
+  var selectedFloorValue = '02'.obs;
 
   List<String> floorItems = [
     '01',
@@ -119,6 +120,7 @@ class CreatePostController extends GetxController with StateMixin {
         cityListList = cityListModel.data ?? [];
         if (cityListList.isNotEmpty) {
           selectedCity.value = cityListList[0].name ?? "";
+          isSelectedCityId.value = cityListList[0].id.toString() ?? "";
         }
       }
     } catch (e) {
@@ -129,6 +131,12 @@ class CreatePostController extends GetxController with StateMixin {
   }
 
   Future<void> createPost() async {
+    DateTime outputDate = DateTime.now();
+
+    // Format the DateTime object to a string
+    String formattedDate = '${outputDate.year}-${outputDate.month.toString().padLeft(2, '0')}-${outputDate.day.toString().padLeft(2, '0')}';
+   print(formattedDate);
+
     isLoadingCreatePost(true);
     var uri = Uri.parse(Api.BASE_URL + Api.CREATE_POST);
 
@@ -155,7 +163,7 @@ class CreatePostController extends GetxController with StateMixin {
 
       request.fields['gender'] = isSelectGender.value == 0 ? "Male" : "Female";
       request.fields['rent'] = rentController.text;
-      request.fields['available_from'] = "2023-04-12";
+      request.fields['available_from'] = formattedDate;
       request.fields['additional_phone_number'] =
           additionalPhoneNumberController.text;
       request.fields['description'] = descriptionController.text;
@@ -203,10 +211,11 @@ class CreatePostController extends GetxController with StateMixin {
   }
 
   void _clearData() {
-    selectedBedRoomValue.value = "";
-    selectedBathRoomValue.value = "";
-    selectedVarandaValue.value = "";
-    selectedFloorValue.value = "";
+    Get.find<MultiImagePickerController>().imageFileList.value=[];
+    selectedBedRoomValue.value = "02";
+    selectedBathRoomValue.value = "02";
+    selectedVarandaValue.value = "02";
+    selectedFloorValue.value = "02";
     rentController.clear();
     postTitleController.clear();
     additionalPhoneNumberController.clear();
@@ -214,7 +223,8 @@ class CreatePostController extends GetxController with StateMixin {
     whatAppNumberController.clear();
     rentController.clear();
     facilityList.value = [];
-    isSelectCategoryId.value = "";
+    isSelectCategoryId.value = "1";
     isSelectedCityId.value = "";
+    getCityList();
   }
 }
