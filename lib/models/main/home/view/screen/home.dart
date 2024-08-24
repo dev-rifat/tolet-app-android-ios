@@ -35,9 +35,6 @@ class HomeScreen extends StatelessWidget {
             children: [
               ///Search layout
               _buildSearchLayout(context),
-              customSpacerHeight(height: 18),
-
-               const CategoryList(),
 
               customSpacerHeight(height: 22),
 

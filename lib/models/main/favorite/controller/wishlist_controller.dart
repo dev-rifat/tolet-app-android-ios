@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:to_let_mobile_app/common/widgets/warning_message.dart';
+import '../../../../common/widgets/success_message.dart';
 import '../../../../init_ app.dart';
 import '../hive/hive_object.dart';
 
@@ -33,6 +34,7 @@ class WishlistController extends GetxController {
       wishlistBox.add(item);
       update(); // Notify listeners
       print('Item added: ${item.name}');
+      showSuccessMessage(message: "Wishlist Added Successfully");
     } catch (e) {
       print('Error adding item: $e');
     }
@@ -45,6 +47,8 @@ class WishlistController extends GetxController {
         wishlistBox.deleteAt(index);
         update(); // Notify listeners
         print('Item deleted with id: $id');
+        showSuccessMessage(message: "Wishlist Remove Successfully");
+
       } else {
         print('Item with id $id not found');
       }

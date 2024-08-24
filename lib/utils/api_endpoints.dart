@@ -10,6 +10,7 @@ class Api {
 
   static String DIVISION_LIST = "/division/list";
   static String CITY_LIST = "/city/list";
+  static String DISTRICT_LIST = "/district/list";
 
   static String CATEGORY_LIST = "/category/list";
   static String PEOPRTIES_lIST = "/category-property/list";

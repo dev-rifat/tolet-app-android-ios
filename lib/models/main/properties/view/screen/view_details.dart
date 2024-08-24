@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
+import 'package:to_let_mobile_app/models/main/home/model/search_model.dart';
 import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/images.dart';
@@ -31,8 +33,7 @@ class ViewDetails extends GetView<PropertiesController> {
       ),
       body: controller.obx(
           (state) => SingleChildScrollView(
-
-            child: Column(
+                child: Column(
                   children: [
                     BuildImageSliderLayout(),
                     Padding(
@@ -47,9 +48,10 @@ class ViewDetails extends GetView<PropertiesController> {
                             sizedBox(17),
                             _facilities(),
                             sizedBox(12),
-            
                             _bedRoomWithBathRoom(),
                             _varandaWithFloor(),
+                            sizedBox(12),
+                            _contactWithWhatApp(),
                             sizedBox(12),
                             _description(),
                             sizedBox(280),
@@ -59,7 +61,7 @@ class ViewDetails extends GetView<PropertiesController> {
                     ),
                   ],
                 ),
-          ),
+              ),
           onLoading: Center(
               child: CircularProgressIndicator(
             color: AppColor.primaryColor,
@@ -89,8 +91,8 @@ class ViewDetails extends GetView<PropertiesController> {
         Text(
           "Address",
           maxLines: 3,
-          style: AppStyle.normal_text_grey
-              .copyWith(color: AppColor.normalTextColor, fontSize: 14,letterSpacing: 2),
+          style: AppStyle.normal_text_grey.copyWith(
+              color: AppColor.normalTextColor, fontSize: 14, letterSpacing: 2),
         ),
         _buildCustomWidget(
             icon: Icons.location_on_outlined,
@@ -172,8 +174,8 @@ class ViewDetails extends GetView<PropertiesController> {
         Text(
           "Facilities",
           maxLines: 3,
-          style: AppStyle.normal_text_grey
-              .copyWith(color: AppColor.normalTextColor, fontSize: 14,letterSpacing: 2),
+          style: AppStyle.normal_text_grey.copyWith(
+              color: AppColor.normalTextColor, fontSize: 14, letterSpacing: 2),
         ),
         sizedBox(2),
         FacilityWidget(),
@@ -230,7 +232,7 @@ class ViewDetails extends GetView<PropertiesController> {
                       ),
                       _rentContact(AppImages.phone, () {
                         makeLocalPhoneCall(controller.propertiesModelDetails
-                                .value.data?.additionalPhoneNumber ??
+                                .value.data?.whatsappNumber ??
                             "");
                       },
                           controller.propertiesModelDetails.value.data
@@ -247,57 +249,136 @@ class ViewDetails extends GetView<PropertiesController> {
     );
   }
 
-
-_bedRoomWithBathRoom(){
+  _bedRoomWithBathRoom() {
     return Row(
       children: [
-        _badRoomAndOther(icon: Icons.bed_outlined,staticText: "Bed room",dynamicText: controller.propertiesModelDetails.value.data?.bedroom??""),
+        _badRoomAndOther(
+            icon: Icons.bed_outlined,
+            staticText: "Bed room",
+            dynamicText:
+                controller.propertiesModelDetails.value.data?.bedroom ?? ""),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(width: 1,height: 10,color: AppColor.hintColor,),
+          child: Container(
+            width: 1,
+            height: 10,
+            color: AppColor.hintColor,
+          ),
         ),
-        _badRoomAndOther(icon: Icons.shower_outlined,staticText: "Bath room",dynamicText: controller.propertiesModelDetails.value.data?.bathroom??"")
+        _badRoomAndOther(
+            icon: Icons.shower_outlined,
+            staticText: "Bath room",
+            dynamicText:
+                controller.propertiesModelDetails.value.data?.bathroom ?? "")
       ],
     );
-}
-_varandaWithFloor(){
+  }
+
+  _varandaWithFloor() {
     return Row(
       children: [
-        _badRoomAndOther(icon: Icons.wind_power_sharp,staticText: "Vranda",dynamicText: controller.propertiesModelDetails.value.data?.veranda??""),
+        _badRoomAndOther(
+            icon: Icons.wind_power_sharp,
+            staticText: "Vranda",
+            dynamicText:
+                controller.propertiesModelDetails.value.data?.veranda ?? ""),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(width: 1,height: 10,color: AppColor.hintColor,),
+          child: Container(
+            width: 1,
+            height: 10,
+            color: AppColor.hintColor,
+          ),
         ),
-        _badRoomAndOther(icon: Icons.maps_home_work_outlined,staticText: "Floor",dynamicText: controller.propertiesModelDetails.value.data?.floorNo??"")
+        _badRoomAndOther(
+            icon: Icons.maps_home_work_outlined,
+            staticText: "Floor",
+            dynamicText:
+                controller.propertiesModelDetails.value.data?.floorNo ?? "")
       ],
     );
-}
+  }
 
-  _badRoomAndOther({IconData?icon,String? staticText,String ?dynamicText}) {
+  _badRoomAndOther({IconData? icon, String? staticText, String? dynamicText}) {
     return Row(
       children: [
         Row(
           children: [
-             Icon(
+            Icon(
               icon,
               color: AppColor.hintColor,
               size: 16,
             ),
             customSpacerWidth(width: 4),
-            Text("$staticText",style: AppStyle.normal_text_grey.copyWith(color: AppColor.normalTextColor,fontStyle: FontStyle.italic),)
-
+            Text(
+              "$staticText",
+              style: AppStyle.normal_text_grey
+                  .copyWith(color: AppColor.normalTextColor.withOpacity(0.8)),
+            )
           ],
         ),
         customSpacerWidth(width: 4),
-        Text("- $dynamicText",style: AppStyle.normal_text_grey.copyWith(color: AppColor.primaryColor),),
-
+        Text(
+          "- ${dynamicText == "0" ? "None" : dynamicText}",
+          style:
+              AppStyle.normal_text_grey.copyWith(color: AppColor.primaryColor),
+        ),
       ],
     );
   }
 
+  _contactWithWhatApp() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Text(
+              "Contact with WhatApp",
+              maxLines: 3,
+              style: AppStyle.normal_text.copyWith(
+                  color: AppColor.successColor, fontSize: 14, letterSpacing: 2),
+            ),
+            customSpacerWidth(width: 8),
 
-
-
+            GestureDetector(
+                onTap: () {
+                  copyToClipboard(controller
+                      .propertiesModelDetails.value.data?.whatsappNumber
+                      .toString() ??
+                      "");
+                },
+                child:  const Icon(Icons.copy,size: 14,color: AppColor.hintColor,)),
+          ],
+        ),
+        Row(
+          children: [
+            SizedBox(
+                height: 15,
+                width: 15,
+                child: Image(image: AssetImage(AppImages.whatApp))),
+            customSpacerWidth(width: 8),
+            GestureDetector(
+                onTap: () {
+                  launchWhatsApp(
+                      phoneNumber: controller
+                              .propertiesModelDetails.value.data?.whatsappNumber
+                              .toString() ??
+                          "");
+                },
+                child: Text(
+                  controller.propertiesModelDetails.value.data?.whatsappNumber
+                          .toString() ??
+                      "",
+                  style: AppStyle.normal_text.copyWith(
+                      color: AppColor.primaryColor,
+                      decoration: TextDecoration.underline),
+                )),
+          ],
+        ),
+      ],
+    );
+  }
 }
 
 _buildCustomWidget({IconData? icon, String? text}) {
@@ -316,8 +397,9 @@ _buildCustomWidget({IconData? icon, String? text}) {
           child: Text(
         "$text",
         maxLines: 3,
-        style: AppStyle.normal_text
-            .copyWith(color: AppColor.normalTextColor.withOpacity(0.5),),
+        style: AppStyle.normal_text.copyWith(
+          color: AppColor.normalTextColor.withOpacity(0.5),
+        ),
       )),
     ],
   );

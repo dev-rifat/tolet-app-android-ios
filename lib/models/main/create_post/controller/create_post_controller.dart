@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:to_let_mobile_app/common/widgets/success_message.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import '../../../../common/controller/input_controller.dart';
 import '../../../../common/widgets/error_message.dart';
@@ -9,6 +10,7 @@ import '../../../../utils/api_endpoints.dart';
 import '../../../../utils/utils.dart';
 import '../../../auth/model/error_model.dart';
 import '../model/cilty_list_model.dart';
+import '../model/district_model.dart';
 import 'multi_image_pic_controller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,6 +23,7 @@ class CreatePostController extends GetxController with StateMixin {
   final isSelectCategoryName = "".obs;
   final isSelectedCityId = "".obs;
   final isLoadingCreatePost = false.obs;
+  final isLoadingCity = false.obs;
 
   var selectedBedRoomValue = "02".obs;
   List<String> items = [
@@ -30,18 +33,12 @@ class CreatePostController extends GetxController with StateMixin {
     "04",
     "05",
     "06",
+    "None",
   ];
 
   var selectedBathRoomValue = '02'.obs;
 
-  List<String> bathRoomItems = [
-    '01',
-    '02',
-    '03',
-    "04",
-    "05",
-    "06",
-  ];
+  List<String> bathRoomItems = ['01', '02', '03', "04", "05", "06", "None"];
 
   var selectedVarandaValue = '02'.obs;
 
@@ -52,6 +49,7 @@ class CreatePostController extends GetxController with StateMixin {
     "04",
     "05",
     "06",
+    "None",
   ];
 
   var selectedFloorValue = '02'.obs;
@@ -63,6 +61,7 @@ class CreatePostController extends GetxController with StateMixin {
     "04",
     "05",
     "06",
+    "None",
   ];
 
   RxList facilityList = [].obs;
@@ -84,6 +83,8 @@ class CreatePostController extends GetxController with StateMixin {
   }
 
   var selectedCity = "".obs;
+  var selectedDistrict = "".obs;
+  var selectedDistrictId = "".obs;
 
   void setSelectedDivision(String value) {
     selectedCity.value = value;
@@ -91,22 +92,26 @@ class CreatePostController extends GetxController with StateMixin {
 
   List<CityListData> cityListList = [];
 
+  void setSelectedDistrict(String value) {
+    selectedDistrict.value = value;
+  }
+
+  List<DistrictListData> districtList = [];
+
   CityListModel cityListModel = CityListModel();
+  DistrictListModel districtListModel = DistrictListModel();
 
   @override
   void onInit() {
-    getCityList();
-
+    getDistrictList();
     super.onInit();
   }
 
-  Future getCityList() async {
-    change(null, status: RxStatus.loading());
-
+  Future getCityList({id = ""}) async {
+    isLoadingCity(true);
     try {
-      Response response = await NetworkClient().getRequest(
-        Api.CITY_LIST,
-      );
+      Response response = await NetworkClient().postRequest(
+          "${Api.CITY_LIST}?district_id=$id", {"district_id": "$id"});
       if (response.hasError) {
         logErrorMessage(logName: "getCityList", response: response);
         showErrorMessage(
@@ -127,15 +132,45 @@ class CreatePostController extends GetxController with StateMixin {
       log(e.toString());
       return Future.error(ErrorModel(message: e.toString()));
     }
-    change(null, status: RxStatus.success());
+    isLoadingCity(false);
+  }
+
+  Future getDistrictList() async {
+    isLoadingCity(true);
+    try {
+      Response response = await NetworkClient().getRequest(Api.DISTRICT_LIST);
+      if (response.hasError) {
+        logErrorMessage(logName: "getDistrictList", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getDistrictList", response: response);
+        log("getDistrictList ==> ${response.body}");
+        change(null, status: RxStatus.success());
+        districtListModel = DistrictListModel.fromJson(response.body);
+
+        districtList = districtListModel.data ?? [];
+        print("id_con_${districtList[0].id.toString() ?? ""}");
+        if (districtList.isNotEmpty) {
+          selectedDistrict.value = districtList[0].name ?? "";
+          selectedDistrictId.value = districtList[0].id.toString() ?? "";
+          getCityList(id: districtListModel.data?.first.id ?? "");
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    isLoadingCity(false);
   }
 
   Future<void> createPost() async {
     DateTime outputDate = DateTime.now();
 
     // Format the DateTime object to a string
-    String formattedDate = '${outputDate.year}-${outputDate.month.toString().padLeft(2, '0')}-${outputDate.day.toString().padLeft(2, '0')}';
-   print(formattedDate);
+    String formattedDate =
+        '${outputDate.year}-${outputDate.month.toString().padLeft(2, '0')}-${outputDate.day.toString().padLeft(2, '0')}';
+    print(formattedDate);
 
     isLoadingCreatePost(true);
     var uri = Uri.parse(Api.BASE_URL + Api.CREATE_POST);
@@ -150,13 +185,13 @@ class CreatePostController extends GetxController with StateMixin {
       // Safe conversion with error handling
       try {
         request.fields['bedroom'] =
-            int.parse(selectedBedRoomValue.value).toString();
+            int.parse(_count(selectedBedRoomValue.value)).toString();
         request.fields['bathroom'] =
-            int.parse(selectedBathRoomValue.value).toString();
+            int.parse(_count(selectedBathRoomValue.value)).toString();
         request.fields['veranda'] =
-            int.parse(selectedVarandaValue.value).toString();
+            int.parse(_count(selectedVarandaValue.value)).toString();
         request.fields['floor_no'] =
-            int.parse(selectedFloorValue.value).toString();
+            int.parse(_count(selectedFloorValue.value)).toString();
       } catch (e) {
         throw FormatException("Invalid number format in one of the fields: $e");
       }
@@ -192,6 +227,7 @@ class CreatePostController extends GetxController with StateMixin {
       var streamedResponse = await request.send();
       var response = await http.Response.fromStream(streamedResponse);
       if (response.statusCode == 200 || response.statusCode == 201) {
+        showSuccessMessage(message: "Your Post Create Successfully");
 
         _clearData();
 
@@ -211,7 +247,7 @@ class CreatePostController extends GetxController with StateMixin {
   }
 
   void _clearData() {
-    Get.find<MultiImagePickerController>().imageFileList.value=[];
+    Get.find<MultiImagePickerController>().imageFileList.value = [];
     selectedBedRoomValue.value = "02";
     selectedBathRoomValue.value = "02";
     selectedVarandaValue.value = "02";
@@ -224,7 +260,15 @@ class CreatePostController extends GetxController with StateMixin {
     rentController.clear();
     facilityList.value = [];
     isSelectCategoryId.value = "1";
-    isSelectedCityId.value = "";
+    selectedDistrictId.value = "";
     getCityList();
+  }
+
+  String _count(String selectedVal) {
+    if (selectedVal == "None") {
+      return "0";
+    } else {
+      return selectedVal;
+    }
   }
 }

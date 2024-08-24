@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/common/widgets/cutom_component/custom_app_buttom.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
+import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 
 class NoAuth extends StatelessWidget {
@@ -14,7 +15,7 @@ class NoAuth extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Unauthenticated, please login',
+            'Unauthenticated, please login.',
             style: AppStyle.normal_text_grey,
             textAlign: TextAlign.center, // Center the text if desired
           ),
@@ -25,6 +26,7 @@ class NoAuth extends StatelessWidget {
               height: 40,
               child: CustomAppButton(
                 onPressed: () => Get.offNamed(Routes.SIGN_IN),
+                buttonColor: AppColor.primaryColor,
                 text: "Login",
               ),
             ),
