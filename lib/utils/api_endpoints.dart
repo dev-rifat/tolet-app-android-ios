@@ -17,11 +17,12 @@ class Api {
   static String SERCH_POST_lIST = "/property/search?query=";
   static String PEOPRTIES_DETAILS = "/property/show/";
   static String CREATE_POST = "/property/add";
+  static String myPost = "/my-property-list";
 
 
 
   static String FORGOT = "/forget-password";
-  static String PROFLE = "/user/profile/";
+  static String PROFLE = "/profile/show?id=";
   static String EDIT_ROFIEL = "/user/profile/";
   static String POPULAR_PRODUCT = "/products";
   static String WISH_LIST = "/user/wishlist/";

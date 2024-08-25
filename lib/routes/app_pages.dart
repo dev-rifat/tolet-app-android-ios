@@ -37,10 +37,7 @@ class AppPages {
       page: () =>  WishListScreen(),
     ),
 
-    GetPage(
-      name: _Paths.MY_POSTS,
-      page: () =>  const MyPosts(),
-    ),
+
     GetPage(
       name: _Paths.CAHANGE_PASSWORD,
       page: () =>  ChangePassword(),

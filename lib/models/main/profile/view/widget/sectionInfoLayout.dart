@@ -40,17 +40,7 @@ Widget myPostsTitleText({String? text}) {
         style: AppStyle.normal_text_grey.copyWith(
             color: AppColor.normalTextColor, fontSize: Dimensions.fontSizeMid),
       ),
-        GestureDetector(
-          onTap:()=>Get.toNamed(Routes.MY_POSTS),
-          child: Text(
-            "See more",
-            style: AppStyle.normal_text_grey
-                .copyWith(
-                color: AppColor.primaryColor,
 
-                overflow: TextOverflow.ellipsis),
-          ),
-        ),
     ],
   );
 }

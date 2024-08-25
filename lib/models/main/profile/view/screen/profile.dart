@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:to_let_mobile_app/common/widgets/cutom_component/custom_title_text.dart';
+import 'package:to_let_mobile_app/common/widgets/loading_effect/circle_loading.dart';
 import 'package:to_let_mobile_app/models/main/profile/view/widget/post_list_widget.dart';
 import '../../../../../common/widgets/custom_dialog.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
@@ -19,51 +19,48 @@ import '../../controller/profile_controller.dart';
 import '../widget/profile_appbar.dart';
 import '../widget/sectionInfoLayout.dart';
 
-
-
-
 class ProfileScreen extends GetView<ProfileController> {
-   const ProfileScreen({super.key});
+  const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:Colors.grey.shade100,
-
+      backgroundColor: Colors.grey.shade100,
       appBar: profileAppbar(
         onAction: () => ZoomDrawer.of(context)?.toggle(),
         context: context,
       ),
-      body: Padding(
-        padding: marginLayout.copyWith(left: 12, right: 12),
-        child: RefreshIndicator(
-          onRefresh: _refreshPage,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _userInfoLayout(
-                context: context,
-                imgUrl:
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",
-                name: "Rifat Al Hasan",
-                email: "rfatal@gmail.com",
+      body: controller.obx(
+          (state) => Padding(
+                padding: marginLayout.copyWith(left: 12, right: 12),
+                child: RefreshIndicator(
+                  onRefresh: _refreshPage,
+                  color: AppColor.primaryColor,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _profileInfo(),
+                        customSpacerHeight(height: 12),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: myPostsTitleText(text: "My posts"),
+                        ),
+                        const MyPostsWidget()
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              customSpacerHeight(height:12 ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: myPostsTitleText(text: "My posts"),
-
-              ),
-              const Expanded(child: MyPostsWidget())
-
-            ],
-          ),
-        ),
-      ),
+          onLoading: Center(child: loadingIndicator(width: 40, height: 40))),
     );
   }
 
-  Future<void> _refreshPage() async {}
+  Future<void> _refreshPage() async {
+    controller
+      ..getMyPost()
+      ..getProfile();
+  }
 
   Widget _userInfoLayout({
     required String name,
@@ -141,7 +138,6 @@ class ProfileScreen extends GetView<ProfileController> {
     );
   }
 
-
   Widget _logoutLayout(BuildContext context) {
     return Container(
       height: AppLayout.getHeight(70),
@@ -174,7 +170,7 @@ class ProfileScreen extends GetView<ProfileController> {
               AppString.text_log_out.tr,
               textAlign: TextAlign.center,
               style:
-              AppStyle.mid_large_text.copyWith(color: AppColor.cardColor),
+                  AppStyle.mid_large_text.copyWith(color: AppColor.cardColor),
             ),
           ],
         ),
@@ -193,13 +189,18 @@ class ProfileScreen extends GetView<ProfileController> {
     );
   }
 
-  void _getApiResponse() {
-    if (GetStorage().read(AppString.ACCESS_TOKEN) == null) {
-      Get.offNamed(Routes.SIGN_IN);
-    }
-  }
+
 
   void _updateEditProfileAccordingToResponse() {
     Get.toNamed(Routes.EDIT_PROFILE_SCREEN);
+  }
+
+  _profileInfo() {
+    return _userInfoLayout(
+      context: Get.context!,
+      imgUrl: controller.profileModel.data?.image ?? "Not added yet",
+      name: controller.profileModel.data?.name ?? "Not added yet",
+      email: controller.profileModel.data?.email ?? "Not added yet",
+    );
   }
 }

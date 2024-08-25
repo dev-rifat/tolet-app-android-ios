@@ -1,98 +1,101 @@
 class ProfileModel {
-  User? user;
+  String? status;
+  Data? data;
 
-  ProfileModel({this.user});
+  ProfileModel({this.status, this.data});
 
   ProfileModel.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    status = json['status'];
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
+    data['status'] = this.status;
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
-class User {
+class Data {
   int? id;
-  String? firstName;
-  String? lastName;
+  String? name;
   String? email;
-  Null? emailVerifiedAt;
-  String? roles;
-  String? address;
+  dynamic nidNumber;
+  dynamic image;
+  dynamic dob;
   String? phoneNumber;
-  String? image;
+  dynamic presentAddress;
+  dynamic permanentAddress;
+  dynamic emailVerifiedAt;
+  String? role;
+  dynamic bloodGroup;
+  dynamic donateBlood;
+  dynamic latitude;
+  dynamic longitude;
   String? createdAt;
   String? updatedAt;
-  String? city;
-  String? state;
-  String? country;
-  Null? postalCode;
-  String? latitude;
-  String? longitude;
 
-  User(
+  Data(
       {this.id,
-        this.firstName,
-        this.lastName,
+        this.name,
         this.email,
-        this.emailVerifiedAt,
-        this.roles,
-        this.address,
-        this.phoneNumber,
+        this.nidNumber,
         this.image,
-        this.createdAt,
-        this.updatedAt,
-        this.city,
-        this.state,
-        this.country,
-        this.postalCode,
+        this.dob,
+        this.phoneNumber,
+        this.presentAddress,
+        this.permanentAddress,
+        this.emailVerifiedAt,
+        this.role,
+        this.bloodGroup,
+        this.donateBlood,
         this.latitude,
-        this.longitude});
+        this.longitude,
+        this.createdAt,
+        this.updatedAt});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
+    name = json['name'];
     email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
-    roles = json['roles'];
-    address = json['address'];
-    phoneNumber = json['phone_number'];
+    nidNumber = json['nid_number'];
     image = json['image'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    city = json['city'];
-    state = json['state'];
-    country = json['country'];
-    postalCode = json['postal_code'];
+    dob = json['dob'];
+    phoneNumber = json['phone_number'];
+    presentAddress = json['present_address'];
+    permanentAddress = json['permanent_address'];
+    emailVerifiedAt = json['email_verified_at'];
+    role = json['role'];
+    bloodGroup = json['blood_group'];
+    donateBlood = json['donate_blood'];
     latitude = json['latitude'];
     longitude = json['longitude'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
+    data['name'] = this.name;
     data['email'] = this.email;
-    data['email_verified_at'] = this.emailVerifiedAt;
-    data['roles'] = this.roles;
-    data['address'] = this.address;
-    data['phone_number'] = this.phoneNumber;
+    data['nid_number'] = this.nidNumber;
     data['image'] = this.image;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['city'] = this.city;
-    data['state'] = this.state;
-    data['country'] = this.country;
-    data['postal_code'] = this.postalCode;
+    data['dob'] = this.dob;
+    data['phone_number'] = this.phoneNumber;
+    data['present_address'] = this.presentAddress;
+    data['permanent_address'] = this.permanentAddress;
+    data['email_verified_at'] = this.emailVerifiedAt;
+    data['role'] = this.role;
+    data['blood_group'] = this.bloodGroup;
+    data['donate_blood'] = this.donateBlood;
     data['latitude'] = this.latitude;
     data['longitude'] = this.longitude;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

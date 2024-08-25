@@ -11,6 +11,7 @@ import '../../../common/controller/network_controller.dart';
 import '../../../common/controller/pick_image_controller.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../../main/home/controller/home_controller.dart';
+import '../../main/profile/controller/profile_controller.dart';
 import '../../main/properties/controller/properties_controller.dart';
 
 class SplashController extends GetxController {
@@ -37,6 +38,7 @@ void intController() {
   Get.put(GenderController(), permanent: true);
   Get.put(PikedProfileImgController(), permanent: true);
   Get.put(HomeController(), permanent: true);
+  Get.put(ProfileController(), permanent: true);
   Get.put(DateTimeController(), permanent: true);
   Get.put(AuthController(), permanent: true);
   Get.put(PropertiesController(), permanent: true);

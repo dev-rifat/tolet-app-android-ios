@@ -1,69 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
+import 'package:to_let_mobile_app/models/main/profile/controller/profile_controller.dart';
 import 'package:to_let_mobile_app/models/main/properties/view/widgets/photo_grid.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
+import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../utils/utils.dart';
 import '../../../main/main.dart';
 import 'expanded_text_layout.dart';
 
-class MyPostsWidget extends StatelessWidget {
+class MyPostsWidget extends GetView<ProfileController> {
   const MyPostsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      controller: hideButtonController,
-      itemBuilder: (context, index) {
-        return Card(
-          elevation: 0,
-          shape: roundedRectangleBorder.copyWith(
-              borderRadius: BorderRadius.circular(12)),
-          color: AppColor.cardColor,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///user profile info only
-                _buildProfileInfo(),
+    return controller.obx(
+        (state) => ListView.builder(
+              controller: hideButtonController,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: controller.myPostModel.properties?.data?.length ?? 0,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 0,
+                  shape: roundedRectangleBorder.copyWith(
+                      borderRadius: BorderRadius.circular(12)),
+                  color: AppColor.cardColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ///user profile info only
+                        _buildProfileInfo(
+                          imgUrl: controller.myPostModel.properties
+                                  ?.data?[index].user?.image ??
+                              "",
+                          userName: controller.myPostModel.properties
+                                  ?.data?[index].user?.name ??
+                              "",
+                           date:formatDateTime( controller.myPostModel.properties?.data?[index].availableFrom??""),
+                          status:  controller.myPostModel.properties?.data?[index].approvedStatus??""
 
-                ///House info only
-                _houseInfo(),
-                _descriptionText(),
+                        ),
 
-                customSpacerHeight(height: 14),
+                        ///House info only
+                        _houseInfo(index),
+                        _descriptionText( controller.myPostModel.properties?.data?[index].description??""),
 
-                ///House img only
-                _houseImage(),
-              ],
+                        customSpacerHeight(height: 14),
+
+                        ///House img only
+                        _houseImage(index),
+                      ],
+                    ),
+                  ),
+                );
+              },
             ),
-          ),
-        );
-      },
-    );
+        onLoading: const CircularProgressIndicator());
   }
 
-  _buildProfileInfo() {
+  _buildProfileInfo(
+      {String? imgUrl, String? userName, String? date, String? status}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const CustomNetworkImage(
+            CustomNetworkImage(
               height: 20,
               borderColor: Colors.transparent,
-              imgUrl:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",
+              imgUrl: "$imgUrl",
             ),
             customSpacerWidth(width: 8),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Rifat Hasan",
+                  "$userName",
                   style: AppStyle.small_text_black.copyWith(
                       fontWeight: FontWeight.w800,
                       fontSize: Dimensions.fontSizeDefault + 1),
@@ -77,7 +97,7 @@ class MyPostsWidget extends StatelessWidget {
                     ),
                     customSpacerWidth(width: 4),
                     Text(
-                      "6 Apr 2023",
+                      "$date",
                       style: AppStyle.small_text_black.copyWith(
                           fontSize: Dimensions.fontSizeDefault,
                           color: AppColor.hintColor),
@@ -89,14 +109,14 @@ class MyPostsWidget extends StatelessWidget {
             const Spacer(),
             Card(
                 elevation: 0,
-                color: AppColor.pendingColor.withOpacity(0.2),
+                color:  status == "0" ? AppColor.pendingColor.withOpacity(0.2):AppColor.successColor.withOpacity(0.2),
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8, bottom: 2, top: 2),
                   child: Text(
-                    "Pending",
+                    status == "0" ? "Pending" : "Approve",
                     style: AppStyle.normal_text_black.copyWith(
-                        color: AppColor.pendingColor,
+                        color:  status == "0" ? AppColor.pendingColor:AppColor.successColor,
                         overflow: TextOverflow.ellipsis),
                   ),
                 )),
@@ -106,9 +126,7 @@ class MyPostsWidget extends StatelessWidget {
     );
   }
 
-  _descriptionText() {
-    var drc =
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
+  _descriptionText(drc) {
     final wordCount = drc.split(' ').length;
     if (wordCount > 20) {
       return Padding(
@@ -122,27 +140,29 @@ class MyPostsWidget extends StatelessWidget {
         padding: marginLayout.copyWith(left: 8, right: 4, bottom: 0, top: 0),
         child: Text(
           drc,
-          style: AppStyle.mid_large_text.copyWith(color: AppColor.primaryColor),
+          style:disTextStyle,
         ),
       );
     }
   }
 
-  _houseInfo() {
+  _houseInfo(index) {
+    var data =controller.myPostModel.properties?.data?[index];
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Orchard House",
+            data?.title??"",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.normalTextColor,
                 fontSize: Dimensions.fontSizeDefault + 1,
                 overflow: TextOverflow.ellipsis),
           ),
           Text(
-            "\$400 / year",
+            "${AppString.text_bd_currency} ${data?.rent??""}",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.primaryColor,
                 fontSize: Dimensions.fontSizeDefault - 1,
@@ -150,14 +170,14 @@ class MyPostsWidget extends StatelessWidget {
           ),
           Row(
             children: [
-              Icon(
-                Icons.hotel_outlined,
-                size: 17,
-                color: AppColor.normalTextColor.withOpacity(0.7),
+              const Icon(
+                Icons.location_on_outlined,
+                size: 14,
+                color: AppColor.pendingColor,
               ),
               customSpacerWidth(width: 4),
               Text(
-                "6 Bedroom",
+                "${data?.city?.district?.name??""}, ${data?.city?.name??""}",
                 style: AppStyle.normal_text_black.copyWith(
                     color: AppColor.normalTextColor.withOpacity(0.7),
                     fontSize: Dimensions.fontSizeDefault - 1,
@@ -170,21 +190,48 @@ class MyPostsWidget extends StatelessWidget {
     );
   }
 
-  _houseImage() {
-    var urls = <String>[
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-      'https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-    ];
 
+
+
+  Widget _houseImage(int index) {
+    // Fetch the images list for the current index
+    final images = controller.myPostModel.properties?.data?[index].images;
+
+    // Check if images exist and is not empty
+    if (images == null || images.isEmpty) {
+      // Handle case where there are no images
+      return const SizedBox(
+        height: 220,
+        child: CustomNetworkImage(
+          imgUrl: "",
+          isRectangleImg: true,
+          borderRadius: 4,
+        ),
+      );
+    }
+
+    // Get the URL of the first image as the primary image URL
+    final imageUrl = images.first.title ?? "";
+    final fullImageUrl = "/$imageUrl";
+
+    // Prepare list of image URLs
+    final imageUrls = images.map((image) => "/${image.title ?? ""}").toList();
     return SizedBox(
       height: 220,
-      child: PhotoGrid(
-        imageUrls: urls,
-        onImageClicked: (i) => print('Image $i was clicked!'),
+      child: imageUrls.length == 1
+          ? CustomNetworkImage(
+        imgUrl: fullImageUrl,
+        isRectangleImg: true,
+        borderRadius: 4,
+      )
+          : PhotoGrid(
+        imageUrls: imageUrls,
+        onImageClicked: (index) {},
         onExpandClicked: () => print('Expand Image was clicked'),
         maxImages: 2,
       ),
     );
   }
+
+
 }
