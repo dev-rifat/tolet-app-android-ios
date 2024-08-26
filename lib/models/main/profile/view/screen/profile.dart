@@ -8,7 +8,6 @@ import '../../../../../common/widgets/custom_dialog.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
-import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_layout.dart';
