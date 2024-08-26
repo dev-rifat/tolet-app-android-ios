@@ -12,8 +12,9 @@ import '../model/profile_model.dart';
 
 class ProfileController extends GetxController with StateMixin {
 
-   ProfileModel profileModel = ProfileModel();
+   Rx<ProfileModel> profileModel = ProfileModel().obs;
    MyPostModel myPostModel = MyPostModel();
+   final isMyPostLoading = false.obs;
 
   @override
   void onInit() {
@@ -37,7 +38,7 @@ class ProfileController extends GetxController with StateMixin {
         logSuccessMessage(logName: "profile", response: response);
         log("profile ==> ${response.body}");
         change(null, status: RxStatus.success());
-        profileModel = ProfileModel.fromJson(response.body);
+        profileModel.value = ProfileModel.fromJson(response.body);
       }
     } catch (e) {
       log(e.toString());
@@ -46,6 +47,7 @@ class ProfileController extends GetxController with StateMixin {
   }
 
   Future getMyPost() async {
+    isMyPostLoading(true);
     try {
       Response response = await NetworkClient()
           .getRequest(Api.myPost);
@@ -58,9 +60,13 @@ class ProfileController extends GetxController with StateMixin {
         logSuccessMessage(logName: "getMyPost", response: response);
         log("getMyPost ==> ${response.body}");
         myPostModel = MyPostModel.fromJson(response.body);
+        isMyPostLoading(false);
+
 
       }
     } catch (e) {
+      isMyPostLoading(false);
+
       log(e.toString());
     }
   }

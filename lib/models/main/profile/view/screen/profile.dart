@@ -8,12 +8,14 @@ import '../../../../../common/widgets/custom_dialog.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
 import '../../../../../common/widgets/custom_spacer.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../../utils/app_color.dart';
 import '../../../../../utils/app_layout.dart';
 import '../../../../../utils/app_string.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
+import '../../../create_post/view/screen/no_auth.dart';
 import '../../../home/view/widget/card_style.dart';
 import '../../controller/profile_controller.dart';
 import '../widget/profile_appbar.dart';
@@ -30,7 +32,8 @@ class ProfileScreen extends GetView<ProfileController> {
         onAction: () => ZoomDrawer.of(context)?.toggle(),
         context: context,
       ),
-      body: controller.obx(
+      body: GetStorage().read(AppString.ACCESS_TOKEN) == null
+          ? const NoAuth(): controller.obx(
           (state) => Padding(
                 padding: marginLayout.copyWith(left: 12, right: 12),
                 child: RefreshIndicator(
@@ -52,14 +55,16 @@ class ProfileScreen extends GetView<ProfileController> {
                   ),
                 ),
               ),
-          onLoading: Center(child: loadingIndicator(width: 40, height: 40))),
+        onLoading: Center(child: loadingIndicator(width: 40,height: 40)),
+
+
+      ),
     );
   }
 
   Future<void> _refreshPage() async {
-    controller
-      ..getMyPost()
-      ..getProfile();
+   await controller.getProfile();
+   await controller.getMyPost();
   }
 
   Widget _userInfoLayout({
@@ -198,9 +203,9 @@ class ProfileScreen extends GetView<ProfileController> {
   _profileInfo() {
     return _userInfoLayout(
       context: Get.context!,
-      imgUrl: controller.profileModel.data?.image ?? "Not added yet",
-      name: controller.profileModel.data?.name ?? "Not added yet",
-      email: controller.profileModel.data?.email ?? "Not added yet",
+      imgUrl: controller.profileModel.value.data?.image ?? "Not added yet",
+      name: controller.profileModel.value.data?.name ?? "Not added yet",
+      email: controller.profileModel.value.data?.email ?? "Not added yet",
     );
   }
 }

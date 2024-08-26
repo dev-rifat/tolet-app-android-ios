@@ -26,7 +26,6 @@ class PropertiesScreen extends StatelessWidget {
           leadingWidth: double.infinity,
           actions: [
             GestureDetector(
-
                 onTap: ()=>Get.toNamed(Routes.SEARCH_SCREEN),
                 child: const Icon(CupertinoIcons.search)),
             customSpacerWidth(width: 12),

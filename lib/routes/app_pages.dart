@@ -1,7 +1,6 @@
 import 'package:to_let_mobile_app/models/auth/view/screen/sign_up.dart';
 import 'package:to_let_mobile_app/models/auth/view/screen/sign_in.dart';
 import 'package:get/get.dart';
-import 'package:to_let_mobile_app/models/main/profile/view/screen/all_my_post.dart';
 import 'package:to_let_mobile_app/models/main/profile/view/screen/change_password.dart';
 import 'package:to_let_mobile_app/models/main/profile/view/screen/edit_profile.dart';
 import '../models/main/favorite/view/screen/wishlist_screen.dart';

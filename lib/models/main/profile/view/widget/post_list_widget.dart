@@ -10,6 +10,7 @@ import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../../../../utils/utils.dart';
 import '../../../main/main.dart';
 import 'expanded_text_layout.dart';
@@ -17,53 +18,82 @@ import 'expanded_text_layout.dart';
 class MyPostsWidget extends GetView<ProfileController> {
   const MyPostsWidget({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     return controller.obx(
-        (state) => ListView.builder(
-              controller: hideButtonController,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: controller.myPostModel.properties?.data?.length ?? 0,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 0,
-                  shape: roundedRectangleBorder.copyWith(
-                      borderRadius: BorderRadius.circular(12)),
-                  color: AppColor.cardColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ///user profile info only
-                        _buildProfileInfo(
+        (state){
+          final data = controller.myPostModel.properties?.data;
+
+          if (data == null || data.isEmpty) {
+            return Center(
+                child: Text(
+                  "No post available here!",
+                  style: AppStyle.normal_text,
+                ));
+          }
+          return  ListView.builder(
+            controller: hideButtonController,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: controller.myPostModel.properties?.data?.length ?? 0,
+            itemBuilder: (context, index) {
+              return Card(
+                elevation: 0,
+                shape: roundedRectangleBorder.copyWith(
+                    borderRadius: BorderRadius.circular(12)),
+                color: AppColor.cardColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ///user profile info only
+                      _buildProfileInfo(
                           imgUrl: controller.myPostModel.properties
-                                  ?.data?[index].user?.image ??
+                              ?.data?[index].user?.image ??
                               "",
                           userName: controller.myPostModel.properties
-                                  ?.data?[index].user?.name ??
+                              ?.data?[index].user?.name ??
                               "",
-                           date:formatDateTime( controller.myPostModel.properties?.data?[index].availableFrom??""),
-                          status:  controller.myPostModel.properties?.data?[index].approvedStatus??""
+                          date: formatDateTime(controller.myPostModel
+                              .properties?.data?[index].availableFrom ??
+                              ""),
+                          status: controller.myPostModel.properties
+                              ?.data?[index].approvedStatus ??
+                              ""),
 
-                        ),
+                      ///House info only
+                      _houseInfo(index),
+                      _descriptionText(controller.myPostModel.properties
+                          ?.data?[index].description ??
+                          ""),
 
-                        ///House info only
-                        _houseInfo(index),
-                        _descriptionText( controller.myPostModel.properties?.data?[index].description??""),
+                      customSpacerHeight(height: 14),
 
-                        customSpacerHeight(height: 14),
-
-                        ///House img only
-                        _houseImage(index),
-                      ],
-                    ),
+                      ///House img only
+                      _houseImage(index),
+                    ],
                   ),
-                );
-              },
-            ),
-        onLoading: const CircularProgressIndicator());
+                ),
+              );
+            },
+          );
+        },
+
+
+
+        onLoading: const Expanded(
+          child: ShimmerListEffect(
+            itemHeight: 800,
+            itemWidth: double.infinity,
+            itemCount: 5,
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+            itemCardHeight: 200,
+            scrollDirection: Axis.vertical,
+          ),
+        ));
   }
 
   _buildProfileInfo(
@@ -109,14 +139,18 @@ class MyPostsWidget extends GetView<ProfileController> {
             const Spacer(),
             Card(
                 elevation: 0,
-                color:  status == "0" ? AppColor.pendingColor.withOpacity(0.2):AppColor.successColor.withOpacity(0.2),
+                color: status == "0"
+                    ? AppColor.pendingColor.withOpacity(0.2)
+                    : AppColor.successColor.withOpacity(0.2),
                 child: Padding(
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8, bottom: 2, top: 2),
                   child: Text(
                     status == "0" ? "Pending" : "Approve",
                     style: AppStyle.normal_text_black.copyWith(
-                        color:  status == "0" ? AppColor.pendingColor:AppColor.successColor,
+                        color: status == "0"
+                            ? AppColor.pendingColor
+                            : AppColor.successColor,
                         overflow: TextOverflow.ellipsis),
                   ),
                 )),
@@ -140,14 +174,14 @@ class MyPostsWidget extends GetView<ProfileController> {
         padding: marginLayout.copyWith(left: 8, right: 4, bottom: 0, top: 0),
         child: Text(
           drc,
-          style:disTextStyle,
+          style: disTextStyle,
         ),
       );
     }
   }
 
   _houseInfo(index) {
-    var data =controller.myPostModel.properties?.data?[index];
+    var data = controller.myPostModel.properties?.data?[index];
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -155,14 +189,14 @@ class MyPostsWidget extends GetView<ProfileController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data?.title??"",
+            data?.title ?? "",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.normalTextColor,
                 fontSize: Dimensions.fontSizeDefault + 1,
                 overflow: TextOverflow.ellipsis),
           ),
           Text(
-            "${AppString.text_bd_currency} ${data?.rent??""}",
+            "${AppString.text_bd_currency} ${data?.rent ?? ""}",
             style: AppStyle.normal_text_grey.copyWith(
                 color: AppColor.primaryColor,
                 fontSize: Dimensions.fontSizeDefault - 1,
@@ -177,7 +211,7 @@ class MyPostsWidget extends GetView<ProfileController> {
               ),
               customSpacerWidth(width: 4),
               Text(
-                "${data?.city?.district?.name??""}, ${data?.city?.name??""}",
+                "${data?.city?.district?.name ?? ""}, ${data?.city?.name ?? ""}",
                 style: AppStyle.normal_text_black.copyWith(
                     color: AppColor.normalTextColor.withOpacity(0.7),
                     fontSize: Dimensions.fontSizeDefault - 1,
@@ -189,9 +223,6 @@ class MyPostsWidget extends GetView<ProfileController> {
       ),
     );
   }
-
-
-
 
   Widget _houseImage(int index) {
     // Fetch the images list for the current index
@@ -220,18 +251,16 @@ class MyPostsWidget extends GetView<ProfileController> {
       height: 220,
       child: imageUrls.length == 1
           ? CustomNetworkImage(
-        imgUrl: fullImageUrl,
-        isRectangleImg: true,
-        borderRadius: 4,
-      )
+              imgUrl: fullImageUrl,
+              isRectangleImg: true,
+              borderRadius: 4,
+            )
           : PhotoGrid(
-        imageUrls: imageUrls,
-        onImageClicked: (index) {},
-        onExpandClicked: () => print('Expand Image was clicked'),
-        maxImages: 2,
-      ),
+              imageUrls: imageUrls,
+              onImageClicked: (index) {},
+              onExpandClicked: () => print('Expand Image was clicked'),
+              maxImages: 2,
+            ),
     );
   }
-
-
 }

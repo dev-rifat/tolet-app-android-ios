@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
+import 'package:to_let_mobile_app/models/main/profile/controller/profile_controller.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
@@ -29,8 +30,7 @@ class DrawerMenuScreen extends StatelessWidget {
            _buildProfileInformation(),
            customSpacerHeight(height: 20),
 
-           _buildWidget(text: "Post",icon: CupertinoIcons.viewfinder,onAction: ()=>Get.toNamed(Routes.MY_POSTS)),
-            Divider(color: AppColor.cardColor.withOpacity(0.3),),
+
 
             _buildWidget(text: "Wishlist",icon: Icons.favorite_border,onAction: ()=>Get.toNamed(Routes.FAVORITE)),
             Divider(color: AppColor.cardColor.withOpacity(0.3)),
@@ -41,7 +41,7 @@ class DrawerMenuScreen extends StatelessWidget {
             _buildWidget(text: "Edit profile",icon: Icons.image_outlined,onAction: ()=>Get.toNamed(Routes.EDIT_PROFILE_SCREEN)),
             Divider(color: AppColor.cardColor.withOpacity(0.3),),
 
-            _buildWidget(text: "Help?",icon: CupertinoIcons.headphones,onAction: ()=>Get.toNamed(Routes.MY_POSTS)),
+            _buildWidget(text: "Help?",icon: CupertinoIcons.headphones,onAction: ()=>Get.toNamed(Routes.MAIN)),
             customSpacerHeight(height: 20),
 
           _logout(),
@@ -55,11 +55,11 @@ class DrawerMenuScreen extends StatelessWidget {
   }
 
   _buildProfileInformation() {
-    return Column(
-     crossAxisAlignment: CrossAxisAlignment.start,
+    var controller=Get.find<ProfileController>();
+    return  Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const CustomNetworkImage(
-          imgUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTljNxaJeX5ZRS3t9wgRC2GQ0xJHlOmGLinYnz4RS2y3Gnmhb6BcxQJzDvwU-PWfVfXXFs&usqp=CAU",),
+        CustomNetworkImage(imgUrl: controller.profileModel.value.data?.image??"",),
 
         SizedBox(
           width: 80,
@@ -71,12 +71,14 @@ class DrawerMenuScreen extends StatelessWidget {
               child: Text("Update",style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),),
             )),),
         ),
-        Text(
-          "Rifat Al Hasan",
-          style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid+5,color: AppColor.cardColor),
-        ),
+       Obx(() =>  Text(
+         controller.profileModel.value.data?.name??"Guest",
+         style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid+5,color: AppColor.cardColor),
+       ),)
+
       ],
     );
+
   }
 
   _buildWidget({required String text,required IconData icon ,onAction}) {

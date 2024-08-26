@@ -39,7 +39,6 @@ abstract class Routes {
   static const ADMIN_ALL_CATEGORY_VIEW = _Paths.ADMIN_ALL_CATEGORY_VIEW;
   static const ADMIN_ALL_PRODUCTS_VIEW = _Paths.ADMIN_ALL_PRODUCTS_VIEW;
   static const VIEW_DETAILS = _Paths.VIEW_DETAILS;
-  static const MY_POSTS = _Paths.MY_POSTS;
 
 
 }
