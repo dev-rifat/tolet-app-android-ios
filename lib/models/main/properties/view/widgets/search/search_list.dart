@@ -12,6 +12,7 @@ import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../../init_ app.dart';
 import '../../../../../../utils/utils.dart';
 import '../../../../favorite/controller/wishlist_controller.dart';
 import '../../../../favorite/hive/hive_object.dart';
@@ -87,7 +88,7 @@ class SearchListWidget extends GetView<HomeController> {
 
   Widget _buildProfileInfo(int index) {
     final property = controller.searchModel.data?[index];
-    final wishlistBox = Hive.box<WishlistItem>('wishlist');
+    final wishlistBox = Hive.box<WishlistItem>(wishListTableKey);
     final exists =
     RxBool(wishlistBox.values.any((item) => item.id == property?.id));
 
@@ -100,37 +101,6 @@ class SearchListWidget extends GetView<HomeController> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // CustomNetworkImage(
-        //   height: 20,
-        //   borderColor: Colors.transparent,
-        //   imgUrl: property?.user?.image ?? "",
-        // ),
-        // customSpacerWidth(width: 8),
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(
-        //       property?.user?.name ?? "",
-        //       style: AppStyle.small_text_black.copyWith(
-        //         fontWeight: FontWeight.w800,
-        //         fontSize: Dimensions.fontSizeDefault + 1,
-        //       ),
-        //     ),
-        //     Row(
-        //       children: [
-        //         _getDateTimeIcon(property?.availableFrom),
-        //         customSpacerWidth(width: 4),
-        //         Text(
-        //           formatDateTime(property?.availableFrom ?? ""),
-        //           style: AppStyle.small_text_black.copyWith(
-        //             fontSize: Dimensions.fontSizeDefault,
-        //             color: AppColor.hintColor,
-        //           ),
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
         const Spacer(),
         Obx(() => GestureDetector(
           onTap: () {

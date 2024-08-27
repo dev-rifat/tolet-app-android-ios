@@ -43,4 +43,5 @@ void intController() {
   Get.put(AuthController(), permanent: true);
   Get.put(PropertiesController(), permanent: true);
   Get.put(MultiImagePickerController(), permanent: true);
+  Get.delete<SplashController>();
 }

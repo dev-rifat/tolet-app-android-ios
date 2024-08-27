@@ -16,8 +16,11 @@ import '../../../../utils/app_string.dart';
 
 class DrawerMenuScreen extends StatelessWidget {
   const DrawerMenuScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final accessToken = GetStorage().read(AppString.ACCESS_TOKEN);
+
     return Scaffold(
       backgroundColor: AppColor.primaryColor,
       body: Padding(
@@ -26,97 +29,134 @@ class DrawerMenuScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Spacer(),
-            ///For only profile info
-           _buildProfileInformation(),
-           customSpacerHeight(height: 20),
-
-
-
-            _buildWidget(text: "Wishlist",icon: Icons.favorite_border,onAction: ()=>Get.toNamed(Routes.FAVORITE)),
-            Divider(color: AppColor.cardColor.withOpacity(0.3)),
-
-            _buildWidget(text: "Change password",icon: CupertinoIcons.lock,onAction: ()=>Get.toNamed(Routes.CAHANGE_PASSWORD)),
-            Divider(color: AppColor.cardColor.withOpacity(0.3)),
-
-            _buildWidget(text: "Edit profile",icon: Icons.image_outlined,onAction: ()=>Get.toNamed(Routes.EDIT_PROFILE_SCREEN)),
-            Divider(color: AppColor.cardColor.withOpacity(0.3),),
-
-            _buildWidget(text: "Help?",icon: CupertinoIcons.headphones,onAction: ()=>Get.toNamed(Routes.MAIN)),
+            _buildProfileInformation(),
             customSpacerHeight(height: 20),
-
-          _logout(),
-
-            const Spacer(flex: 2,),
-
+            _buildMenuItems(accessToken),
+            customSpacerHeight(height: 20),
+            _logout(),
+            const Spacer(flex: 2),
           ],
         ),
       ),
     );
   }
 
-  _buildProfileInformation() {
-    var controller=Get.find<ProfileController>();
-    return  Column(
+  Widget _buildProfileInformation() {
+    var controller = Get.find<ProfileController>();
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomNetworkImage(imgUrl: controller.profileModel.value.data?.image??"",),
-
+        CustomNetworkImage(imgUrl: controller.profileModel.value.data?.image ?? ""),
         SizedBox(
           width: 80,
           child: Card(
             elevation: 0,
             color: AppColor.primaryOrange,
-            child: Center(child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text("Update",style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),),
-            )),),
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  "Update",
+                  style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),
+                ),
+              ),
+            ),
+          ),
         ),
-       Obx(() =>  Text(
-         controller.profileModel.value.data?.name??"Guest",
-         style: AppStyle.title_text.copyWith(fontSize: Dimensions.fontSizeMid+5,color: AppColor.cardColor),
-       ),)
-
+        Obx(
+              () => Text(
+            controller.profileModel.value.data?.name ?? "Guest",
+            style: AppStyle.title_text.copyWith(
+              fontSize: Dimensions.fontSizeMid + 5,
+              color: AppColor.cardColor,
+            ),
+          ),
+        ),
       ],
     );
-
   }
 
-  _buildWidget({required String text,required IconData icon ,onAction}) {
+  Widget _buildMenuItems(String? accessToken) {
+    return Column(
+      children: [
+        _buildWidget(
+          text: "Wishlist",
+          icon: Icons.favorite_border,
+          onAction: () => Get.toNamed(Routes.FAVORITE),
+        ),
+        Divider(color: AppColor.cardColor.withOpacity(0.3)),
+        _buildWidget(
+          text: "Change password",
+          icon: accessToken == null ? Icons.close : CupertinoIcons.lock,
+          onAction: accessToken == null ? null : () => Get.toNamed(Routes.CAHANGE_PASSWORD),
+        ),
+        Divider(color: AppColor.cardColor.withOpacity(0.3)),
+        _buildWidget(
+          text: "Edit profile",
+          icon: accessToken == null ? Icons.close : Icons.image_outlined,
+          onAction: accessToken == null ? null : () => Get.toNamed(Routes.EDIT_PROFILE_SCREEN),
+        ),
+        Divider(color: AppColor.cardColor.withOpacity(0.3)),
+        _buildWidget(
+          text: "Help?",
+          icon: accessToken == null ? Icons.close : CupertinoIcons.headphones,
+          onAction: accessToken == null ? null : () => Get.toNamed(Routes.CAHANGE_PASSWORD),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWidget({required String text, required IconData icon, VoidCallback? onAction}) {
     return GestureDetector(
-      onTap: onAction,
+      onTap: onAction ?? () {},
       child: Padding(
-        padding:  const EdgeInsets.only(top: 12.0,bottom: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Row(
           children: [
-             Icon(icon,size: 20,color:Colors.black,),
+            Icon(icon, size: 20, color: Colors.black),
             customSpacerWidth(width: 8),
-            Text(text,style: AppStyle.normal_text_black.copyWith(fontWeight: FontWeight.w700,fontSize: Dimensions.fontSizeMid-2,color: Colors.black),),
+            Text(
+              text,
+              style: AppStyle.normal_text_black.copyWith(
+                fontWeight: FontWeight.w700,
+                fontSize: Dimensions.fontSizeMid - 2,
+                color: Colors.black,
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  _logout() {
-    return   GestureDetector(
-      onTap: ()=>_logoutDialog(),
+  Widget _logout() {
+    return GestureDetector(
+      onTap: _logoutDialog,
       child: SizedBox(
         width: 80,
         child: Card(
           elevation: 0,
-          shape: roundedRectangleBorder.copyWith(side: const BorderSide(width: 1,color: AppColor.errorColor)),
+          shape: roundedRectangleBorder.copyWith(
+            side: const BorderSide(width: 1, color: AppColor.errorColor),
+          ),
           color: Colors.red,
-          child: Center(child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Text("Logout",style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),),
-          )),),
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                "Logout",
+                style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
 }
 
-_logoutDialog(){
-   customDialog(
+void _logoutDialog() {
+  customDialog(
     context: Get.context!,
     saveBtnAction: () {
       Get.offAllNamed(Routes.SIGN_IN);
