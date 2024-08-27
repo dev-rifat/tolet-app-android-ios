@@ -5,6 +5,7 @@ import 'package:hidable/hidable.dart';
 import 'package:to_let_mobile_app/models/main/home/controller/home_controller.dart';
 import 'package:to_let_mobile_app/models/main/main/widgets.dart';
 import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
+import '../../../init_ app.dart';
 import '../../../utils/app_color.dart';
 
 ScrollController hideButtonController = ScrollController();
@@ -24,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   initState() {
     super.initState();
     visit = widget.routeIndex ?? 0;
+
 
   }
 

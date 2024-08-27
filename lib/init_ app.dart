@@ -7,12 +7,12 @@ import 'models/main/favorite/hive/hive_object.dart';
 import 'models/statring/controller/splash_controller.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-String wishListTableKey = "wishlist";
+String wishListTableKey = "wishlist_key";
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 ///For using int. Hive Local storage
-  _initHive();
+  initHive();
 
   await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -22,7 +22,7 @@ Future<void> initApp() async {
   Get.put(LocationServiceController());
 }
 
- _initHive() async {
+ initHive() async {
   // Initialize Hive and open a box
   await Hive.initFlutter();
 

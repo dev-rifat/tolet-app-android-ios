@@ -28,7 +28,7 @@ class WishlistItemAdapter extends TypeAdapter<WishlistItem> {
   @override
   void write(BinaryWriter writer, WishlistItem obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -37,7 +37,7 @@ class WishlistItemAdapter extends TypeAdapter<WishlistItem> {
       ..write(obj.rent)
       ..writeByte(3)
       ..write(obj.bedroom)
-    ..writeByte(4)
+      ..writeByte(4)
       ..write(obj.img);
   }
 
