@@ -12,12 +12,14 @@ class CustomNetworkImage extends StatelessWidget {
   final double? borderRadius;
   final Color? borderColor;
   final bool isRectangleImg;
+ final BorderRadius ? customBorderRadius;
   const CustomNetworkImage(
       {super.key,
       this.height = 32,
       required this.imgUrl,
+        this.borderRadius,
       this.borderColor,
-      this.borderRadius,
+      this.customBorderRadius,
       this.errorImg,
       this.isRectangleImg = false});
   @override
@@ -25,10 +27,10 @@ class CustomNetworkImage extends StatelessWidget {
     var radius = height;
     return isRectangleImg == true
         ? CachedNetworkImage(
-            imageUrl: Api.IMGE_KEY+imgUrl,
+            imageUrl: Api.imagePublicKey+imgUrl,
             placeholder: (context, url) => Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(borderRadius ?? 0),
+                  borderRadius:customBorderRadius?? BorderRadius.circular(borderRadius ?? 0),
                   image: DecorationImage(
                     image: AssetImage(errorImg ?? AppImages.placeholder),
                     fit: BoxFit.cover,
@@ -47,7 +49,7 @@ class CustomNetworkImage extends StatelessWidget {
             imageBuilder: (context, imageProvider) => Container(
               decoration: BoxDecoration(
                 color: Colors.transparent,
-                borderRadius: BorderRadius.circular(borderRadius ?? 0),
+                borderRadius:customBorderRadius?? BorderRadius.circular(borderRadius ?? 0),
                 image: DecorationImage(
                   image: imageProvider,
                   fit: BoxFit.fill,
@@ -66,7 +68,7 @@ class CustomNetworkImage extends StatelessWidget {
                 radius: radius,
                 backgroundColor: AppColor.cardColor,
                 child: CachedNetworkImage(
-                  imageUrl: Api.IMGE_KEY+imgUrl,
+                  imageUrl: Api.imagePublicKey+imgUrl,
                   placeholder: (context, url) =>
                       const CupertinoActivityIndicator(),
                   errorWidget: (context, url, error) => CircleAvatar(

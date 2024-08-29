@@ -1,96 +1,134 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
+import 'package:to_let_mobile_app/models/main/home/controller/home_controller.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
+import 'package:to_let_mobile_app/utils/app_string.dart';
 import '../../../../../common/widgets/custom_network_image.dart';
+import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../../../utils/app_style.dart';
 import '../../../../../utils/dimensions.dart';
+import '../../../properties/controller/properties_controller.dart';
 
-class BestForYou extends StatelessWidget {
+class BestForYou extends GetView<HomeController> {
   const BestForYou({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 50,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
-          child: SizedBox(
-            child: GestureDetector(
-              onTap: ()=>Get.toNamed(Routes.VIEW_DETAILS),
+    return controller.obx(
+      (state) {
+        final properties = controller.bestForYouModel.properties?.data;
+        if (properties == null || properties.isEmpty) {
+          return Center(
+              child: Text(
+            "No properties available!",
+            style: AppStyle.normal_text_black,
+          ));
+        }
 
-              child: Card(
-                elevation: 0,
-                shape: roundedRectangleBorder.copyWith(
-                    borderRadius: BorderRadius.circular(12)),
-                color: AppColor.cardColor,
-                child: Row(
-                  children: [
-                    Container(
-                      color: Colors.transparent,
-                      width: 80,
-                      height: 80,
-                      child: const CustomNetworkImage(
-                        imgUrl:
-                            'https://www.desmoinesregister.com/gcdn/presto/2023/03/06/PDEM/442d7d79-7525-4f5d-8c0b-e56f3b810e3b-6102_NE_Briarwood_Dr_Ankeny_IA_twilight_028.jpg?crop=1023,576,x0,y94&width=660&height=372&format=pjpg&auto=webp',
-                        isRectangleImg: true,
-                        borderRadius: 8,
+        return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: properties.length,
+          itemBuilder: (context, index) {
+            final data = properties[index];
+            final imageUrl = data.images?.isNotEmpty == true
+                ? data.images!.first.title ?? ""
+                : "";
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: GestureDetector(
+                onTap: () {
+                  final propertiesId = data.id;
+                  if (propertiesId != null) {
+                    Get.find<PropertiesController>()
+                        .getPropertiesDetails(propertiesId: propertiesId);
+                    Get.toNamed(Routes.VIEW_DETAILS);
+                  }
+                },
+                child: Card(
+                  elevation: 0,
+                  shape: roundedRectangleBorder.copyWith(
+                      borderRadius: BorderRadius.circular(12)),
+                  color: AppColor.cardColor,
+                  child: Row(
+                    children: [
+                      Container(
+                        color: Colors.transparent,
+                        width: 85,
+                        height: 80,
+                        child: CustomNetworkImage(
+                          imgUrl: imageUrl,
+                          isRectangleImg: true,
+                          customBorderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(6),
+                              topLeft: Radius.circular(6)),
+                        ),
                       ),
-                    ),
-                    customSpacerWidth(width: 6),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Orchard House",
-                            style: AppStyle.normal_text_grey.copyWith(
+                      customSpacerWidth(width: 6),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              data.title ?? "",
+                              style: AppStyle.normal_text_grey.copyWith(
                                 color: AppColor.normalTextColor,
                                 fontSize: Dimensions.fontSizeDefault + 1,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                          Text(
-                            "\$400 / year",
-                            style: AppStyle.normal_text_grey.copyWith(
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text(
+                              "${AppString.text_bd_currency} ${data.rent ?? ""}",
+                              style: AppStyle.normal_text_grey.copyWith(
                                 color: AppColor.primaryColor,
                                 fontSize: Dimensions.fontSizeDefault - 1,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                          Row(
-                            children: [
-                               Icon(
-                                Icons.hotel_outlined,
-                                size: 17,
-                                color: AppColor.normalTextColor.withOpacity(0.7),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                              customSpacerWidth(width: 4),
-                              Text(
-                                "6 Bedroom",
-                                style: AppStyle.normal_text_black.copyWith(
-                                    color:
-                                        AppColor.normalTextColor.withOpacity(0.7),
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.hotel_outlined,
+                                  size: 17,
+                                  color:
+                                      AppColor.normalTextColor.withOpacity(0.7),
+                                ),
+                                customSpacerWidth(width: 4),
+                                Text(
+                                  data.bedroom ?? "",
+                                  style: AppStyle.normal_text_black.copyWith(
+                                    color: AppColor.normalTextColor
+                                        .withOpacity(0.7),
                                     fontSize: Dimensions.fontSizeDefault - 1,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
+      onLoading: const ShimmerListEffect(
+        itemHeight: 1000,
+        itemWidth: double.infinity,
+        itemCount: 5,
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+        itemCardHeight: 80,
+        scrollDirection: Axis.vertical,
+      ),
     );
   }
 }

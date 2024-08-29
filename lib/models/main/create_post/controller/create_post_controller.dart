@@ -103,7 +103,10 @@ class CreatePostController extends GetxController with StateMixin {
 
   @override
   void onInit() {
-    getDistrictList();
+    if (GetStorage().read(AppString.ACCESS_TOKEN) != null) {
+      getDistrictList();
+    }
+
     super.onInit();
   }
 
@@ -111,7 +114,7 @@ class CreatePostController extends GetxController with StateMixin {
     isLoadingCity(true);
     try {
       Response response = await NetworkClient().postRequest(
-          "${Api.CITY_LIST}?district_id=$id", {"district_id": "$id"});
+          "${Api.cityList}?district_id=$id", {"district_id": "$id"});
       if (response.hasError) {
         logErrorMessage(logName: "getCityList", response: response);
         showErrorMessage(
@@ -138,7 +141,7 @@ class CreatePostController extends GetxController with StateMixin {
   Future getDistrictList() async {
     isLoadingCity(true);
     try {
-      Response response = await NetworkClient().getRequest(Api.DISTRICT_LIST);
+      Response response = await NetworkClient().getRequest(Api.districtList);
       if (response.hasError) {
         logErrorMessage(logName: "getDistrictList", response: response);
         showErrorMessage(
@@ -173,7 +176,7 @@ class CreatePostController extends GetxController with StateMixin {
     print(formattedDate);
 
     isLoadingCreatePost(true);
-    var uri = Uri.parse(Api.BASE_URL + Api.CREATE_POST);
+    var uri = Uri.parse(Api.baseUrl + Api.createPost);
 
     // Create a multipart request
     var request = http.MultipartRequest('POST', uri);

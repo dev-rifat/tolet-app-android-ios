@@ -3,7 +3,7 @@ import 'package:to_let_mobile_app/utils/app_string.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
-String _getRequestUrl(String apiEndPoint) => Api.BASE_URL + apiEndPoint;
+String _getRequestUrl(String apiEndPoint) => Api.baseUrl + apiEndPoint;
 
 class NetworkClient extends GetConnect {
   Future<Response> getRequest(String apiEndPoint) async {

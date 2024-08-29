@@ -26,22 +26,14 @@ class _MainScreenState extends State<MainScreen> {
   initState() {
     super.initState();
     visit = widget.routeIndex ?? 0;
-
-
   }
 
   @override
   Widget build(BuildContext context) {
-    /// initialController controller
-    _initialController();
-
     return WillPopScope(
         onWillPop: () => appExitChecker,
         child: Scaffold(
           body: screenListLayout[visit],
-
-
-          
           bottomNavigationBar: Hidable(
             controller: hideButtonController,
             enableOpacityAnimation: true,
@@ -57,17 +49,9 @@ class _MainScreenState extends State<MainScreen> {
               indexSelected: visit,
               onTap: (int index) => setState(() {
                 visit = index;
-                Get.find<HomeController>().isSelectCategory.value=0;
-                if(index==1){
-                  Get.find<PropertiesController>().getProperties(categoryId: "0");
-                }
-
               }),
             ),
           ),
         ));
-  }
-
-  void _initialController() async {
   }
 }

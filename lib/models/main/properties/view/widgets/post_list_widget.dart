@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/common/widgets/loading_effect/shimmer.dart';
+import 'package:to_let_mobile_app/models/main/home/controller/home_controller.dart';
 import 'package:to_let_mobile_app/models/main/properties/view/widgets/photo_grid.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
@@ -55,41 +56,48 @@ class PostListWidget extends GetView<PropertiesController> {
       ));
     }
 
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      controller: hideButtonController,
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: (){
-            controller.getPropertiesDetails(propertiesId: controller.propertiesModel.data?[index].id??"");
-            Get.toNamed(Routes.VIEW_DETAILS);
-          },
-          child: Card(
-            elevation: 0,
-            shape: roundedRectangleBorder.copyWith(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            color: AppColor.cardColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildProfileInfo(index),
-                  _houseInfo(index),
-                  _descriptionText(index),
-                  customSpacerHeight(height: 14),
-                  _buildHouseImage(index),
-                ],
+    return RefreshIndicator(
+       onRefresh: _refreshPage,
+      backgroundColor: AppColor.backgroundColor,
+      color: AppColor.primaryColor,
+      child: ListView.builder(
+        controller: hideButtonController,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: (){
+              controller.getPropertiesDetails(propertiesId: controller.propertiesModel.data?[index].id??"");
+              Get.toNamed(Routes.VIEW_DETAILS);
+            },
+            child: Card(
+              elevation: 0,
+              shape: roundedRectangleBorder.copyWith(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              color: AppColor.cardColor,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildProfileInfo(index),
+                    _houseInfo(index),
+                    _descriptionText(index),
+                    customSpacerHeight(height: 14),
+                    _buildHouseImage(index),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
-
+  Future<void> _refreshPage() async {
+    await Get.find<HomeController>().getCategory();
+    await controller.getProperties();
+  }
   Widget _buildProfileInfo(int index) {
     final property = controller.propertiesModel.data?[index];
     final wishlistBox = Hive.box<WishlistItem>(wishListTableKey);

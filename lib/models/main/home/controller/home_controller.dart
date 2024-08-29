@@ -5,8 +5,10 @@ import 'package:to_let_mobile_app/network/network_client.dart';
 import 'package:to_let_mobile_app/utils/api_endpoints.dart';
 import 'package:to_let_mobile_app/utils/utils.dart';
 import 'package:get/get.dart';
+import '../model/best_for_you.dart';
 import '../model/categories_model.dart';
 import '../model/division_list_model.dart' as city;
+import '../model/near_by_model.dart';
 import '../model/search_model.dart';
 
 
@@ -33,10 +35,12 @@ class HomeController extends GetxController with StateMixin {
   }
 
   @override
-  void onInit() {
-    getDivisionList();
-    getCategory();
-    getSearchList();
+  void onInit() async{
+  await  getDivisionList();
+  await getCategory();
+  await  getNearByPost();
+  await  getBestForYouPost();
+  await  getSearchList();
 
     super.onInit();
   }
@@ -45,13 +49,15 @@ class HomeController extends GetxController with StateMixin {
   city.DivisionListModel divisionListModel = city.DivisionListModel();
   CategoriesModel categoriesModel = CategoriesModel();
   SearchModel searchModel = SearchModel();
+  NearByModel nearByModel = NearByModel();
+  BestForYouModel bestForYouModel = BestForYouModel();
 
   Future getDivisionList() async {
     change(null, status: RxStatus.loading());
 
     try {
       Response response = await NetworkClient().getRequest(
-        Api.DIVISION_LIST,
+        Api.divisionList,
       );
       if (response.hasError) {
         logErrorMessage(logName: "getDivisionList", response: response);
@@ -81,7 +87,7 @@ class HomeController extends GetxController with StateMixin {
 
     try {
       Response response = await NetworkClient().getRequest(
-        Api.CATEGORY_LIST,
+        Api.categoryList,
       );
       if (response.hasError) {
         logErrorMessage(logName: "getCategory", response: response);
@@ -101,12 +107,63 @@ class HomeController extends GetxController with StateMixin {
     change(null, status: RxStatus.success());
   }
 
+
+  Future getNearByPost() async {
+    change(null, status: RxStatus.loading());
+
+    try {
+      Response response = await NetworkClient().getRequest(
+        Api.nearByPostList,
+      );
+      if (response.hasError) {
+        logErrorMessage(logName: "getNearByPost", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getNearByPost", response: response);
+        log("getNearByPost ==> ${response.body}");
+        nearByModel = NearByModel.fromJson(response.body);
+        change(null, status: RxStatus.success());
+
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    change(null, status: RxStatus.success());
+  }
+
+  Future getBestForYouPost() async {
+    change(null, status: RxStatus.loading());
+
+    try {
+      Response response = await NetworkClient().getRequest(
+        Api.bestForYou,
+      );
+      if (response.hasError) {
+        logErrorMessage(logName: "getBestForYouPost", response: response);
+        showErrorMessage(
+            message: ErrorModel.fromJson(response.body).message ?? "");
+      } else {
+        logSuccessMessage(logName: "getBestForYouPost", response: response);
+        log("getBestForYouPost ==> ${response.body}");
+        bestForYouModel = BestForYouModel.fromJson(response.body);
+        change(null, status: RxStatus.success());
+
+      }
+    } catch (e) {
+      log(e.toString());
+      return Future.error(ErrorModel(message: e.toString()));
+    }
+    change(null, status: RxStatus.success());
+  }
+
   Future getSearchList({String ?query=""}) async {
     change(null, status: RxStatus.loading());
 
     try {
       Response response = await NetworkClient().getRequest(
-        "${Api.SERCH_POST_lIST}$query",
+        "${Api.searchPostList}$query",
       );
       if (response.hasError) {
         logErrorMessage(logName: "getSearchList", response: response);

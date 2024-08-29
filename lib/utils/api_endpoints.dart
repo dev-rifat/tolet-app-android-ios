@@ -3,21 +3,42 @@ import 'package:get_storage/get_storage.dart';
 
 class Api {
   Api._();
-  static String BASE_URL = "https://to-let.property.nexgen-labs.xyz/api";
-  static String IMGE_KEY = "https://to-let.property.nexgen-labs.xyz/public/property/";
-  static String LOG_IN = "/login";
-  static String RESISTER = "/register";
+  static String baseUrl = "https://to-let.property.nexgen-labs.xyz/api";
+  static String imagePublicKey = "https://to-let.property.nexgen-labs.xyz/public/property/";
+  static String logIn = "/login";
+  static String signUp = "/register";
 
-  static String DIVISION_LIST = "/division/list";
-  static String CITY_LIST = "/city/list";
-  static String DISTRICT_LIST = "/district/list";
+  static String divisionList = "/division/list";
+  static String cityList = "/city/list";
+  static String districtList = "/district/list";
 
-  static String CATEGORY_LIST = "/category/list";
-  static String PEOPRTIES_lIST = "/category-property/list";
-  static String SERCH_POST_lIST = "/property/search?query=";
-  static String PEOPRTIES_DETAILS = "/property/show/";
-  static String CREATE_POST = "/property/add";
+  static String categoryList = "/category/list";
+  static String propertiesList = "/category-property/list";
+  static String searchPostList = "/property/search?query=";
+  static String propertyDetails = "/property/show/";
+  static String createPost = "/property/add";
   static String myPost = "/my-property-list";
+  static String userChangeProfileImg = "/change-image";
+  static String nearByPostList = "/property/list";
+  static String bestForYou = "/property/bestforyou";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

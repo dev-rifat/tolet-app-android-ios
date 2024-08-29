@@ -24,7 +24,7 @@ class AuthController extends GetxController with StateMixin {
     };
     try {
       Response response =
-          await NetworkClient().postRequest(Api.LOG_IN, signInMapData);
+          await NetworkClient().postRequest(Api.logIn, signInMapData);
       if (response.hasError) {
         _error(response, "logIn");
       } else {
@@ -49,7 +49,7 @@ class AuthController extends GetxController with StateMixin {
     };
     try {
       Response response =
-          await NetworkClient().postRequest(Api.RESISTER, signUpMapData);
+          await NetworkClient().postRequest(Api.signUp, signUpMapData);
       if (response.hasError) {
         _error(response, "signup");
       } else {

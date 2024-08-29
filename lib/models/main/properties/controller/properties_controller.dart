@@ -27,7 +27,7 @@ class PropertiesController extends GetxController with StateMixin {
 
     try {
       Response response = await NetworkClient().getRequest(
-        "${Api.PEOPRTIES_lIST}?category_id=$categoryId",
+        "${Api.propertiesList}?category_id=$categoryId",
       );
       if (response.hasError) {
         logErrorMessage(logName: "getProperties", response: response);
@@ -51,7 +51,7 @@ class PropertiesController extends GetxController with StateMixin {
 
     try {
       Response response = await NetworkClient().getRequest(
-        "${Api.PEOPRTIES_DETAILS}$propertiesId",
+        "${Api.propertyDetails}$propertiesId",
       );
       if (response.hasError) {
         logErrorMessage(logName: "getPropertiesDetails", response: response);

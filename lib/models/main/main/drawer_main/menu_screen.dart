@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
@@ -10,6 +12,7 @@ import 'package:to_let_mobile_app/routes/app_pages.dart';
 import 'package:to_let_mobile_app/utils/app_color.dart';
 import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
+import '../../../../common/controller/picked_file_form_storage.dart';
 import '../../../../common/widgets/custom_dialog.dart';
 import '../../../../common/widgets/cutom_component/margin_layout.dart';
 import '../../../../utils/app_string.dart';
@@ -42,22 +45,30 @@ class DrawerMenuScreen extends StatelessWidget {
   }
 
   Widget _buildProfileInformation() {
+    PickedFileFormStorage storageForUpload = PickedFileFormStorage();
+
     var controller = Get.find<ProfileController>();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CustomNetworkImage(imgUrl: controller.profileModel.value.data?.image ?? ""),
-        SizedBox(
-          width: 80,
-          child: Card(
-            elevation: 0,
-            color: AppColor.primaryOrange,
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text(
-                  "Update",
-                  style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),
+        GestureDetector(
+          onTap: (){
+            storageForUpload.pickImageForProfile(ImageSource.gallery);
+
+          },
+          child: SizedBox(
+            width: 80,
+            child: Card(
+              elevation: 0,
+              color: AppColor.primaryOrange,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Text(
+                    "Update",
+                    style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),
+                  ),
                 ),
               ),
             ),
