@@ -10,6 +10,7 @@ import 'package:to_let_mobile_app/utils/app_style.dart';
 import 'package:to_let_mobile_app/utils/dimensions.dart';
 import '../../../../../common/widgets/cutom_component/custom_title_text.dart';
 import '../../../../../common/widgets/cutom_component/margin_layout.dart';
+import '../../../../../common/widgets/loading_effect/shimmer.dart';
 import '../../../../../routes/app_pages.dart';
 import '../../../main/main.dart';
 import '../widget/app_bar.dart';
@@ -17,44 +18,48 @@ import '../widget/best_for_you.dart';
 import '../widget/category_list.dart';
 import '../widget/near_for_you.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(),
-      backgroundColor: Colors.grey.shade100,
-      body: Padding(
-        padding: marginLayout.copyWith(left: 12, right: 12),
-        child: RefreshIndicator(
-          onRefresh: _refreshPage,
-          color: AppColor.primaryColor,
-          backgroundColor: AppColor.backgroundColor,
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            controller: hideButtonController,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ///Search layout
-                _buildSearchLayout(context),
+    return controller.obx((state) => Scaffold(
+        appBar: CustomAppBar(),
+        backgroundColor: Colors.grey.shade100,
+        body:  Padding(
+          padding: marginLayout.copyWith(left: 12, right: 12),
+          child: RefreshIndicator(
+            onRefresh: _refreshPage,
+            color: AppColor.primaryColor,
+            backgroundColor: AppColor.backgroundColor,
+            child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: hideButtonController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ///Search layout
+                  _buildSearchLayout(context),
+                  customSpacerHeight(height: 22),
 
-                customSpacerHeight(height: 22),
+                  ///Near for you image list
+                  _nearByForYou(),
 
-                ///Near for you image list
-                _nearByForYou(),
+                  customSpacerHeight(height: 14),
 
-                customSpacerHeight(height: 14),
-
-                ///Title text (Near for you)
-                _bestForYou(),
-              ],
+                  ///Title text (Near for you)
+                  _bestForYou(),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        )
+
+
+
+
+    ),onLoading: _loading());
+
   }
 
   _buildSearchLayout(context) {
@@ -147,7 +152,37 @@ class HomeScreen extends StatelessWidget {
   }
 
   Future<void> _refreshPage() async {
-    await Get.find<HomeController>().getNearByPost();
-    await Get.find<HomeController>().getBestForYouPost();
+    await controller.getNearByPost();
+    await controller.getBestForYouPost();
+    await controller.getDivisionList();
+  }
+
+  _loading() {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Column(
+        children: [
+          customSpacerHeight(height: 40),
+          const ShimmerListEffect(
+            itemHeight: 340,
+            itemWidth: 200,
+            itemCount: 5,
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+            itemCardHeight: 200,
+            scrollDirection: Axis.horizontal,
+          ),
+          const Expanded(
+            child: ShimmerListEffect(
+              itemHeight: 1000,
+              itemWidth: double.infinity,
+              itemCount: 5,
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 4),
+              itemCardHeight: 140,
+              scrollDirection: Axis.vertical,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

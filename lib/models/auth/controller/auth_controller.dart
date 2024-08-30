@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:to_let_mobile_app/common/widgets/error_message.dart';
 import 'package:to_let_mobile_app/models/auth/model/error_model.dart';
 import 'package:to_let_mobile_app/models/auth/model/signin_model.dart';
+import 'package:to_let_mobile_app/models/main/create_post/controller/create_post_controller.dart';
 import 'package:to_let_mobile_app/models/main/profile/controller/profile_controller.dart';
 import 'package:to_let_mobile_app/network/network_client.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
@@ -11,6 +12,7 @@ import 'package:to_let_mobile_app/utils/utils.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../../../common/controller/input_controller.dart';
+import '../../main/home/controller/home_controller.dart';
 
 class AuthController extends GetxController with StateMixin {
   final isSignInLoading = false.obs;
@@ -71,6 +73,8 @@ class AuthController extends GetxController with StateMixin {
               SignInResponse.fromJson(response.body).token)
           .then((value) {
             Get.find<ProfileController>()..getProfile()..getMyPost();
+            // Get.find<HomeController>()
+            Get.find<CreatePostController>().getDistrictList();
 
         Get.toNamed(Routes.MAIN);
       });

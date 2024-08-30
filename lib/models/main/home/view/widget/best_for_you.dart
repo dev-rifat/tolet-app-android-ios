@@ -17,118 +17,118 @@ class BestForYou extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.obx(
-      (state) {
-        final properties = controller.bestForYouModel.properties?.data;
-        if (properties == null || properties.isEmpty) {
-          return Center(
-              child: Text(
-            "No properties available!",
-            style: AppStyle.normal_text_black,
-          ));
-        }
+    return Obx(() {
+      final properties = controller.bestForYouModel.properties?.data;
+      if (properties == null || properties.isEmpty) {
+        return Center(
+            child: Text(
+          "No properties available!",
+          style: AppStyle.normal_text_black,
+        ));
+      }
+      return controller.isLoadingBestForYou.isFalse
+          ? ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: properties.length,
+              itemBuilder: (context, index) {
+                final data = properties[index];
+                final imageUrl = data.images?.isNotEmpty == true
+                    ? data.images!.first.title ?? ""
+                    : "";
 
-        return ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: properties.length,
-          itemBuilder: (context, index) {
-            final data = properties[index];
-            final imageUrl = data.images?.isNotEmpty == true
-                ? data.images!.first.title ?? ""
-                : "";
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
-              child: GestureDetector(
-                onTap: () {
-                  final propertiesId = data.id;
-                  if (propertiesId != null) {
-                    Get.find<PropertiesController>()
-                        .getPropertiesDetails(propertiesId: propertiesId);
-                    Get.toNamed(Routes.VIEW_DETAILS);
-                  }
-                },
-                child: Card(
-                  elevation: 0,
-                  shape: roundedRectangleBorder.copyWith(
-                      borderRadius: BorderRadius.circular(12)),
-                  color: AppColor.cardColor,
-                  child: Row(
-                    children: [
-                      Container(
-                        color: Colors.transparent,
-                        width: 85,
-                        height: 80,
-                        child: CustomNetworkImage(
-                          imgUrl: imageUrl,
-                          isRectangleImg: true,
-                          customBorderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(6),
-                              topLeft: Radius.circular(6)),
-                        ),
-                      ),
-                      customSpacerWidth(width: 6),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              data.title ?? "",
-                              style: AppStyle.normal_text_grey.copyWith(
-                                color: AppColor.normalTextColor,
-                                fontSize: Dimensions.fontSizeDefault + 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      final propertiesId = data.id;
+                      if (propertiesId != null) {
+                        Get.find<PropertiesController>()
+                            .getPropertiesDetails(propertiesId: propertiesId);
+                        Get.toNamed(Routes.VIEW_DETAILS);
+                      }
+                    },
+                    child: Card(
+                      elevation: 0,
+                      shape: roundedRectangleBorder.copyWith(
+                          borderRadius: BorderRadius.circular(12)),
+                      color: AppColor.cardColor,
+                      child: Row(
+                        children: [
+                          Container(
+                            color: Colors.transparent,
+                            width: 95,
+                            height: 86,
+                            child: CustomNetworkImage(
+                              imgUrl: imageUrl,
+                              isRectangleImg: true,
+                              customBorderRadius: const BorderRadius.only(
+                                  bottomLeft: Radius.circular(6),
+                                  topLeft: Radius.circular(6)),
                             ),
-                            Text(
-                              "${AppString.text_bd_currency} ${data.rent ?? ""}",
-                              style: AppStyle.normal_text_grey.copyWith(
-                                color: AppColor.primaryColor,
-                                fontSize: Dimensions.fontSizeDefault - 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Row(
+                          ),
+                          customSpacerWidth(width: 6),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Icon(
-                                  Icons.hotel_outlined,
-                                  size: 17,
-                                  color:
-                                      AppColor.normalTextColor.withOpacity(0.7),
-                                ),
-                                customSpacerWidth(width: 4),
                                 Text(
-                                  data.bedroom ?? "",
-                                  style: AppStyle.normal_text_black.copyWith(
-                                    color: AppColor.normalTextColor
-                                        .withOpacity(0.7),
+                                  data.title ?? "",
+                                  style: AppStyle.normal_text_grey.copyWith(
+                                    color: AppColor.normalTextColor,
+                                    fontSize: Dimensions.fontSizeDefault + 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Text(
+                                  "${AppString.text_bd_currency} ${data.rent ?? ""}",
+                                  style: AppStyle.normal_text_grey.copyWith(
+                                    color: AppColor.primaryColor,
                                     fontSize: Dimensions.fontSizeDefault - 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.hotel_outlined,
+                                      size: 17,
+                                      color: AppColor.normalTextColor
+                                          .withOpacity(0.7),
+                                    ),
+                                    customSpacerWidth(width: 4),
+                                    Text(
+                                      data.bedroom ?? "",
+                                      style:
+                                          AppStyle.normal_text_black.copyWith(
+                                        color: AppColor.normalTextColor
+                                            .withOpacity(0.7),
+                                        fontSize:
+                                            Dimensions.fontSizeDefault - 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
+            )
+          : const ShimmerListEffect(
+              itemHeight: 1000,
+              itemWidth: double.infinity,
+              itemCount: 5,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              itemCardHeight: 80,
+              scrollDirection: Axis.vertical,
             );
-          },
-        );
-      },
-      onLoading: const ShimmerListEffect(
-        itemHeight: 1000,
-        itemWidth: double.infinity,
-        itemCount: 5,
-        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-        itemCardHeight: 80,
-        scrollDirection: Axis.vertical,
-      ),
-    );
+    });
   }
 }

@@ -15,117 +15,119 @@ class NearForYou extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: controller.obx(
-            (state) {
-          final properties = controller.nearByModel.properties?.data;
+    return Obx(() {
+      final properties = controller.nearByModel.properties?.data;
 
-          if (properties == null || properties.isEmpty) {
-            return Center(
-              child: Text(
-                "No nearby properties found!",
-                style: AppStyle.normal_text_black,
-              ),
-            );
-          }
+      if (properties == null || properties.isEmpty) {
+        return Center(
+          child: Text(
+            "No nearby properties found!",
+            style: AppStyle.normal_text_black,
+          ),
+        );
+      }
+      return controller.isLoadingNearBy.isFalse
+          ? SizedBox(
+              height: 300,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: properties.length,
+                itemBuilder: (context, index) {
+                  final data = properties[index];
+                  final imageUrl = (data.images?.isNotEmpty ?? false)
+                      ? data.images![0].title ?? ""
+                      : "";
 
-          return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: properties.length,
-            itemBuilder: (context, index) {
-              final data = properties[index];
-              final imageUrl = (data.images?.isNotEmpty ?? false)
-                  ? data.images![0].title ?? ""
-                  : "";
+                  return GestureDetector(
+                    onTap: () {
+                      final propertiesController =
+                          Get.find<PropertiesController>();
+                      final propertiesId = data.id;
 
-              return GestureDetector(
-                onTap: () {
-                  final propertiesController = Get.find<PropertiesController>();
-                  final propertiesId = data.id;
-
-                  if (propertiesId != null) {
-                    propertiesController.getPropertiesDetails(propertiesId: propertiesId);
-                    Get.toNamed(Routes.VIEW_DETAILS);
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Stack(
-                    children: [
-                      SizedBox(
-                        width: 230,
-                        child: CustomNetworkImage(
-                          imgUrl: imageUrl,
-                          isRectangleImg: true,
-                          borderRadius: Dimensions.radiusDefault,
-                        ),
-                      ),
-                      Positioned(
-                        bottom: -4,
-                        left: -5,
-                        right: -5,
-                        child: Card(
-                          elevation: 0,
-                          color: AppColor.normalTextColor.withOpacity(0.4),
-                          shape: roundedRectangleBorder.copyWith(
-                              borderRadius: BorderRadius.only(
-                                  bottomRight:
-                                  Radius.circular(Dimensions.radiusDefault),
-                                  bottomLeft:
-                                  Radius.circular(Dimensions.radiusDefault))),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  data.title ?? "Unknown",
-                                  style: AppStyle.normal_text_black.copyWith(
-                                    color: AppColor.cardColor,
-                                    fontSize: Dimensions.fontSizeMid - 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                                Row(
+                      if (propertiesId != null) {
+                        propertiesController.getPropertiesDetails(
+                            propertiesId: propertiesId);
+                        Get.toNamed(Routes.VIEW_DETAILS);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        children: [
+                          SizedBox(
+                            width: 230,
+                            child: CustomNetworkImage(
+                              imgUrl: imageUrl,
+                              isRectangleImg: true,
+                              borderRadius: Dimensions.radiusDefault,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: -4,
+                            left: -5,
+                            right: -5,
+                            child: Card(
+                              elevation: 0,
+                              color: AppColor.normalTextColor.withOpacity(0.4),
+                              shape: roundedRectangleBorder.copyWith(
+                                  borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(
+                                          Dimensions.radiusDefault),
+                                      bottomLeft: Radius.circular(
+                                          Dimensions.radiusDefault))),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Icon(
-                                      Icons.location_pin,
-                                      size: 14,
-                                      color: AppColor.pendingColor,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "${data.city?.district?.districtName ?? "Unknown District"}, ${data.city?.cityName ?? "Unknown City"}",
-                                        style: AppStyle.normal_text_black.copyWith(
-                                          color: AppColor.cardColor,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                    Text(
+                                      data.title ?? "Unknown",
+                                      style:
+                                          AppStyle.normal_text_black.copyWith(
+                                        color: AppColor.cardColor,
+                                        fontSize: Dimensions.fontSizeMid - 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.location_pin,
+                                          size: 14,
+                                          color: AppColor.pendingColor,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "${data.city?.district?.districtName ?? "Unknown District"}, ${data.city?.cityName ?? "Unknown City"}",
+                                            style: AppStyle.normal_text_black
+                                                .copyWith(
+                                              color: AppColor.cardColor,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
-        onLoading: const ShimmerListEffect(
-          itemHeight: 100,
-          itemWidth: 200,
-          itemCount: 5,
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-          itemCardHeight: 200,
-          scrollDirection: Axis.horizontal,
-        ),
-      ),
-    );
+                    ),
+                  );
+                },
+              ),
+            )
+          : const ShimmerListEffect(
+              itemHeight: 280,
+              itemWidth: 230,
+              itemCount: 5,
+              padding: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              itemCardHeight: 200,
+              scrollDirection: Axis.horizontal,
+            );
+    });
   }
 }

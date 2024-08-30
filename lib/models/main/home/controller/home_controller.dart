@@ -16,6 +16,9 @@ class HomeController extends GetxController with StateMixin {
   final isSelectCategory = 0.obs;
   final isSelectGender = 0.obs;
   final isSelectFilter = 0.obs;
+  RxBool isLoadingNearBy=false.obs;
+  RxBool isLoadingBestForYou=false.obs;
+  RxBool isLoadingLocation=false.obs;
 
   var selectedValue = 'All'.obs;
   List<String> items = [
@@ -28,6 +31,7 @@ class HomeController extends GetxController with StateMixin {
   }
 
   var selectedDivision = "".obs;
+  var selectedDivisionId = "".obs;
   List<city.Data> divisionList = [];
 
   void setSelectedDivision(String value) {
@@ -36,13 +40,12 @@ class HomeController extends GetxController with StateMixin {
 
   @override
   void onInit() async{
-  await  getDivisionList();
-  await getCategory();
   await  getNearByPost();
   await  getBestForYouPost();
+  await  getDivisionList();
+  await getCategory();
   await  getSearchList();
-
-    super.onInit();
+  super.onInit();
   }
 
   ///Using model for division list
@@ -53,7 +56,7 @@ class HomeController extends GetxController with StateMixin {
   BestForYouModel bestForYouModel = BestForYouModel();
 
   Future getDivisionList() async {
-    change(null, status: RxStatus.loading());
+    isLoadingLocation(true);
 
     try {
       Response response = await NetworkClient().getRequest(
@@ -72,18 +75,20 @@ class HomeController extends GetxController with StateMixin {
         divisionList = divisionListModel.data ?? [];
         if (divisionList.isNotEmpty) {
           selectedDivision.value = divisionList[0].name ?? "";
+          selectedDivisionId.value = divisionList[0].id.toString() ?? "";
         }
       }
     } catch (e) {
       log(e.toString());
       return Future.error(ErrorModel(message: e.toString()));
     }
-    change(null, status: RxStatus.success());
+    isLoadingLocation(false);
+
   }
 
 
   Future getCategory() async {
-    change(null, status: RxStatus.loading());
+   change(null, status: RxStatus.loading());
 
     try {
       Response response = await NetworkClient().getRequest(
@@ -109,7 +114,7 @@ class HomeController extends GetxController with StateMixin {
 
 
   Future getNearByPost() async {
-    change(null, status: RxStatus.loading());
+    isLoadingNearBy(true);
 
     try {
       Response response = await NetworkClient().getRequest(
@@ -123,19 +128,20 @@ class HomeController extends GetxController with StateMixin {
         logSuccessMessage(logName: "getNearByPost", response: response);
         log("getNearByPost ==> ${response.body}");
         nearByModel = NearByModel.fromJson(response.body);
-        change(null, status: RxStatus.success());
+        isLoadingNearBy(false);
 
       }
     } catch (e) {
       log(e.toString());
+      isLoadingNearBy(false);
+
       return Future.error(ErrorModel(message: e.toString()));
     }
-    change(null, status: RxStatus.success());
+
   }
 
   Future getBestForYouPost() async {
-    change(null, status: RxStatus.loading());
-
+    isLoadingBestForYou(true);
     try {
       Response response = await NetworkClient().getRequest(
         Api.bestForYou,
@@ -148,14 +154,14 @@ class HomeController extends GetxController with StateMixin {
         logSuccessMessage(logName: "getBestForYouPost", response: response);
         log("getBestForYouPost ==> ${response.body}");
         bestForYouModel = BestForYouModel.fromJson(response.body);
-        change(null, status: RxStatus.success());
+        isLoadingBestForYou(false);
 
       }
     } catch (e) {
       log(e.toString());
       return Future.error(ErrorModel(message: e.toString()));
     }
-    change(null, status: RxStatus.success());
+    isLoadingBestForYou(false);
   }
 
   Future getSearchList({String ?query=""}) async {
