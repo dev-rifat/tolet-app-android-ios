@@ -2,6 +2,8 @@ import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:to_let_mobile_app/common/widgets/success_message.dart';
+import 'package:to_let_mobile_app/models/main/home/controller/home_controller.dart';
+import 'package:to_let_mobile_app/models/main/properties/controller/properties_controller.dart';
 import 'package:to_let_mobile_app/utils/app_string.dart';
 import '../../../../common/controller/input_controller.dart';
 import '../../../../common/widgets/error_message.dart';
@@ -265,6 +267,8 @@ class CreatePostController extends GetxController with StateMixin {
     isSelectCategoryId.value = "1";
     selectedDistrictId.value = "";
     getCityList();
+    Get.find<HomeController>()..getBestForYouPost()..getNearByPost();
+    Get.find<PropertiesController>().getProperties();
   }
 
   String _count(String selectedVal) {

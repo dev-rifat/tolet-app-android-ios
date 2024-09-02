@@ -9,6 +9,7 @@ import 'package:to_let_mobile_app/models/main/create_post/view/screen/no_auth.da
 import '../../../../utils/app_color.dart';
 import '../../../../utils/app_string.dart';
 import '../../../common/widgets/custom_dialog.dart';
+import '../../statring/controller/splash_controller.dart';
 import '../create_post/view/screen/create_post_screen.dart';
 import '../favorite/view/screen/wishlist_screen.dart';
 import '../home/view/screen/home.dart';
@@ -23,7 +24,9 @@ Future<bool> _onWillPop() async {
     saveBtnAction: () {
       if (Platform.isAndroid) {
         SystemNavigator.pop();
+        Get.delete<SplashController>();
       } else if (Platform.isIOS) {
+        Get.delete<SplashController>();
         exit(0);
       }
     },

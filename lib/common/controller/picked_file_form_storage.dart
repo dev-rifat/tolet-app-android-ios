@@ -18,11 +18,9 @@ class PickedFileFormStorage {
   final isLoading = false.obs;
   var pickedImage = Rx<XFile?>(null);
 
+
   Future<void> pickImageForProfile(ImageSource source) async {
     XFile? image = await ImagePicker().pickImage(source: source);
-
-
-
 
     if (image != null) {
       // Check image size

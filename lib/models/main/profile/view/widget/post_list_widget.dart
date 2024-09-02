@@ -93,6 +93,8 @@ class MyPostsWidget extends GetView<ProfileController> {
           height: 20,
           borderColor: Colors.transparent,
           imgUrl: imgUrl,
+          isProfileImg: true,
+
         ),
         customSpacerWidth(width: 8),
         Column(

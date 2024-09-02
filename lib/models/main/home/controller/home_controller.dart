@@ -21,6 +21,7 @@ class HomeController extends GetxController with StateMixin {
   RxBool isLoadingLocation=false.obs;
 
   var selectedValue = 'All'.obs;
+  var imgKey = ''.obs;
   List<String> items = [
     'All',
     'Pending',

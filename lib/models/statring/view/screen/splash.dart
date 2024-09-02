@@ -23,7 +23,7 @@ class SplashScreen extends StatelessWidget {
           Column(
             children: [
               Text(
-                "Let's find\nthe best\nplease to\n     live",
+                "Let's find\nthe best\nplace to\n 🇧🇩 live",
                 style: AppStyle.normal_text_grey.copyWith(
                     color: AppColor.cardColor,
                     fontSize: Dimensions.fontSizeExtraLarge + 16),

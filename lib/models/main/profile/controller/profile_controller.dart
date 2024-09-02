@@ -79,32 +79,33 @@ class ProfileController extends GetxController with StateMixin {
 
 
 
-   Future changeImageImage({required XFile image}) async {
-     isImgUploadLoading(true);
+   Future<void> changeImageImage({required XFile image}) async {
+     try {
+       isImgUploadLoading(true);
 
-     print("img_path ::: ${image.path}");
+       var url = Uri.parse(baseUrl);
+       var headers = {
+         'Authorization': 'Bearer ${GetStorage().read(AppString.ACCESS_TOKEN)}',
+       };
 
-     var url = Uri.parse(baseUrl);
-     // Replace 'BEARER_TOKEN' and 'USER_ID' with your actual token and user ID
-     var headers = {
-       'Authorization': '${GetStorage().read(AppString.ACCESS_TOKEN)}',
-     };
-     // 'user_id': '${GetStorage().read(AppString.ID_STORE)}',
-     var request = http.MultipartRequest('POST', url)
-       ..headers.addAll(headers)
-       ..files.add(await http.MultipartFile.fromPath('image', image.path));
+       var request = http.MultipartRequest('POST', url)
+         ..headers.addAll(headers)
+         ..files.add(await http.MultipartFile.fromPath('image', image.path));
 
-     var response = await request.send();
-     print("statusCode ::: ${response.statusCode}");
-
-     if (response.statusCode == 200) {
+       var response = await request.send();
+       if (response.statusCode == 200) {
+         isImgUploadLoading(false);
+         showSuccessMessage(
+             message: AppString.text_file_upload_update_successfully.tr);
+         getProfile();
+       } else {
+         showErrorMessage(message: "Failed to upload image");
+         isImgUploadLoading(false);
+       }
+     } catch (e) {
        isImgUploadLoading(false);
-       showSuccessMessage(
-           message: AppString.text_file_upload_update_successfully.tr);
-       getProfile();
-     } else {
-       showErrorMessage(message: "Failed to upload image");
-       isImgUploadLoading(false);
+       print("Error during image upload: $e");
+       showErrorMessage(message: "An error occurred during image upload");
      }
    }
 

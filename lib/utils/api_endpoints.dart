@@ -4,13 +4,13 @@ import 'package:get_storage/get_storage.dart';
 class Api {
   Api._();
   static String baseUrl = "https://to-let.property.nexgen-labs.xyz/api";
-  static String imagePublicKey = "https://to-let.property.nexgen-labs.xyz/public/property/";
+  static String imagePublicKey = "https://to-let.property.nexgen-labs.xyz/public";
   static String logIn = "/login";
   static String signUp = "/register";
 
   static String divisionList = "/division/list";
   static String cityList = "/city/list";
-  static String districtList = "/district/list";
+  static String districtList = "/district/list-sp";
 
   static String categoryList = "/category/list";
   static String propertiesList = "/category-property/list";

@@ -15,7 +15,7 @@ void showImageZoomDialog(BuildContext context, String imageUrl) {
             width: double.infinity,
             height: double.infinity,
             child: PhotoView(
-              imageProvider: NetworkImage(Api.imagePublicKey+imageUrl),
+              imageProvider: NetworkImage("${Api.imagePublicKey}/property/$imageUrl"),
               backgroundDecoration: const BoxDecoration(
                 color: Colors.transparent,
               ),

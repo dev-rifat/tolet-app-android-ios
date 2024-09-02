@@ -117,6 +117,7 @@ class PostListWidget extends GetView<PropertiesController> {
           height: 20,
           borderColor: Colors.transparent,
           imgUrl: property?.user?.image ?? "",
+          isProfileImg: true,
         ),
         customSpacerWidth(width: 8),
         Column(

@@ -25,6 +25,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   initState() {
     super.initState();
+    Get.delete<SplashController>();
     visit = widget.routeIndex ?? 0;
   }
 

@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_network_image.dart';
 import 'package:to_let_mobile_app/common/widgets/custom_spacer.dart';
+import 'package:to_let_mobile_app/common/widgets/loading_effect/circle_loading.dart';
 import 'package:to_let_mobile_app/models/main/home/view/widget/card_style.dart';
 import 'package:to_let_mobile_app/models/main/profile/controller/profile_controller.dart';
 import 'package:to_let_mobile_app/routes/app_pages.dart';
@@ -57,22 +58,27 @@ class DrawerMenuScreen extends StatelessWidget {
             storageForUpload.pickImageForProfile(ImageSource.gallery);
 
           },
-          child: SizedBox(
+          child:Obx(() =>
+
+          SizedBox(
             width: 80,
             child: Card(
               elevation: 0,
               color: AppColor.primaryOrange,
               child: Center(
-                child: Padding(
+                child:
+
+                Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: Text(
+                  child: controller.isImgUploadLoading.isTrue?Center(child: loadingIndicator(color: AppColor.cardColor)): Text(
                     "Update",
                     style: AppStyle.normal_text_black.copyWith(color: AppColor.cardColor),
                   ),
                 ),
               ),
             ),
-          ),
+          )),
+
         ),
         Obx(
               () => Text(

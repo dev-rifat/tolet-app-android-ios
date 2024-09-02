@@ -10,6 +10,7 @@ import '../../../common/controller/gender_controller.dart';
 import '../../../common/controller/network_controller.dart';
 import '../../../common/controller/pick_image_controller.dart';
 import '../../auth/controller/auth_controller.dart';
+import '../../main/create_post/controller/create_post_controller.dart';
 import '../../main/home/controller/home_controller.dart';
 import '../../main/profile/controller/profile_controller.dart';
 import '../../main/properties/controller/properties_controller.dart';
@@ -39,9 +40,9 @@ void intController() {
   Get.put(PikedProfileImgController(), permanent: true);
   Get.put(HomeController(), permanent: true);
   Get.put(ProfileController(), permanent: true);
+  Get.put(CreatePostController(), permanent: true);
   Get.put(DateTimeController(), permanent: true);
   Get.put(AuthController(), permanent: true);
   Get.put(PropertiesController(), permanent: true);
   Get.put(MultiImagePickerController(), permanent: true);
-  Get.delete<SplashController>();
 }

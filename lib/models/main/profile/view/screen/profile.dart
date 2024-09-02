@@ -32,8 +32,9 @@ class ProfileScreen extends GetView<ProfileController> {
         context: context,
       ),
       body: GetStorage().read(AppString.ACCESS_TOKEN) == null
-          ? const NoAuth(): controller.obx(
-          (state) => Padding(
+          ? const NoAuth()
+          : controller.obx(
+              (state) => Padding(
                 padding: marginLayout.copyWith(left: 12, right: 12),
                 child: RefreshIndicator(
                   onRefresh: _refreshPage,
@@ -54,16 +55,16 @@ class ProfileScreen extends GetView<ProfileController> {
                   ),
                 ),
               ),
-        onLoading: Center(child: loadingIndicator(width: 40,height: 40)),
-
-
-      ),
+              onLoading: Center(
+                  child:
+                      loadingIndicator(width: 40, height: 40, strokeWidth: 4)),
+            ),
     );
   }
 
   Future<void> _refreshPage() async {
-   await controller.getProfile();
-   await controller.getMyPost();
+    await controller.getProfile();
+    await controller.getMyPost();
   }
 
   Widget _userInfoLayout({
@@ -72,11 +73,15 @@ class ProfileScreen extends GetView<ProfileController> {
     required BuildContext context,
     required String imgUrl,
   }) {
+    print("profile_imh_url ::: $imgUrl");
     return GestureDetector(
       onTap: _updateEditProfileAccordingToResponse,
       child: Row(
         children: [
-          CustomNetworkImage(imgUrl: imgUrl),
+          CustomNetworkImage(
+            imgUrl: imgUrl,
+            isProfileImg: true,
+          ),
           customSpacerWidth(width: 18),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,8 +197,6 @@ class ProfileScreen extends GetView<ProfileController> {
       ),
     );
   }
-
-
 
   void _updateEditProfileAccordingToResponse() {
     Get.toNamed(Routes.EDIT_PROFILE_SCREEN);

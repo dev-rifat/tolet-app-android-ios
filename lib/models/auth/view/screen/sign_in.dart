@@ -39,8 +39,7 @@ class SignInScreen extends StatelessWidget {
                   customSpacerHeight(height: 30),
                   ///TextField body
                    const TextFieldLayout(),
-                  ///Forgot password
-                  recoveryPassword(),
+
                   customSpacerHeight(height: 30),
                   ///Login button
                   Obx(() => _loginButtonLayout()),
